@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,0" last-zoom="0.65"
+	 default-schema="public" default-owner="postgres">
+<database name="marketplace" encoding="UTF8" lc-collate="en_US.utf8" lc-ctype="en_US.utf8">
+	<role name="postgres"/>
+	<tablespace name="pg_default"/>
+</database>
+
+<schema name="public" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<sequence name="user_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="user_account">
+	<schema name="public"/>
+	<position x="1080" y="444"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="password" not-null="true">
+		<type name="character varying" length="128"/>
+	</column>
+	<column name="created" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="updated" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<constraint name="user_pk" type="pk-constr" table="public.user_account">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="username_uq" type="uq-constr" table="public.user_account">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="email_uq" type="uq-constr" table="public.user_account">
+		<columns names="email" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="order_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="order">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="620" y="724"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="created" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="updated" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<constraint name="order_pk" type="pk-constr" table="public.&quot;order&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="goods_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<sequence name="license_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<sequence name="song_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="book">
+	<schema name="public"/>
+	<position x="1140" y="1784"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="sample_file">
+		<type name="varchar" length="150"/>
+		<comment><![CDATA[mp3 file]]></comment>
+	</column>
+	<constraint name="song_pk" type="pk-constr" table="public.book">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="order_item_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="role">
+	<schema name="public"/>
+	<position x="560" y="444"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="varchar" length="150"/>
+	</column>
+	<constraint name="role_pk" type="pk-constr" table="public.role">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="name_uq" type="uq-constr" table="public.role">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="permission">
+	<schema name="public"/>
+	<position x="580" y="124"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="content_type" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="create" not-null="true" default-value="FALSE">
+		<type name="bool" length="0"/>
+	</column>
+	<column name="read" not-null="true" default-value="FALSE">
+		<type name="bool" length="0"/>
+	</column>
+	<column name="update" not-null="true" default-value="FALSE">
+		<type name="bool" length="0"/>
+	</column>
+	<column name="delete" not-null="true" default-value="FALSE">
+		<type name="bool" length="0"/>
+	</column>
+	<column name="read_all" not-null="true" default-value="FALSE">
+		<type name="bool" length="0"/>
+	</column>
+	<column name="edit_all" not-null="true" default-value="FALSE">
+		<type name="bool" length="0"/>
+	</column>
+	<constraint name="permission_pk" type="pk-constr" table="public.permission">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="many_role_has_many_permission" type="relnn"
+	 src-col-pattern="{st}_{sc}" dst-col-pattern="{st}_{sc}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#fdd343"
+	 src-table="public.role"
+	 dst-table="public.permission"
+	 src-required="false" dst-required="false"
+	 table-name="many_role_has_many_permission"
+	upd-action="CASCADE"
+	del-action="CASCADE">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="many_user_has_many_role" type="relnn"
+	 src-col-pattern="{st}_{sc}" dst-col-pattern="{st}_{sc}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#842a2d"
+	 src-table="public.user_account"
+	 dst-table="public.role"
+	 src-required="false" dst-required="false"
+	 table-name="many_user_has_many_role"
+	upd-action="CASCADE"
+	del-action="CASCADE">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<table name="invoice">
+	<schema name="public"/>
+	<position x="1760" y="744"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="status" not-null="true">
+		<type name="smallint" length="50"/>
+	</column>
+	<column name="created" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="updated" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<constraint name="order_status_pk" type="pk-constr" table="public.invoice">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="order_item">
+	<schema name="public"/>
+	<position x="260" y="1164"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="amount" not-null="true">
+		<type name="money" length="0"/>
+	</column>
+	<column name="delivered" not-null="true" default-value="false">
+		<type name="bool" length="0"/>
+	</column>
+	<column name="fee_charged" not-null="true" default-value="false">
+		<type name="bool" length="0"/>
+	</column>
+	<constraint name="order_item_pk" type="pk-constr" table="public.order_item">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="order_id" index="1"/>
+		<object name="product_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="order_fk" index="1"/>
+		<object name="product_fk" index="2"/>
+	</customidxs>
+</table>
+
+<relationship name="order_has_many_order_item" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#c3927d"
+	 src-table="public.&quot;order&quot;"
+	 dst-table="public.order_item"
+	 src-required="true" dst-required="false"/>
+
+<table name="restricted_file">
+	<schema name="public"/>
+	<position x="1160" y="2004"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<constraint name="digtal_goods_pk" type="pk-constr" table="public.restricted_file">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="book_id" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="book_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="download">
+	<schema name="public"/>
+	<position x="580" y="1784"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="created" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="token">
+		<type name="varchar" length="64"/>
+	</column>
+	<column name="valid" not-null="true">
+		<type name="interval" length="0" interval-type="HOUR"/>
+	</column>
+	<column name="use_count" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="download_pk" type="pk-constr" table="public.download">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="order_item_id" index="6"/>
+		<object name="restricted_file_id" index="5"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="order_item_fk" index="2"/>
+		<object name="restricted_file_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="song_has_many_restricted_files" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#08ecc8"
+	 src-table="public.book"
+	 dst-table="public.restricted_file"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="order_item_has_many_download" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#be95ab"
+	 src-table="public.order_item"
+	 dst-table="public.download"
+	 src-required="true" dst-required="false">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="restricted_file_has_many_download" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#7d3b3a"
+	 src-table="public.restricted_file"
+	 dst-table="public.download"
+	 src-required="true" dst-required="false"/>
+
+<table name="subscription">
+	<schema name="public"/>
+	<position x="2200" y="624"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="plan" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="active_since" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<constraint name="suplier_plan_pk" type="pk-constr" table="public.subscription">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="paypal_account">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1120" y="140"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<constraint name="paypal_account_pk" type="pk-constr" table="public.paypal_account">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="transaction">
+	<schema name="public"/>
+	<position x="1440" y="1344"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="debit_account_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="credit_account_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="transaction_pk" type="pk-constr" table="public.transaction">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="order_item_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="order_item_fk" index="3"/>
+		<object name="transaction_uq" index="4"/>
+	</customidxs>
+</table>
+
+<table name="account">
+	<schema name="public"/>
+	<position x="1280" y="1140"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="type">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[debit, credit, transfer]]></comment>
+	</column>
+	<constraint name="account_pk" type="pk-constr" table="public.account">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="user_account_id" index="2"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="user_account_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="user_has_many_account" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#471ff0"
+	 src-table="public.user_account"
+	 dst-table="public.account"
+	 src-required="true" dst-required="false"/>
+
+<table name="author">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1800" y="1584"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="firstaname" not-null="true">
+		<type name="varchar" length="128"/>
+	</column>
+	<column name="lastname">
+		<type name="varchar" length="128"/>
+	</column>
+	<column name="photo">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="bio">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="author_pk" type="pk-constr" table="public.author">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="book_has_many_author" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#9ffce3"
+	 src-table="public.book"
+	 dst-table="public.author"
+	 src-required="false" dst-required="false"/>
+
+<table name="language">
+	<schema name="public"/>
+	<position x="1800" y="1784"/>
+	<column name="code" not-null="true">
+		<type name="varchar" length="3"/>
+		<comment><![CDATA[ISO 639-2]]></comment>
+	</column>
+	<column name="name" not-null="true">
+		<type name="varchar" length="128"/>
+	</column>
+	<constraint name="language_pk" type="pk-constr" table="public.language">
+		<columns names="code" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="language_name_uq" type="uq-constr" table="public.language">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="language_code_name_uq" type="uq-constr" table="public.language">
+		<columns names="code,name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="genre">
+	<schema name="public"/>
+	<position x="1800" y="1944"/>
+	<column name="genre_name" not-null="true">
+		<type name="varchar" length="128"/>
+	</column>
+	<constraint name="genre_pk" type="pk-constr" table="public.genre">
+		<columns names="genre_name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="many_book_has_many_language" type="relnn"
+	 src-col-pattern="{st}_{sc}" dst-col-pattern="{st}_{sc}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#54eed9"
+	 src-table="public.book"
+	 dst-table="public.language"
+	 src-required="false" dst-required="false"
+	 table-name="many_book_has_many_language"/>
+
+<relationship name="many_book_has_many_genre" type="relnn"
+	 src-col-pattern="{st}_{sc}" dst-col-pattern="{st}_{sc}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#9a8707"
+	 src-table="public.book"
+	 dst-table="public.genre"
+	 src-required="false" dst-required="false"
+	 table-name="many_book_has_many_genre"/>
+
+<table name="invoice_item">
+	<schema name="public"/>
+	<position x="2060" y="1144"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<constraint name="invoice_item_pk" type="pk-constr" table="public.invoice_item">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="invoice_has_many_invoice_item" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#d6ccf5"
+	 src-table="public.invoice"
+	 dst-table="public.invoice_item"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="subscription_has_many_invoice_item" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#89d4df"
+	 src-table="public.subscription"
+	 dst-table="public.invoice_item"
+	 src-required="true" dst-required="false"/>
+
+<table name="subscription_plan">
+	<schema name="public"/>
+	<position x="2180" y="264"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="name">
+		<type name="varchar" length="64"/>
+	</column>
+	<column name="sale_fee" not-null="true">
+		<type name="decimal" length="2" precision="2"/>
+	</column>
+	<column name="anual_fee" not-null="true">
+		<type name="money" length="0"/>
+	</column>
+	<column name="created" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="archived" not-null="true">
+		<type name="bool" length="0"/>
+	</column>
+	<constraint name="subscription_plan_pk" type="pk-constr" table="public.subscription_plan">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="subscription_has_many_subscription_plan" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#d8d84e"
+	 src-table="public.subscription"
+	 dst-table="public.subscription_plan"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="user_has_many_order" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#095061"
+	 src-table="public.user_account"
+	 dst-table="public.&quot;order&quot;"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="user_has_one_paypal_account" type="rel11"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#23b210"
+	 src-table="public.paypal_account"
+	 dst-table="public.user_account"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="user_has_many_invoice" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#e064ee"
+	 src-table="public.user_account"
+	 dst-table="public.invoice"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="user_has_many_subscription" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#d83202"
+	 src-table="public.user_account"
+	 dst-table="public.subscription"
+	 src-required="true" dst-required="false"/>
+
+<table name="product">
+	<schema name="public"/>
+	<position x="1060" y="1520"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="type" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="product_pk" type="pk-constr" table="public.product">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="product_has_one_book" type="rel11"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#099dcc"
+	 src-table="public.book"
+	 dst-table="public.product"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="product_has_many_order_item" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#64f130"
+	 src-table="public.product"
+	 dst-table="public.order_item"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="user_has_many_product" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#c29e9a"
+	 src-table="public.user_account"
+	 dst-table="public.product"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="transaction_has_one_order_item" type="rel11"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#c29f3d"
+	 src-table="public.order_item"
+	 dst-table="public.transaction"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="invoice_item_has_many_transaction" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#afe5bc"
+	 src-table="public.invoice_item"
+	 dst-table="public.transaction"
+	 src-required="false" dst-required="false"/>
+
+<table name="payment">
+	<schema name="public"/>
+	<position x="1720" y="1024"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="payload" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created">
+		<type name="timestamp" length="0"/>
+	</column>
+	<constraint name="payment_pk" type="pk-constr" table="public.payment">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="user_has_many_payment" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#08175b"
+	 src-table="public.user_account"
+	 dst-table="public.payment"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="payment_has_many_transaction" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#a31104"
+	 src-table="public.payment"
+	 dst-table="public.transaction"
+	 src-required="false" dst-required="false"/>
+
+<table name="billing_item">
+	<schema name="public"/>
+	<position x="760" y="1044"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<constraint name="billing_pk" type="pk-constr" table="public.billing_item">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="order_item_id" index="1"/>
+		<object name="subscription_id" index="2"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="billing_item_uq" index="2"/>
+		<object name="order_item_fk" index="1"/>
+		<object name="subscription_fk" index="3"/>
+	</customidxs>
+</table>
+
+<relationship name="billing_has_one_order_item" type="rel11"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#898962"
+	 src-table="public.order_item"
+	 dst-table="public.billing_item"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="subscription_has_many_billing" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#49f9a4"
+	 src-table="public.subscription"
+	 dst-table="public.billing_item"
+	 src-required="false" dst-required="false"/>
+
+<table name="billing">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="960" y="804"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<constraint name="billing1_pk" type="pk-constr" table="public.billing">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="billing_has_many_billing_item" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#3fd772"
+	 src-table="public.billing"
+	 dst-table="public.billing_item"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="user_has_many_billing" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#753b57"
+	 src-table="public.user_account"
+	 dst-table="public.billing"
+	 src-required="true" dst-required="false"/>
+
+<constraint name="debit_account_fk" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.account" table="public.transaction">
+	<columns names="debit_account_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="credit_account_fk" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.account" table="public.transaction">
+	<columns names="credit_account_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_transaction_account" type="relfk"
+	 src-table="public.transaction"
+	 dst-table="public.account"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+</dbmodel>
