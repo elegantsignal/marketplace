@@ -10,20 +10,20 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 
 
-public class UserServiceTest extends AbstractTest {
+public class BookServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		final IUserAccount entity = saveNewUserAccount();
+		final IBook entity = saveNewBook();
 
-		final IUserAccount entityFromDb = userAccountService.get(entity.getId());
+		final IBook entityFromDb = bookService.get(entity.getId());
 
 		assertNotNull(entityFromDb);
-		assertEquals(entity.getName(), entityFromDb.getName());
 		assertNotNull(entityFromDb.getId());
+		assertEquals(entity.getProduct().getId(), entityFromDb.getProduct().getId());
 		assertNotNull(entityFromDb.getCreated());
 		assertNotNull(entityFromDb.getUpdated());
 		assertTrue(entityFromDb.getCreated().equals(entityFromDb.getUpdated()));
@@ -31,18 +31,21 @@ public class UserServiceTest extends AbstractTest {
 
 	@Test
 	public void testGetAll() {
-		final int initialCount = userAccountService.getAll().size();
+		final int initialCount = bookService.getAll().size();
 
 		final int randomObjectsCount = getRandomObjectsCount();
 		for (int i = 0; i < randomObjectsCount; i++) {
-			saveNewUserAccount();
+			saveNewBook();
 		}
 
-		final List<IUserAccount> allEntities = userAccountService.getAll();
+		final List<IBook> allEntities = bookService.getAll();
 
-		for (final IUserAccount entityFromDb : allEntities) {
-			assertNotNull(entityFromDb.getName());
+		for (final IBook entityFromDb : allEntities) {
 			assertNotNull(entityFromDb.getId());
+			assertNotNull(entityFromDb.getProduct());
+			assertNotNull(entityFromDb.getTitle());
+			assertNotNull(entityFromDb.getDescription());
+			assertNotNull(entityFromDb.getPublished());
 			assertNotNull(entityFromDb.getCreated());
 			assertNotNull(entityFromDb.getUpdated());
 		}
@@ -52,15 +55,15 @@ public class UserServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete() {
-		final IUserAccount entity = saveNewUserAccount();
-		userAccountService.delete(entity.getId());
-		assertNull(userAccountService.get(entity.getId()));
+		final IBook entity = saveNewBook();
+		bookService.delete(entity.getId());
+		assertNull(bookService.get(entity.getId()));
 	}
 
 	@Test
 	public void testDeleteAll() {
-		saveNewUserAccount();
-		userAccountService.deleteAll();
-		assertEquals(0, userAccountService.getAll().size());
+		saveNewBook();
+		bookService.deleteAll();
+		assertEquals(0, bookService.getAll().size());
 	}
 }

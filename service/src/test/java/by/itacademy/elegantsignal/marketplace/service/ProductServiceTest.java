@@ -10,19 +10,19 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 
 
-public class UserServiceTest extends AbstractTest {
+public class ProductServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		final IUserAccount entity = saveNewUserAccount();
+		final IProduct entity = saveNewProduct();
 
-		final IUserAccount entityFromDb = userAccountService.get(entity.getId());
+		final IProduct entityFromDb = productService.get(entity.getId());
 
 		assertNotNull(entityFromDb);
-		assertEquals(entity.getName(), entityFromDb.getName());
+		assertEquals(entity.getUserAccount().getId(), entityFromDb.getUserAccount().getId());
 		assertNotNull(entityFromDb.getId());
 		assertNotNull(entityFromDb.getCreated());
 		assertNotNull(entityFromDb.getUpdated());
@@ -31,18 +31,19 @@ public class UserServiceTest extends AbstractTest {
 
 	@Test
 	public void testGetAll() {
-		final int initialCount = userAccountService.getAll().size();
+		final int initialCount = productService.getAll().size();
 
 		final int randomObjectsCount = getRandomObjectsCount();
 		for (int i = 0; i < randomObjectsCount; i++) {
-			saveNewUserAccount();
+			saveNewProduct();
 		}
 
-		final List<IUserAccount> allEntities = userAccountService.getAll();
+		final List<IProduct> allEntities = productService.getAll();
 
-		for (final IUserAccount entityFromDb : allEntities) {
-			assertNotNull(entityFromDb.getName());
+		for (final IProduct entityFromDb : allEntities) {
 			assertNotNull(entityFromDb.getId());
+			assertNotNull(entityFromDb.getUserAccount());
+			assertNotNull(entityFromDb.getPrice());
 			assertNotNull(entityFromDb.getCreated());
 			assertNotNull(entityFromDb.getUpdated());
 		}
@@ -52,15 +53,15 @@ public class UserServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete() {
-		final IUserAccount entity = saveNewUserAccount();
-		userAccountService.delete(entity.getId());
-		assertNull(userAccountService.get(entity.getId()));
+		final IProduct entity = saveNewProduct();
+		productService.delete(entity.getId());
+		assertNull(productService.get(entity.getId()));
 	}
 
 	@Test
 	public void testDeleteAll() {
-		saveNewUserAccount();
-		userAccountService.deleteAll();
-		assertEquals(0, userAccountService.getAll().size());
+		saveNewProduct();
+		productService.deleteAll();
+		assertEquals(0, productService.getAll().size());
 	}
 }

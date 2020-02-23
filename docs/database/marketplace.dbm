@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,0" last-zoom="0.65"
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="178,489" last-zoom="0.75"
 	 default-schema="public" default-owner="postgres">
 <database name="marketplace" encoding="UTF8" lc-collate="en_US.utf8" lc-ctype="en_US.utf8">
 	<role name="postgres"/>
@@ -23,7 +23,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="user_account">
 	<schema name="public"/>
-	<position x="1200" y="308"/>
+	<position x="1200" y="300"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -31,7 +31,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="character varying" length="50"/>
 	</column>
 	<column name="email" not-null="true">
-		<type name="character varying" length="50"/>
+		<type name="character varying" length="32"/>
 	</column>
 	<column name="password" not-null="true">
 		<type name="character varying" length="128"/>
@@ -109,14 +109,25 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
-	<column name="sample_file">
-		<type name="varchar" length="150"/>
-		<comment><![CDATA[mp3 file]]></comment>
+	<column name="title" not-null="true">
+		<type name="varchar" length="32"/>
 	</column>
 	<column name="cover">
 		<type name="varchar" length="128"/>
 	</column>
-	<constraint name="song_pk" type="pk-constr" table="public.book">
+	<column name="published" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="description" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="updated" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<constraint name="book_pk" type="pk-constr" table="public.book">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 
@@ -125,8 +136,8 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="book_uq" index="2"/>
-		<object name="product_fk" index="1"/>
+		<object name="book_uq" index="0"/>
+		<object name="product_fk" index="2"/>
 	</customidxs>
 </table>
 
@@ -140,7 +151,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="role">
 	<schema name="public"/>
-	<position x="1760" y="600"/>
+	<position x="1920" y="620"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -157,7 +168,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="permission">
 	<schema name="public"/>
-	<position x="1880" y="280"/>
+	<position x="2120" y="260"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -245,21 +256,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="restricted_file">
 	<schema name="public"/>
-	<position x="2100" y="1340"/>
+	<position x="2040" y="1380"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
 	<constraint name="digtal_goods_pk" type="pk-constr" table="public.restricted_file">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-
-	<customidxs object-type="column">
-		<object name="book_id" index="1"/>
-	</customidxs>
-
-	<customidxs object-type="constraint">
-		<object name="book_fk" index="1"/>
-	</customidxs>
 </table>
 
 <table name="download_links">
@@ -295,15 +298,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</customidxs>
 </table>
 
-<relationship name="song_has_many_restricted_files" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
-	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
-	 src-fk-pattern="{st}_fk"
-	 custom-color="#08ecc8"
-	 src-table="public.book"
-	 dst-table="public.restricted_file"
-	 src-required="true" dst-required="false"/>
-
 <relationship name="order_item_has_many_download" type="rel1n"
 	 src-col-pattern="{st}_{sc}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
@@ -325,18 +319,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-table="public.restricted_file"
 	 dst-table="public.download_links"
 	 src-required="true" dst-required="false"/>
-
-<table name="paypal_account">
-	<schema name="public"/>
-	<role name="postgres"/>
-	<position x="560" y="160"/>
-	<column name="id" not-null="true">
-		<type name="serial" length="0"/>
-	</column>
-	<constraint name="paypal_account_pk" type="pk-constr" table="public.paypal_account">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
-</table>
 
 <table name="author">
 	<schema name="public"/>
@@ -394,12 +376,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="genre">
 	<schema name="public"/>
-	<position x="2240" y="1160"/>
-	<column name="genre_name" not-null="true">
+	<position x="2120" y="1160"/>
+	<column name="id" not-null="true">
+		<type name="smallserial" length="0"/>
+	</column>
+	<column name="name" not-null="true">
 		<type name="varchar" length="128"/>
 	</column>
 	<constraint name="genre_pk" type="pk-constr" table="public.genre">
-		<columns names="genre_name" ref-type="src-columns"/>
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="genere_uq" type="uq-constr" table="public.genre">
+		<columns names="name" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -414,7 +402,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-required="false" dst-required="false"
 	 table-name="many_book_has_many_language"/>
 
-<relationship name="many_book_has_many_genre" type="relnn"
+<relationship name="book2genre" type="relnn"
 	 src-col-pattern="{st}_{sc}" dst-col-pattern="{st}_{sc}"
 	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
 	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
@@ -423,7 +411,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-table="public.book"
 	 dst-table="public.genre"
 	 src-required="false" dst-required="false"
-	 table-name="many_book_has_many_genre"/>
+	 table-name="book2genre">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
 
 <relationship name="user_has_many_order" type="rel1n"
 	 src-col-pattern="{st}_{sc}"
@@ -438,33 +430,30 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</label>
 </relationship>
 
-<relationship name="user_has_one_paypal_account" type="rel11"
-	 src-col-pattern="{st}_{sc}"
-	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
-	 src-fk-pattern="{st}_fk"
-	 custom-color="#23b210"
-	 src-table="public.paypal_account"
-	 dst-table="public.user_account"
-	 src-required="false" dst-required="true"/>
-
 <table name="product">
 	<schema name="public"/>
 	<position x="1420" y="720"/>
 	<column name="id" not-null="true">
-		<type name="smallint" length="0"/>
+		<type name="smallserial" length="0"/>
 	</column>
 	<column name="type" not-null="true">
-		<type name="smallint" length="0"/>
+		<type name="varchar" length="16"/>
 	</column>
 	<column name="price" not-null="true">
-		<type name="money" length="0"/>
+		<type name="decimal" length="6" precision="2"/>
+	</column>
+	<column name="created">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="updated">
+		<type name="timestamp" length="0"/>
 	</column>
 	<constraint name="product_pk" type="pk-constr" table="public.product">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="user_account_id" index="2"/>
+		<object name="user_account_id" index="1"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -534,7 +523,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-table="public.user_account"
 	 dst-table="public.role"
 	 src-required="false" dst-required="false"
-	 table-name="many_user_account_has_many_role"/>
+	 table-name="many_user_account_has_many_role">
+	<label ref-type="name-label">
+		<position x="-9.35376" y="-0.670347"/>
+	</label>
+</relationship>
 
 <table name="review">
 	<schema name="public"/>
@@ -602,5 +595,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-table="public.product"
 	 dst-table="public.&quot;like&quot;"
 	 src-required="true" dst-required="false"/>
+
+<relationship name="book_has_many_restricted_file" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#8e9505"
+	 src-table="public.book"
+	 dst-table="public.restricted_file"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
 
 </dbmodel>
