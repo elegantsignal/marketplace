@@ -3,12 +3,17 @@ package by.itacademy.elegantsignal.marketplace.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import by.itacademy.elegantsignal.marketplace.daoapi.IUserAccountDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
 import by.itacademy.elegantsignal.marketplace.daojdc.UserAccountDaoImpl;
 import by.itacademy.elegantsignal.marketplace.service.IUserAccountService;
 
 public class UserAccountServiceImpl implements IUserAccountService {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountServiceImpl.class);
 
 	private IUserAccountDao dao = new UserAccountDaoImpl();
 
@@ -22,9 +27,11 @@ public class UserAccountServiceImpl implements IUserAccountService {
 		final Date modifiedOn = new Date();
 		entity.setUpdated(modifiedOn);
 		if (entity.getId() == null) {
+			LOGGER.info("new user created: {}", entity);
 			entity.setCreated(modifiedOn);
 			dao.insert(entity);
 		} else {
+			LOGGER.info("user updated: {}", entity);
 			dao.update(entity);
 		}
 	}
