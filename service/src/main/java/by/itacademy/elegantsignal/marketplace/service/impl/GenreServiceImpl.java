@@ -2,11 +2,14 @@ package by.itacademy.elegantsignal.marketplace.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import by.itacademy.elegantsignal.marketplace.daoapi.IGenreDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daojdc.GenreDaoImpl;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 
+@Service
 public class GenreServiceImpl implements IGenreService {
 
 	private IGenreDao dao = new GenreDaoImpl();
