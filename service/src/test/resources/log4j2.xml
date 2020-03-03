@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
 	<Appenders>
-		<Console name="Console" target="SYSTEM_OUT">
+		<Console
+			name="Console"
+			target="SYSTEM_OUT">
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
 		</Console>
 
-		<RollingFile name="RollingFile" fileName="./logs/app.log"
+		<RollingFile
+			name="RollingFile"
+			fileName="./logs/app.log"
 			filePattern="./logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
 			<PatternLayout>
 				<Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
@@ -23,7 +27,10 @@
 			<AppenderRef ref="RollingFile" />
 		</Root>
 
-		<Logger name="by.itacademy.elegantsignal.marketplace.service.logger" level="debug" additivity="debug">
+		<Logger
+			name="by.itacademy.elegantsignal.marketplace.service.logger"
+			level="debug"
+			additivity="debug">
 			<AppenderRef ref="Console" />
 		</Logger>
 
