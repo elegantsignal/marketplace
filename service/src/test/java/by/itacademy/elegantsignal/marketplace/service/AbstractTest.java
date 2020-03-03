@@ -6,22 +6,25 @@ import java.util.Date;
 import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
-import by.itacademy.elegantsignal.marketplace.service.impl.BookServiceImpl;
-import by.itacademy.elegantsignal.marketplace.service.impl.GenreServiceImpl;
-import by.itacademy.elegantsignal.marketplace.service.impl.ProductServiceImpl;
-import by.itacademy.elegantsignal.marketplace.service.impl.UserAccountServiceImpl;
 
+@SpringJUnitConfig(locations = "classpath:service-context-test.xml")
 public abstract class AbstractTest {
-	protected IUserAccountService userAccountService = new UserAccountServiceImpl();
-	protected IProductService productService = new ProductServiceImpl();
-	protected IBookService bookService = new BookServiceImpl();
-	protected IGenreService genreService = new GenreServiceImpl();
+	@Autowired
+	protected IUserAccountService userAccountService;
+	@Autowired
+	protected IProductService productService;
+	@Autowired
+	protected IBookService bookService;
+	@Autowired
+	protected IGenreService genreService;
 
 	private static final Random RANDOM = new Random();
 
@@ -71,7 +74,7 @@ public abstract class AbstractTest {
 		productService.save(entity);
 		return entity;
 	}
-	
+
 	protected IBook saveNewBook() {
 		final IBook entity = bookService.createEntity();
 		entity.setProduct(saveNewProduct());
@@ -84,7 +87,7 @@ public abstract class AbstractTest {
 		bookService.save(entity);
 		return entity;
 	}
-	
+
 	protected IGenre saveNewGenre() {
 		final IGenre entity = genreService.createEntity();
 		entity.setName("Genre-" + getRandomPrefix());
