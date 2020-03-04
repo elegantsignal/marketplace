@@ -6,12 +6,15 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import by.itacademy.elegantsignal.marketplace.daoapi.IUserAccountDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserAccountFilter;
 import by.itacademy.elegantsignal.marketplace.daojdc.entity.UserAccount;
 import by.itacademy.elegantsignal.marketplace.daojdc.util.PreparedStatementAction;
 
+@Repository
 public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> implements IUserAccountDao {
 
 	@Override
@@ -21,8 +24,10 @@ public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> i
 
 	@Override
 	public void insert(final IUserAccount entity) {
-		executeStatement(new PreparedStatementAction<IUserAccount>(
-				String.format("insert into %s (name, email, password, created, updated) values(?,?,?,?,?)", getTableName()), true) {
+		executeStatement(new PreparedStatementAction<IUserAccount>(String.format(
+				"insert into %s (name, email, password, created, updated) values(?,?,?,?,?)",
+				getTableName()),
+				true) {
 			@Override
 			public IUserAccount doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setString(1, entity.getName());
