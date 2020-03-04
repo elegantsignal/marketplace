@@ -15,5 +15,7 @@ public class ServiceSpringContextExample {
 		LOGGER.info("ICarService: {}", context.getBean(IUserAccountService.class));
 		LOGGER.info("all beans: {}", context.getBeanDefinitionNames());
 
+		((ClassPathXmlApplicationContext) context).close();
+
 	}
 }

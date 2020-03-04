@@ -12,9 +12,12 @@ public class SimpleSpringContextExample {
 	public static void main(String[] args) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("context-example.xml");
 		LOGGER.info("main bean by type:{}", context.getBean(MainBean.class));
-		
+
 		LOGGER.info("main bean by name:{}", context.getBean("mainBean"));
-		
+
 		LOGGER.info("bean names:{}", context.getBeanDefinitionNames());
+
+		((ClassPathXmlApplicationContext) context).close();
+
 	}
 }

@@ -4,17 +4,17 @@ import java.util.List;
 
 public interface IDao<ENTITY, ID> {
 
-    ENTITY createEntity();
+	ENTITY createEntity();
 
-    ENTITY get(ID id);
+	ENTITY get(ID id);
 
-    void insert(ENTITY entity);
+	void insert(ENTITY entity);
 
-    void update(final ENTITY entity);
+	void update(final ENTITY entity);
 
-    void delete(ID id);
+	void delete(ID id);
 
-    void deleteAll();
+	void deleteAll();
 
-    List<ENTITY> selectAll();
+	List<ENTITY> selectAll();
 }

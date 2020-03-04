@@ -1,6 +1,5 @@
 package by.itacademy.elegantsignal.marketplace.daojdc;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,7 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -58,7 +56,7 @@ public abstract class AbstractDaoImpl<ENTITY, ID> implements IDao<ENTITY, ID> {
 
 	@Override
 	public ENTITY get(final ID id) {
-		StatementAction<ENTITY> action = (statement) -> {
+		StatementAction<ENTITY> action = statement -> {
 			statement.executeQuery("select * from " + getTableName() + " where id=" + id);
 
 			final ResultSet resultSet = statement.getResultSet();
@@ -172,14 +170,14 @@ public abstract class AbstractDaoImpl<ENTITY, ID> implements IDao<ENTITY, ID> {
 		throw new UnsupportedOperationException(
 				"this method should be overriden in particular *Impl class or use alternative "
 						+ "com.itacademy.jd2.dz.cardealer.dao.jdbc.AbstractDaoImpl.parseRow(ResultSet, List<String>)");
-	};
+	}
 
 	protected ENTITY parseRow(final ResultSet resultSet, final Set<String> columns) throws SQLException {
 		// this method allows to specify in particular DAO the parser which
 		// accepts list of columns. but by default it will fall back to
 		// com.itacademy.jd2.dz.cardealer.dao.jdbc.AbstractDaoImpl.parseRow(ResultSet)
 		return parseRow(resultSet);
-	};
+	}
 
 	protected abstract String getTableName();
 }
