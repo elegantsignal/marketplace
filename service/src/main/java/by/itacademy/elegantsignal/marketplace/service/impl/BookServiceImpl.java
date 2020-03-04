@@ -3,14 +3,18 @@ package by.itacademy.elegantsignal.marketplace.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
-import by.itacademy.elegantsignal.marketplace.daojdc.BookDaoImpl;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 
+@Service
 public class BookServiceImpl implements IBookService {
 
-	private IBookDao dao = new BookDaoImpl();
+	@Autowired
+	private IBookDao dao;
 
 	@Override
 	public IBook createEntity() {

@@ -14,6 +14,11 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+import org.springframework.beans.factory.annotation.Value;
+
 import by.itacademy.elegantsignal.marketplace.daoapi.IDao;
 import by.itacademy.elegantsignal.marketplace.daojdc.util.PreparedStatementAction;
 import by.itacademy.elegantsignal.marketplace.daojdc.util.SQLExecutionException;
@@ -21,35 +26,34 @@ import by.itacademy.elegantsignal.marketplace.daojdc.util.StatementAction;
 
 public abstract class AbstractDaoImpl<ENTITY, ID> implements IDao<ENTITY, ID> {
 
-	private static String url;
+	@Value("${jdbc.url}")
+	private String url;
 
-	private static String user;
+	@Value("${jdbc.user}")
+	private String user;
 
-	private static String password;
+	@Value("${jdbc.password}")
+	private String password;
 
-	static {
-		Properties props = new Properties();
-		try {
-			Class<?> clazz = AbstractDaoImpl.class;
-			props.load(clazz.getClassLoader().getResourceAsStream("jdbc-test.properties"));
-			url = props.getProperty("jdbc.url");
-			user = props.getProperty("jdbc.user");
-			password = props.getProperty("jdbc.password");
+	@PostConstruct
+	private void init() {
 
-			if (url == null) {
-				throw new IllegalAccessException("[url] cant be null");
-			}
-
-			if (password == null) {
-				throw new IllegalAccessException("[password] cant be null");
-			}
-
-			if (user == null) {
-				throw new IllegalAccessException("[user] cant be null");
-			}
-		} catch (IllegalAccessException | IOException e) {
-			e.printStackTrace();
+		if (url == null) {
+			throw new IllegalArgumentException("[url] cant be null");
 		}
+
+		if (password == null) {
+			throw new IllegalArgumentException("[password] cant be null");
+		}
+
+		if (user == null) {
+			throw new IllegalArgumentException("[user] cant be null");
+		}
+	}
+
+	@PreDestroy
+	private void clean() {
+
 	}
 
 	@Override
@@ -110,7 +114,7 @@ public abstract class AbstractDaoImpl<ENTITY, ID> implements IDao<ENTITY, ID> {
 
 	@Override
 	public void deleteAll() {
-		executeStatement(new PreparedStatementAction<Integer>("delete from \"" + getTableName()+ "\"") {
+		executeStatement(new PreparedStatementAction<Integer>("delete from \"" + getTableName() + "\"") {
 			@Override
 			public Integer doWithPreparedStatement(final PreparedStatement prepareStatement) throws SQLException {
 				final int executeUpdate = prepareStatement.executeUpdate();

@@ -5,12 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import by.itacademy.elegantsignal.marketplace.daoapi.IGenreDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.GenreFilter;
 import by.itacademy.elegantsignal.marketplace.daojdc.entity.Genre;
 import by.itacademy.elegantsignal.marketplace.daojdc.util.PreparedStatementAction;
 
+@Repository
 public class GenreDaoImpl extends AbstractDaoImpl<IGenre, Integer> implements IGenreDao {
 
 	@Override
@@ -20,8 +23,10 @@ public class GenreDaoImpl extends AbstractDaoImpl<IGenre, Integer> implements IG
 
 	@Override
 	public void insert(final IGenre entity) {
-		executeStatement(new PreparedStatementAction<IGenre>(
-				String.format("insert into %s (name) values(?)", getTableName()), true) {
+		executeStatement(new PreparedStatementAction<IGenre>(String.format(
+				"insert into %s (name) values(?)",
+				getTableName()),
+				true) {
 			@Override
 			public IGenre doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setString(1, entity.getName());

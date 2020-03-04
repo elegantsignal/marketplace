@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import by.itacademy.elegantsignal.marketplace.daoapi.IProductDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
@@ -15,6 +17,7 @@ import by.itacademy.elegantsignal.marketplace.daojdc.entity.Product;
 import by.itacademy.elegantsignal.marketplace.daojdc.entity.UserAccount;
 import by.itacademy.elegantsignal.marketplace.daojdc.util.PreparedStatementAction;
 
+@Repository
 public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implements IProductDao {
 
 	@Override
@@ -24,8 +27,10 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 
 	@Override
 	public void insert(final IProduct entity) {
-		executeStatement(new PreparedStatementAction<IProduct>(
-				String.format("insert into %s (user_account_id, type, price, created, updated) values(?,?,?,?,?)", getTableName()), true) {
+		executeStatement(new PreparedStatementAction<IProduct>(String.format(
+				"insert into %s (user_account_id, type, price, created, updated) values(?,?,?,?,?)",
+				getTableName()),
+				true) {
 			@Override
 			public IProduct doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setInt(1, entity.getUserAccount().getId());
@@ -49,7 +54,6 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 
 	}
 
-
 	@Override
 	public void update(final IProduct entity) {
 		throw new RuntimeException("will be implemented in ORM layer. Too complex for plain jdbc ");
@@ -69,11 +73,11 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 	protected IProduct parseRow(final ResultSet resultSet) throws SQLException {
 		final IProduct entity = createEntity();
 		entity.setId((Integer) resultSet.getInt("id"));
-		
+
 		final IUserAccount userAccount = new UserAccount();
 		userAccount.setId(resultSet.getInt("user_account_id"));
 		entity.setUserAccount(userAccount);
-		
+
 		entity.setType(ProductType.valueOf(resultSet.getString("type")));
 		entity.setPrice(resultSet.getBigDecimal("price"));
 		entity.setCreated(resultSet.getTimestamp("created"));
@@ -85,7 +89,5 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 	protected String getTableName() {
 		return "product";
 	}
-
-	
 
 }
