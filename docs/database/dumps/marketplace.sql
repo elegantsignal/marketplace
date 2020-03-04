@@ -38,7 +38,7 @@ ALTER SEQUENCE public.user_id_seq OWNER TO postgres;
 CREATE TABLE public.user_account(
 	id serial NOT NULL,
 	name character varying(50) NOT NULL,
-	email character varying(50) NOT NULL,
+	email character varying(32) NOT NULL,
 	password character varying(128) NOT NULL,
 	created timestamp NOT NULL,
 	updated timestamp NOT NULL,
@@ -124,13 +124,15 @@ ALTER SEQUENCE public.song_id_seq OWNER TO postgres;
 CREATE TABLE public.book(
 	id serial NOT NULL,
 	product_id smallint NOT NULL,
-	sample_file varchar(150),
+	title varchar(32) NOT NULL,
 	cover varchar(128),
-	CONSTRAINT song_pk PRIMARY KEY (id)
+	published date NOT NULL,
+	description text NOT NULL,
+	created timestamp NOT NULL,
+	updated timestamp NOT NULL,
+	CONSTRAINT book_pk PRIMARY KEY (id)
 
 );
--- ddl-end --
-COMMENT ON COLUMN public.book.sample_file IS 'mp3 file';
 -- ddl-end --
 
 -- object: public.order_item_id_seq | type: SEQUENCE --
@@ -223,7 +225,7 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public.restricted_file CASCADE;
 CREATE TABLE public.restricted_file(
 	id serial NOT NULL,
-	book_id integer NOT NULL,
+	book_id integer,
 	CONSTRAINT digtal_goods_pk PRIMARY KEY (id)
 
 );
@@ -244,13 +246,6 @@ CREATE TABLE public.download_links(
 );
 -- ddl-end --
 
--- object: book_fk | type: CONSTRAINT --
--- ALTER TABLE public.restricted_file DROP CONSTRAINT IF EXISTS book_fk CASCADE;
-ALTER TABLE public.restricted_file ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
-REFERENCES public.book (id) MATCH FULL
-ON DELETE RESTRICT ON UPDATE CASCADE;
--- ddl-end --
-
 -- object: order_item_fk | type: CONSTRAINT --
 -- ALTER TABLE public.download_links DROP CONSTRAINT IF EXISTS order_item_fk CASCADE;
 ALTER TABLE public.download_links ADD CONSTRAINT order_item_fk FOREIGN KEY (order_item_id)
@@ -263,18 +258,6 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 ALTER TABLE public.download_links ADD CONSTRAINT restricted_file_fk FOREIGN KEY (restricted_file_id)
 REFERENCES public.restricted_file (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
--- ddl-end --
-
--- object: public.paypal_account | type: TABLE --
--- DROP TABLE IF EXISTS public.paypal_account CASCADE;
-CREATE TABLE public.paypal_account(
-	id serial NOT NULL,
-	user_account_id integer NOT NULL,
-	CONSTRAINT paypal_account_pk PRIMARY KEY (id)
-
-);
--- ddl-end --
-ALTER TABLE public.paypal_account OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.author | type: TABLE --
@@ -317,8 +300,10 @@ COMMENT ON COLUMN public.language.code IS 'ISO 639-2';
 -- object: public.genre | type: TABLE --
 -- DROP TABLE IF EXISTS public.genre CASCADE;
 CREATE TABLE public.genre(
-	genre_name varchar(128) NOT NULL,
-	CONSTRAINT genre_pk PRIMARY KEY (genre_name)
+	id smallserial NOT NULL,
+	name varchar(128) NOT NULL,
+	CONSTRAINT genre_pk PRIMARY KEY (id),
+	CONSTRAINT genere_uq UNIQUE (name)
 
 );
 -- ddl-end --
@@ -347,27 +332,27 @@ REFERENCES public.language (code) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: public.many_book_has_many_genre | type: TABLE --
--- DROP TABLE IF EXISTS public.many_book_has_many_genre CASCADE;
-CREATE TABLE public.many_book_has_many_genre(
+-- object: public.book2genre | type: TABLE --
+-- DROP TABLE IF EXISTS public.book2genre CASCADE;
+CREATE TABLE public.book2genre(
 	book_id integer NOT NULL,
-	book_genre_name varchar(128) NOT NULL,
-	CONSTRAINT many_book_has_many_genre_pk PRIMARY KEY (book_id,book_genre_name)
+	book_id1 smallint NOT NULL,
+	CONSTRAINT book2genre_pk PRIMARY KEY (book_id,book_id1)
 
 );
 -- ddl-end --
 
 -- object: book_fk | type: CONSTRAINT --
--- ALTER TABLE public.many_book_has_many_genre DROP CONSTRAINT IF EXISTS book_fk CASCADE;
-ALTER TABLE public.many_book_has_many_genre ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
+-- ALTER TABLE public.book2genre DROP CONSTRAINT IF EXISTS book_fk CASCADE;
+ALTER TABLE public.book2genre ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
 REFERENCES public.book (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: genre_fk | type: CONSTRAINT --
--- ALTER TABLE public.many_book_has_many_genre DROP CONSTRAINT IF EXISTS genre_fk CASCADE;
-ALTER TABLE public.many_book_has_many_genre ADD CONSTRAINT genre_fk FOREIGN KEY (book_genre_name)
-REFERENCES public.genre (genre_name) MATCH FULL
+-- ALTER TABLE public.book2genre DROP CONSTRAINT IF EXISTS genre_fk CASCADE;
+ALTER TABLE public.book2genre ADD CONSTRAINT genre_fk FOREIGN KEY (book_id1)
+REFERENCES public.genre (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
@@ -378,25 +363,15 @@ REFERENCES public.user_account (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: user_account_fk | type: CONSTRAINT --
--- ALTER TABLE public.paypal_account DROP CONSTRAINT IF EXISTS user_account_fk CASCADE;
-ALTER TABLE public.paypal_account ADD CONSTRAINT user_account_fk FOREIGN KEY (user_account_id)
-REFERENCES public.user_account (id) MATCH FULL
-ON DELETE RESTRICT ON UPDATE CASCADE;
--- ddl-end --
-
--- object: paypal_account_uq | type: CONSTRAINT --
--- ALTER TABLE public.paypal_account DROP CONSTRAINT IF EXISTS paypal_account_uq CASCADE;
-ALTER TABLE public.paypal_account ADD CONSTRAINT paypal_account_uq UNIQUE (user_account_id);
--- ddl-end --
-
 -- object: public.product | type: TABLE --
 -- DROP TABLE IF EXISTS public.product CASCADE;
 CREATE TABLE public.product(
-	id smallint NOT NULL,
-	type smallint NOT NULL,
+	id smallserial NOT NULL,
 	user_account_id integer NOT NULL,
-	price money NOT NULL,
+	type varchar(16) NOT NULL,
+	price decimal(6,2) NOT NULL,
+	created timestamp,
+	updated timestamp,
 	CONSTRAINT product_pk PRIMARY KEY (id)
 
 );
@@ -527,6 +502,13 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 ALTER TABLE public."like" ADD CONSTRAINT product_fk FOREIGN KEY (product_id)
 REFERENCES public.product (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: book_fk | type: CONSTRAINT --
+-- ALTER TABLE public.restricted_file DROP CONSTRAINT IF EXISTS book_fk CASCADE;
+ALTER TABLE public.restricted_file ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
+REFERENCES public.book (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
 
