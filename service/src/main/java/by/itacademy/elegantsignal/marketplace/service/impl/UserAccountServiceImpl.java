@@ -15,11 +15,14 @@ import by.itacademy.elegantsignal.marketplace.service.IUserAccountService;
 
 @Service
 public class UserAccountServiceImpl implements IUserAccountService {
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountServiceImpl.class);
 
-	@Autowired
 	private IUserAccountDao userAccountDao;
+
+	@Autowired
+	public UserAccountServiceImpl(IUserAccountDao userAccountDao) {
+		this.userAccountDao = userAccountDao;
+	}
 
 	@Override
 	public IUserAccount createEntity() {
