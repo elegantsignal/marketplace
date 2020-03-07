@@ -286,9 +286,10 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 -- object: public.language | type: TABLE --
 -- DROP TABLE IF EXISTS public.language CASCADE;
 CREATE TABLE public.language(
-	code varchar(3) NOT NULL,
+	id serial NOT NULL,
+	code varchar(3),
 	name varchar(128) NOT NULL,
-	CONSTRAINT language_pk PRIMARY KEY (code),
+	CONSTRAINT language_pk PRIMARY KEY (id),
 	CONSTRAINT language_name_uq UNIQUE (name),
 	CONSTRAINT language_code_name_uq UNIQUE (code,name)
 
@@ -312,8 +313,8 @@ CREATE TABLE public.genre(
 -- DROP TABLE IF EXISTS public.many_book_has_many_language CASCADE;
 CREATE TABLE public.many_book_has_many_language(
 	book_id integer NOT NULL,
-	book_code varchar(3) NOT NULL,
-	CONSTRAINT many_book_has_many_language_pk PRIMARY KEY (book_id,book_code)
+	book_id1 integer NOT NULL,
+	CONSTRAINT many_book_has_many_language_pk PRIMARY KEY (book_id,book_id1)
 
 );
 -- ddl-end --
@@ -327,8 +328,8 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- object: language_fk | type: CONSTRAINT --
 -- ALTER TABLE public.many_book_has_many_language DROP CONSTRAINT IF EXISTS language_fk CASCADE;
-ALTER TABLE public.many_book_has_many_language ADD CONSTRAINT language_fk FOREIGN KEY (book_code)
-REFERENCES public.language (code) MATCH FULL
+ALTER TABLE public.many_book_has_many_language ADD CONSTRAINT language_fk FOREIGN KEY (book_id1)
+REFERENCES public.language (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
@@ -482,9 +483,9 @@ ALTER TABLE public.review ADD CONSTRAINT review_uq UNIQUE (order_id);
 -- DROP TABLE IF EXISTS public."like" CASCADE;
 CREATE TABLE public."like"(
 	id serial NOT NULL,
-	created timestamp NOT NULL,
 	user_account_id integer NOT NULL,
 	product_id smallint NOT NULL,
+	created timestamp NOT NULL,
 	CONSTRAINT like_pk PRIMARY KEY (id)
 
 );

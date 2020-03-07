@@ -8,34 +8,35 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILanguage;
 
 
-public class GenreTest extends AbstractTest {
+public class LanguageServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		final IGenre entity = saveNewGenre();
+		final ILanguage entity = saveNewLanguage();
 
-		final IGenre entityFromDb = genreService.get(entity.getId());
+		final ILanguage entityFromDb = languageService.get(entity.getId());
 
 		assertNotNull(entityFromDb);
+		assertEquals(entity.getCode(), entityFromDb.getCode());
 		assertEquals(entity.getName(), entityFromDb.getName());
 		assertNotNull(entityFromDb.getId());
 	}
 
 	@Test
 	public void testGetAll() {
-		final int initialCount = genreService.getAll().size();
+		final int initialCount = languageService.getAll().size();
 
 		final int randomObjectsCount = getRandomObjectsCount();
 		for (int i = 0; i < randomObjectsCount; i++) {
-			saveNewGenre();
+			saveNewLanguage();
 		}
 
-		final List<IGenre> allEntities = genreService.getAll();
+		final List<ILanguage> allEntities = languageService.getAll();
 
-		for (final IGenre entityFromDb : allEntities) {
+		for (final ILanguage entityFromDb : allEntities) {
 			assertNotNull(entityFromDb.getName());
 			assertNotNull(entityFromDb.getId());
 		}
@@ -45,15 +46,15 @@ public class GenreTest extends AbstractTest {
 
 	@Test
 	public void testDelete() {
-		final IGenre entity = saveNewGenre();
-		genreService.delete(entity.getId());
-		assertNull(genreService.get(entity.getId()));
+		final ILanguage entity = saveNewLanguage();
+		languageService.delete(entity.getId());
+		assertNull(languageService.get(entity.getId()));
 	}
 
 	@Test
 	public void testDeleteAll() {
-		saveNewGenre();
-		genreService.deleteAll();
-		assertEquals(0, genreService.getAll().size());
+		saveNewLanguage();
+		languageService.deleteAll();
+		assertEquals(0, languageService.getAll().size());
 	}
 }

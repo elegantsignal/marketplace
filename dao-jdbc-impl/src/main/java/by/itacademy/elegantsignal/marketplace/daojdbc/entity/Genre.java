@@ -15,7 +15,6 @@ public class Genre extends BaseEntity implements IGenre {
 	@Override
 	public void setName(String name) {
 		this.name = name;
-
 	}
 
 }
