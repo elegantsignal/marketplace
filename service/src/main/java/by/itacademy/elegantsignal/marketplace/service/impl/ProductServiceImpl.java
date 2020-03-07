@@ -13,9 +13,12 @@ import by.itacademy.elegantsignal.marketplace.service.IProductService;
 
 @Service
 public class ProductServiceImpl implements IProductService {
+	private IProductDao productDao;
 
 	@Autowired
-	private IProductDao productDao;
+	public ProductServiceImpl(IProductDao productDao) {
+		this.productDao = productDao;
+	}
 
 	@Override
 	public IProduct createEntity() {

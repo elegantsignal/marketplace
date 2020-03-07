@@ -13,9 +13,12 @@ import by.itacademy.elegantsignal.marketplace.service.IBookService;
 
 @Service
 public class BookServiceImpl implements IBookService {
+	private IBookDao bookDao;
 
 	@Autowired
-	private IBookDao bookDao;
+	public BookServiceImpl(IBookDao bookDao) {
+		this.bookDao = bookDao;
+	}
 
 	@Override
 	public IBook createEntity() {
