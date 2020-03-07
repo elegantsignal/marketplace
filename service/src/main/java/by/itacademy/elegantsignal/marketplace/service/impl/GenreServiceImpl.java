@@ -13,12 +13,10 @@ import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 @Service
 public class GenreServiceImpl implements IGenreService {
 	private IGenreDao genreDao;
-	private BookServiceImpl bookServiceImpl;
 
 	@Autowired
-	public GenreServiceImpl(IGenreDao genreDao, BookServiceImpl bookServiceImpl) {
+	public GenreServiceImpl(IGenreDao genreDao) {
 		this.genreDao = genreDao;
-		this.bookServiceImpl = bookServiceImpl;
 	}
 
 	@Override

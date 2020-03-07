@@ -14,12 +14,10 @@ import by.itacademy.elegantsignal.marketplace.service.IBookService;
 @Service
 public class BookServiceImpl implements IBookService {
 	private IBookDao bookDao;
-	private GenreServiceImpl genreServiceImpl;
 
 	@Autowired
-	public BookServiceImpl(IBookDao bookDao, GenreServiceImpl genreServiceImpl) {
+	public BookServiceImpl(IBookDao bookDao) {
 		this.bookDao = bookDao;
-		this.genreServiceImpl = genreServiceImpl;
 	}
 
 	@Override
