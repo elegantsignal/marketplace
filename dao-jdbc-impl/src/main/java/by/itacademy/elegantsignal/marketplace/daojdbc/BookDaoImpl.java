@@ -1,4 +1,4 @@
-package by.itacademy.elegantsignal.marketplace.daojdc;
+package by.itacademy.elegantsignal.marketplace.daojdbc;
 
 import java.nio.file.Paths;
 import java.sql.PreparedStatement;
@@ -13,9 +13,10 @@ import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
-import by.itacademy.elegantsignal.marketplace.daojdc.entity.Book;
-import by.itacademy.elegantsignal.marketplace.daojdc.entity.Product;
-import by.itacademy.elegantsignal.marketplace.daojdc.util.PreparedStatementAction;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.Book;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.Product;
+import by.itacademy.elegantsignal.marketplace.daojdbc.util.PreparedStatementAction;
+
 
 @Repository
 public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBookDao {
@@ -76,9 +77,9 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		final IBook entity = createEntity();
 		entity.setId((Integer) resultSet.getInt("id"));
 
-		final IProduct userAccount = new Product();
-		userAccount.setId(resultSet.getInt("product_id"));
-		entity.setProduct(userAccount);
+		final IProduct product = new Product();
+		product.setId(resultSet.getInt("product_id"));
+		entity.setProduct(product);
 
 		entity.setTitle(resultSet.getString("title"));
 		entity.setCover(Paths.get(resultSet.getString("cover")));

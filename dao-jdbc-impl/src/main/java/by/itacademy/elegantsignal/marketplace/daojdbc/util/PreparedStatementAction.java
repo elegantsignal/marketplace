@@ -1,7 +1,8 @@
-package by.itacademy.elegantsignal.marketplace.daojdc.util;
+package by.itacademy.elegantsignal.marketplace.daojdbc.util;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 
 public abstract class PreparedStatementAction<RETURN_TYPE> {
 

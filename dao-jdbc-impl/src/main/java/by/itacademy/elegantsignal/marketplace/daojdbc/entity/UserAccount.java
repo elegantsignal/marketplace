@@ -1,8 +1,9 @@
-package by.itacademy.elegantsignal.marketplace.daojdc.entity;
+package by.itacademy.elegantsignal.marketplace.daojdbc.entity;
 
 import java.util.Date;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+
 
 public class UserAccount extends BaseEntity implements IUserAccount {
 

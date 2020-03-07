@@ -10,15 +10,16 @@ import by.itacademy.elegantsignal.marketplace.daoapi.IProductDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
 
+
 @Service
 public class ProductServiceImpl implements IProductService {
 
 	@Autowired
-	private IProductDao dao;
+	private IProductDao productDao;
 
 	@Override
 	public IProduct createEntity() {
-		return dao.createEntity();
+		return productDao.createEntity();
 	}
 
 	@Override
@@ -27,31 +28,31 @@ public class ProductServiceImpl implements IProductService {
 		entity.setUpdated(modifiedOn);
 		if (entity.getId() == null) {
 			entity.setCreated(modifiedOn);
-			dao.insert(entity);
+			productDao.insert(entity);
 		} else {
-			dao.update(entity);
+			productDao.update(entity);
 		}
 	}
 
 	@Override
 	public IProduct get(final Integer id) {
-		final IProduct entity = dao.get(id);
+		final IProduct entity = productDao.get(id);
 		return entity;
 	}
 
 	@Override
 	public void delete(final Integer id) {
-		dao.delete(id);
+		productDao.delete(id);
 	}
 
 	@Override
 	public void deleteAll() {
-		dao.deleteAll();
+		productDao.deleteAll();
 	}
 
 	@Override
 	public List<IProduct> getAll() {
-		final List<IProduct> all = dao.selectAll();
+		final List<IProduct> all = productDao.selectAll();
 		return all;
 	}
 

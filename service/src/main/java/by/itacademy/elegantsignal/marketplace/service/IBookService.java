@@ -4,6 +4,7 @@ import java.util.List;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 
+
 public interface IBookService {
 
 	IBook get(Integer id);

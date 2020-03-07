@@ -10,15 +10,16 @@ import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 
+
 @Service
 public class BookServiceImpl implements IBookService {
 
 	@Autowired
-	private IBookDao dao;
+	private IBookDao bookDao;
 
 	@Override
 	public IBook createEntity() {
-		return dao.createEntity();
+		return bookDao.createEntity();
 	}
 
 	@Override
@@ -27,31 +28,31 @@ public class BookServiceImpl implements IBookService {
 		entity.setUpdated(modifiedOn);
 		if (entity.getId() == null) {
 			entity.setCreated(modifiedOn);
-			dao.insert(entity);
+			bookDao.insert(entity);
 		} else {
-			dao.update(entity);
+			bookDao.update(entity);
 		}
 	}
 
 	@Override
 	public IBook get(final Integer id) {
-		final IBook entity = dao.get(id);
+		final IBook entity = bookDao.get(id);
 		return entity;
 	}
 
 	@Override
 	public void delete(final Integer id) {
-		dao.delete(id);
+		bookDao.delete(id);
 	}
 
 	@Override
 	public void deleteAll() {
-		dao.deleteAll();
+		bookDao.deleteAll();
 	}
 
 	@Override
 	public List<IBook> getAll() {
-		final List<IBook> all = dao.selectAll();
+		final List<IBook> all = bookDao.selectAll();
 		return all;
 	}
 

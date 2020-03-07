@@ -1,4 +1,4 @@
-package by.itacademy.elegantsignal.marketplace.daojdc;
+package by.itacademy.elegantsignal.marketplace.daojdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,9 +18,10 @@ import javax.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IDao;
-import by.itacademy.elegantsignal.marketplace.daojdc.util.PreparedStatementAction;
-import by.itacademy.elegantsignal.marketplace.daojdc.util.SQLExecutionException;
-import by.itacademy.elegantsignal.marketplace.daojdc.util.StatementAction;
+import by.itacademy.elegantsignal.marketplace.daojdbc.util.PreparedStatementAction;
+import by.itacademy.elegantsignal.marketplace.daojdbc.util.SQLExecutionException;
+import by.itacademy.elegantsignal.marketplace.daojdbc.util.StatementAction;
+
 
 public abstract class AbstractDaoImpl<ENTITY, ID> implements IDao<ENTITY, ID> {
 

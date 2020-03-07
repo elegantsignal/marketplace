@@ -1,4 +1,4 @@
-package by.itacademy.elegantsignal.marketplace.daojdc;
+package by.itacademy.elegantsignal.marketplace.daojdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,9 +13,10 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.ProductFilter;
-import by.itacademy.elegantsignal.marketplace.daojdc.entity.Product;
-import by.itacademy.elegantsignal.marketplace.daojdc.entity.UserAccount;
-import by.itacademy.elegantsignal.marketplace.daojdc.util.PreparedStatementAction;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.Product;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.UserAccount;
+import by.itacademy.elegantsignal.marketplace.daojdbc.util.PreparedStatementAction;
+
 
 @Repository
 public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implements IProductDao {

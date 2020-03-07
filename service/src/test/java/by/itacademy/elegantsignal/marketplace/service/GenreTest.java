@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 
+
 public class GenreTest extends AbstractTest {
 
 	@Test

@@ -1,6 +1,7 @@
-package by.itacademy.elegantsignal.marketplace.daojdc.entity;
+package by.itacademy.elegantsignal.marketplace.daojdbc.entity;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
+
 
 public class Genre extends BaseEntity implements IGenre {
 

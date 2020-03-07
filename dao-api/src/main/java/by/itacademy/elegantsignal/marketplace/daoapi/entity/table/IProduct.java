@@ -5,6 +5,7 @@ import java.util.Date;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 
+
 public interface IProduct extends IBaseEntity {
 
 	IUserAccount getUserAccount();

@@ -1,4 +1,4 @@
-package by.itacademy.elegantsignal.marketplace.daojdc;
+package by.itacademy.elegantsignal.marketplace.daojdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 import by.itacademy.elegantsignal.marketplace.daoapi.IGenreDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.GenreFilter;
-import by.itacademy.elegantsignal.marketplace.daojdc.entity.Genre;
-import by.itacademy.elegantsignal.marketplace.daojdc.util.PreparedStatementAction;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.Genre;
+import by.itacademy.elegantsignal.marketplace.daojdbc.util.PreparedStatementAction;
+
 
 @Repository
 public class GenreDaoImpl extends AbstractDaoImpl<IGenre, Integer> implements IGenreDao {

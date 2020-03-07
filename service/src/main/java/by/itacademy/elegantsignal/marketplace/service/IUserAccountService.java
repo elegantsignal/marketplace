@@ -4,6 +4,7 @@ import java.util.List;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
 
+
 public interface IUserAccountService {
 
 	IUserAccount get(Integer id);

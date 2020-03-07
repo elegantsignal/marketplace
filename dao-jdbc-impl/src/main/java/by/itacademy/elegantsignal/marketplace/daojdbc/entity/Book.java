@@ -1,10 +1,11 @@
-package by.itacademy.elegantsignal.marketplace.daojdc.entity;
+package by.itacademy.elegantsignal.marketplace.daojdbc.entity;
 
 import java.nio.file.Path;
 import java.util.Date;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+
 
 public class Book extends BaseEntity implements IBook {
 

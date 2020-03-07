@@ -9,44 +9,45 @@ import by.itacademy.elegantsignal.marketplace.daoapi.IGenreDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 
+
 @Service
 public class GenreServiceImpl implements IGenreService {
 
 	@Autowired
-	private IGenreDao dao;
+	private IGenreDao genreDao;
 
 	@Override
 	public IGenre createEntity() {
-		return dao.createEntity();
+		return genreDao.createEntity();
 	}
 
 	@Override
 	public void save(final IGenre entity) {
 		if (entity.getId() == null) {
-			dao.insert(entity);
+			genreDao.insert(entity);
 		} else {
-			dao.update(entity);
+			genreDao.update(entity);
 		}
 	}
 
 	@Override
 	public IGenre get(final Integer id) {
-		return dao.get(id);
+		return genreDao.get(id);
 	}
 
 	@Override
 	public void delete(final Integer id) {
-		dao.delete(id);
+		genreDao.delete(id);
 	}
 
 	@Override
 	public void deleteAll() {
-		dao.deleteAll();
+		genreDao.deleteAll();
 	}
 
 	@Override
 	public List<IGenre> getAll() {
-		return dao.selectAll();
+		return genreDao.selectAll();
 	}
 
 }

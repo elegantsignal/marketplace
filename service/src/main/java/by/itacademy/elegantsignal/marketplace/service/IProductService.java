@@ -4,6 +4,7 @@ import java.util.List;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 
+
 public interface IProductService {
 
 	IProduct get(Integer id);

@@ -3,6 +3,7 @@ package by.itacademy.elegantsignal.marketplace.daoapi.entity.table;
 import java.nio.file.Path;
 import java.util.Date;
 
+
 public interface IBook extends IBaseEntity {
 
 	IProduct getProduct();

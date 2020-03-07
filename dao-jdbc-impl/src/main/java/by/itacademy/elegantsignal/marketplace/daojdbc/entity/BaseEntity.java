@@ -1,6 +1,7 @@
-package by.itacademy.elegantsignal.marketplace.daojdc.entity;
+package by.itacademy.elegantsignal.marketplace.daojdbc.entity;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBaseEntity;
+
 
 public abstract class BaseEntity implements IBaseEntity {
 	private Integer id;

@@ -1,4 +1,4 @@
-package by.itacademy.elegantsignal.marketplace.daojdc.util;
+package by.itacademy.elegantsignal.marketplace.daojdbc.util;
 
 public class SQLExecutionException extends RuntimeException {
 

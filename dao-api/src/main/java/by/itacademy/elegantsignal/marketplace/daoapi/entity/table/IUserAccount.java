@@ -2,6 +2,7 @@ package by.itacademy.elegantsignal.marketplace.daoapi.entity.table;
 
 import java.util.Date;
 
+
 public interface IUserAccount extends IBaseEntity {
 
 	String getName();

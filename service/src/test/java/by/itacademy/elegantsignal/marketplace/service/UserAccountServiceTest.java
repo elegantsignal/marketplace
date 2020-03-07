@@ -1,6 +1,5 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;

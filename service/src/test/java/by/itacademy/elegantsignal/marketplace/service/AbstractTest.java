@@ -26,6 +26,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
 
+
 @SpringJUnitConfig(locations = "classpath:service-context-test.xml")
 public abstract class AbstractTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractTest.class);

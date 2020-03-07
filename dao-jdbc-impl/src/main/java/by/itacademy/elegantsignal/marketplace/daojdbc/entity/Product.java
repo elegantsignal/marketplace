@@ -1,4 +1,4 @@
-package by.itacademy.elegantsignal.marketplace.daojdc.entity;
+package by.itacademy.elegantsignal.marketplace.daojdbc.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -6,6 +6,7 @@ import java.util.Date;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+
 
 public class Product extends BaseEntity implements IProduct {
 

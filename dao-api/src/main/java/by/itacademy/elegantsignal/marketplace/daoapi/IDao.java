@@ -2,6 +2,7 @@ package by.itacademy.elegantsignal.marketplace.daoapi;
 
 import java.util.List;
 
+
 public interface IDao<ENTITY, ID> {
 
 	ENTITY createEntity();

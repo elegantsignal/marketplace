@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import by.itacademy.elegantsignal.marketplace.service.IUserAccountService;
 
+
 public class ServiceSpringContextExample {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleSpringContextExample.class);
 

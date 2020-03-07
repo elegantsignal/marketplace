@@ -1,4 +1,4 @@
-package by.itacademy.elegantsignal.marketplace.daojdc;
+package by.itacademy.elegantsignal.marketplace.daojdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,8 +11,9 @@ import org.springframework.stereotype.Repository;
 import by.itacademy.elegantsignal.marketplace.daoapi.IUserAccountDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserAccountFilter;
-import by.itacademy.elegantsignal.marketplace.daojdc.entity.UserAccount;
-import by.itacademy.elegantsignal.marketplace.daojdc.util.PreparedStatementAction;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.UserAccount;
+import by.itacademy.elegantsignal.marketplace.daojdbc.util.PreparedStatementAction;
+
 
 @Repository
 public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> implements IUserAccountDao {
