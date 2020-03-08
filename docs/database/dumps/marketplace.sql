@@ -479,9 +479,9 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 ALTER TABLE public.review ADD CONSTRAINT review_uq UNIQUE (order_id);
 -- ddl-end --
 
--- object: public."like" | type: TABLE --
--- DROP TABLE IF EXISTS public."like" CASCADE;
-CREATE TABLE public."like"(
+-- object: public._like | type: TABLE --
+-- DROP TABLE IF EXISTS public._like CASCADE;
+CREATE TABLE public._like(
 	id serial NOT NULL,
 	user_account_id integer NOT NULL,
 	product_id smallint NOT NULL,
@@ -492,15 +492,15 @@ CREATE TABLE public."like"(
 -- ddl-end --
 
 -- object: user_account_fk | type: CONSTRAINT --
--- ALTER TABLE public."like" DROP CONSTRAINT IF EXISTS user_account_fk CASCADE;
-ALTER TABLE public."like" ADD CONSTRAINT user_account_fk FOREIGN KEY (user_account_id)
+-- ALTER TABLE public._like DROP CONSTRAINT IF EXISTS user_account_fk CASCADE;
+ALTER TABLE public._like ADD CONSTRAINT user_account_fk FOREIGN KEY (user_account_id)
 REFERENCES public.user_account (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: product_fk | type: CONSTRAINT --
--- ALTER TABLE public."like" DROP CONSTRAINT IF EXISTS product_fk CASCADE;
-ALTER TABLE public."like" ADD CONSTRAINT product_fk FOREIGN KEY (product_id)
+-- ALTER TABLE public._like DROP CONSTRAINT IF EXISTS product_fk CASCADE;
+ALTER TABLE public._like ADD CONSTRAINT product_fk FOREIGN KEY (product_id)
 REFERENCES public.product (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --

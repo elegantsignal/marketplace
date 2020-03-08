@@ -24,6 +24,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILanguage;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILike;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
 
@@ -42,6 +43,8 @@ public abstract class AbstractTest {
 	protected IGenreService genreService;
 	@Autowired
 	protected ILanguageService languageService;
+	@Autowired
+	protected ILikeService likeService;
 
 	private static final Random RANDOM = new Random();
 
@@ -153,9 +156,18 @@ public abstract class AbstractTest {
 
 	protected ILanguage saveNewLanguage() {
 		final ILanguage entity = languageService.createEntity();
-		entity.setCode(getRandomPrefix().substring(0,3));
+		entity.setCode(getRandomPrefix().substring(0, 3));
 		entity.setName("Language-" + getRandomPrefix());
 		languageService.save(entity);
+		return entity;
+	}
+
+	protected ILike saveNewLike() {
+		final ILike entity = likeService.createEntity();
+		entity.setUserAccount(saveNewUserAccount());
+		entity.setProduct(saveNewProduct());
+		entity.setCreated(new Date());
+		likeService.save(entity);
 		return entity;
 	}
 }
