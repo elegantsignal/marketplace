@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <web-app
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee"
@@ -6,145 +6,38 @@
 	id="WebApp_ID"
 	version="3.0">
 
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
 	<context-param>
-		<param-name>databaseUrl</param-name>
-		<param-value>jdbc:postgresql://localhost:5434/test</param-value>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:webapp-context.xml</param-value>
 	</context-param>
 
-	<display-name>Simple web</display-name>
-
 	<servlet>
-		<servlet-name>Test</servlet-name>
-		<servlet-class>servlet.MyServlet</servlet-class>
-		<init-param>
-			<param-name>initParam</param-name>
-			<param-value>init param value</param-value>
-		</init-param>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+			<location>/tmp</location>
+			<max-file-size>20848820</max-file-size>
+			<max-request-size>418018841</max-request-size>
+			<file-size-threshold>1048576</file-size-threshold>
+		</multipart-config>
 	</servlet>
 
+
 	<servlet-mapping>
-		<servlet-name>Test</servlet-name>
-		<url-pattern>/test</url-pattern>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>ServletFormUser</servlet-name>
-		<servlet-class>servlet.ServletFormUser</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ServletFormUser</servlet-name>
-		<url-pattern>/user_form</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>MyServlet2</servlet-name>
-		<servlet-class>servlet.MyServlet2</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>MyServlet2</servlet-name>
-		<url-pattern>/2</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>ServletTableBody</servlet-name>
-		<servlet-class>servlet.ServletTableBody</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ServletTableBody</servlet-name>
-		<url-pattern>/table_body</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>ServletTableBlue</servlet-name>
-		<servlet-class>servlet.ServletTableBlue</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ServletTableBlue</servlet-name>
-		<url-pattern>/table_blue</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>ServletTableGreen</servlet-name>
-		<servlet-class>servlet.ServletTableGreen</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ServletTableGreen</servlet-name>
-		<url-pattern>/table_green</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>CookiesSetServlet</servlet-name>
-		<servlet-class>servlet.CookiesSetServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CookiesSetServlet</servlet-name>
-		<url-pattern>/cookie_set</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>CookiesGetServlet</servlet-name>
-		<servlet-class>servlet.CookiesGetServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CookiesGetServlet</servlet-name>
-		<url-pattern>/cookie_get</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>servlet.LoginServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>LoginServlet</servlet-name>
-		<url-pattern>/login</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>MyPageServlet</servlet-name>
-		<servlet-class>servlet.MyPageServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>MyPageServlet</servlet-name>
-		<url-pattern>/myPage</url-pattern>
-	</servlet-mapping>
-
-
-	<servlet>
-		<servlet-name>resource2</servlet-name>
-		<servlet-class>servlet.Resource2</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>resource2</servlet-name>
-		<url-pattern>/r2</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>resource3</servlet-name>
-		<servlet-class>servlet.Resource3</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>resource3</servlet-name>
-		<url-pattern>/r3</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>resource4</servlet-name>
-		<servlet-class>servlet.Resource4</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>resource4</servlet-name>
-		<url-pattern>/r4</url-pattern>
-	</servlet-mapping>
-
-
-	<filter>
-		<filter-name>AuthorizationFilter</filter-name>
-		<filter-class>filter.AuthorizationFilter</filter-class>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>AuthorizationFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<page-encoding>UTF-8</page-encoding>
+		</jsp-property-group>
+	</jsp-config>
 
 </web-app>

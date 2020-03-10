@@ -30,8 +30,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 	public void insert(final IBook entity) {
 		executeStatement(new PreparedStatementAction<IBook>(String.format(
 				"insert into %s (product_id, title, cover, published, description, created, updated) values(?,?,?,?,?,?,?)",
-				getTableName()),
-				true) {
+				getTableName()), true) {
 			@Override
 			public IBook doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setInt(1, entity.getProduct().getId());
@@ -64,7 +63,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 
 	@Override
 	public List<IBook> find(final BookFilter filter) {
-		throw new RuntimeException("will be implemented in ORM layer. Too complex for plain jdbc ");
+		return selectAll();
 	}
 
 	@Override
@@ -75,7 +74,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 	@Override
 	protected IBook parseRow(final ResultSet resultSet) throws SQLException {
 		final IBook entity = createEntity();
-		entity.setId((Integer) resultSet.getInt("id"));
+		entity.setId(resultSet.getInt("id"));
 
 		final IProduct product = new Product();
 		product.setId(resultSet.getInt("product_id"));
