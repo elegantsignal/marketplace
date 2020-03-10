@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 
 
@@ -57,6 +58,11 @@ public class BookServiceImpl implements IBookService {
 	public List<IBook> getAll() {
 		final List<IBook> all = bookDao.selectAll();
 		return all;
+	}
+
+	@Override
+	public List<IBook> find(BookFilter filter) {
+		return bookDao.find(filter);
 	}
 
 }

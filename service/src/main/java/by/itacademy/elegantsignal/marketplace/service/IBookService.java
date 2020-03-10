@@ -3,6 +3,7 @@ package by.itacademy.elegantsignal.marketplace.service;
 import java.util.List;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 
 
 public interface IBookService {
@@ -18,5 +19,7 @@ public interface IBookService {
 	void deleteAll();
 
 	IBook createEntity();
+
+	List<IBook> find(BookFilter filter);
 
 }
