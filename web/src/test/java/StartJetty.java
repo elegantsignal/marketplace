@@ -50,7 +50,7 @@ public final class StartJetty {
 		final WebAppContext bb = new WebAppContext();
 		bb.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/[^/]*jstl.*\\.jar$");
 		bb.setServer(server);
-		bb.setContextPath("/t2");
+		bb.setContextPath("/");
 		bb.setWar("src/main/webapp");
 
 		server.setHandler(bb);
