@@ -28,3 +28,17 @@ psql -U postgres book
 ```bash
 docker exec -it $POSTGRESQL_CONTAINER pg_dump -U postgres --schema-only --no-owner marketplace > marketplace.sql
 ```
+
+## psql
+
+### Switch Database
+
+```sql
+\connect DBNAME
+```
+
+or
+
+```sql
+\c DBNAME
+```

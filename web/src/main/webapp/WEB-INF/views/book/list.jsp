@@ -12,28 +12,28 @@
 			<th></th>
 		</tr>
 
-		<c:forEach var="book" items="${gridItems}" varStatus="loopCounter">
+		<c:forEach var="item" items="${gridItems}" varStatus="loopCounter">
 			<tr>
 				<td>
-					<c:out value="${book.id}" />
+					<c:out value="${item.id}" />
 				</td>
 				<td>
-					<c:out value="${book.title}" />
+					<c:out value="${item.title}" />
 				</td>
 				<td>
-					<fmt:formatDate pattern="yyyy-MM-dd" value="${book.created}" />
+					<fmt:formatDate pattern="yyyy-MM-dd" value="${item.created}" />
 				</td>
 				<td>
-					<fmt:formatDate pattern="yyyy-MM-dd" value="${book.updated}" />
+					<fmt:formatDate pattern="yyyy-MM-dd" value="${item.updated}" />
 				</td>
 				<td class="right">
-					<a class="btn-floating" href="${pagesBook}/${book.id}">
+					<a class="btn-floating" href="${pagesBook}/${item.id}">
 						<i class="material-icons">info</i>
 					</a>
-					<a class="btn-floating" href="${pagesBook}/${book.id}/edit">
+					<a class="btn-floating" href="${pagesBook}/${item.id}/edit">
 						<i class="material-icons">edit</i>
 					</a>
-					<a class="btn-floating red" href="${pagesBook}/${book.id}/delete">
+					<a class="btn-floating red" href="${pagesBook}/${item.id}/delete">
 						<i class="material-icons">delete</i>
 					</a>
 				</td>

@@ -29,6 +29,7 @@ public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> i
 				"insert into %s (name, email, password, created, updated) values(?,?,?,?,?)",
 				getTableName()),
 				true) {
+
 			@Override
 			public IUserAccount doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setString(1, entity.getName());
@@ -59,7 +60,7 @@ public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> i
 
 	@Override
 	public List<IUserAccount> find(final UserAccountFilter filter) {
-		throw new RuntimeException("will be implemented in ORM layer. Too complex for plain jdbc ");
+		return selectAll();
 	}
 
 	@Override

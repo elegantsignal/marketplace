@@ -19,4 +19,7 @@ public interface IGenreService {
 
 	IGenre createEntity();
 
+	@Deprecated
+	void saveWithId(IGenre genre);
+
 }

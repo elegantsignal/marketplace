@@ -1,0 +1,57 @@
+---
+UserAccount:
+  - id: 1
+    name: asimov
+    email: asimov@exampl.com
+    password: "123456"
+  - id: 2
+    name: bloch
+    email: bloch@exampl.com
+    password: "123456"
+
+  - id: 3
+    name: alice
+    email: alice@exampl.com
+    password: "123456"
+
+  - id: 4
+    name: bob
+    email: bob@exampl.com
+    password: "123456"
+
+Product:
+  - user_account_id: 1
+    id: 1
+    type: book
+    price: 10
+  - user_account_id: 1
+    id: 2
+    type: book
+    price: 15
+  - user_account_id: 1
+    id: 3
+    type: book
+    price: 20
+
+Genre:
+  - id: 1
+    name: fiction
+
+Book:
+  - product_id: 1
+    title: The Caves of Steel
+    cover: https://upload.wikimedia.org/wikipedia/en/0/03/The-caves-of-steel-doubleday-cover.jpg?download
+    published: 1954-02-04
+    description: "A millennium into the future two advancements have altered the course of human history: the colonization of the galaxy and the creation of the positronic brain. Isaac Asimov’s Robot novels chronicle the unlikely partnership between a New York City detective and a humanoid robot who must learn to work together."
+  - product_id: 2
+    title: The Naked Sun
+    cover: https://upload.wikimedia.org/wikipedia/en/e/e5/The-naked-sun-doubleday-cover.jpg?download
+    published: 1957-01-01
+    description: "A millennium into the future, two advancements have altered the course of human history:  the colonization of the Galaxy and the creation of the positronic brain.  On the beautiful Outer World planet of Solaria, a handful of human colonists lead a hermit-like existence, their every need attended to by their faithful robot servants.  To this strange and provocative planet comes Detective Elijah Baley, sent from the streets of New York with his positronic partner, the robot R. Daneel Olivaw, to solve an incredible murder that has rocked Solaria to its foundations.  The victim had been so reclusive that he appeared to his associates only through holographic projection.  Yet someone had gotten close enough to bludgeon him to death while robots looked on.  Now Baley and Olivaw are faced with two clear impossibilities:  Either the Solarian was killed by one of his robots--unthinkable under the laws of Robotics--or he was killed by the woman who loved him so much that she never came into his presence!"
+  - product_id: 3
+    title: The Robots of Dawn
+    published: 1983-01-01
+    cover: https://upload.wikimedia.org/wikipedia/en/9/92/The-robots-of-dawn-doubleday-cover.jpg?download
+    description: "A millennium into the future two advances have altered the course of human history: the colonization of the Galaxy and the creation of the positronic brain. Isaac Asimov's Robot novels chronicle the unlikely partnership between a New York City detective and a humanoid robot who must learn to work together."
+
+Order:

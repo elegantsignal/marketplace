@@ -13,10 +13,10 @@ import by.itacademy.elegantsignal.marketplace.service.IProductService;
 
 @Service
 public class ProductServiceImpl implements IProductService {
-	private IProductDao productDao;
+	private final IProductDao productDao;
 
 	@Autowired
-	public ProductServiceImpl(IProductDao productDao) {
+	public ProductServiceImpl(final IProductDao productDao) {
 		this.productDao = productDao;
 	}
 
@@ -59,4 +59,12 @@ public class ProductServiceImpl implements IProductService {
 		return all;
 	}
 
+	@Override
+	@Deprecated
+	public void saveWithId(final IProduct product) {
+		final Date modifiedOn = new Date();
+		product.setUpdated(modifiedOn);
+		product.setCreated(modifiedOn);
+		productDao.insert(product);
+	}
 }
