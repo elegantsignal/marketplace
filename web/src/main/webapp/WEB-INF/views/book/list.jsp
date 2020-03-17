@@ -39,9 +39,33 @@
 				</td>
 			</tr>
 		</c:forEach>
-		
+
 	</tbody>
 </table>
+
+
+
+<div class="row">
+	<c:forEach var="item" items="${gridItems}" varStatus="loopCounter">
+		<div class="col s4">
+
+			<div class="card">
+				<div class="card-image">
+					<img src="https://picsum.photos/200/300?random=${item.id}">
+					<span class="card-title">Card Title</span>
+				</div>
+				<div class="card-content">
+					<p>I am a very simple card. I am good at containing small bits of information.
+						I am convenient because I require little markup to use effectively.</p>
+				</div>
+				<div class="card-action">
+					<a href="#">This is a link</a>
+				</div>
+			</div>
+		</div>
+	</c:forEach>
+</div>
+
 <a class="waves-effect waves-light btn right" href="${pagesBook}/add">
 	<i class="material-icons">add</i>
 </a>
