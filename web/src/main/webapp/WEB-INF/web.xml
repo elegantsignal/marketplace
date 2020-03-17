@@ -34,6 +34,10 @@
 	</servlet-mapping>
 
 	<jsp-config>
+		<taglib>
+			<taglib-uri>my-custom-tags-uri</taglib-uri>
+			<taglib-location>/WEB-INF/my-tags.tld</taglib-location>
+		</taglib>
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>
 			<page-encoding>UTF-8</page-encoding>

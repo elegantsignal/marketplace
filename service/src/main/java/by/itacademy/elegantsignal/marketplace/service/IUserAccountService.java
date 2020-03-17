@@ -25,4 +25,6 @@ public interface IUserAccountService {
 
 	List<IUserAccount> find(UserAccountFilter filter);
 
+	long getCount(UserAccountFilter filter);
+
 }

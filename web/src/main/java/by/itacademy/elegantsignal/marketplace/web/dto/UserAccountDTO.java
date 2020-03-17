@@ -2,6 +2,8 @@ package by.itacademy.elegantsignal.marketplace.web.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.Size;
+
 
 public class UserAccountDTO {
 
@@ -10,6 +12,7 @@ public class UserAccountDTO {
 	private Date updated;
 	private String name;
 	private String email;
+	@Size(min = 6, max = 32)
 	private String password;
 
 	public Integer getId() {

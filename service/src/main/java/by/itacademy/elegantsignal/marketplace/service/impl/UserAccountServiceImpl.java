@@ -80,4 +80,9 @@ public class UserAccountServiceImpl implements IUserAccountService {
 	public List<IUserAccount> find(final UserAccountFilter filter) {
 		return userAccountDao.find(filter);
 	}
+
+	@Override
+	public long getCount(UserAccountFilter filter) {
+		return userAccountDao.getCount(filter);
+	}
 }

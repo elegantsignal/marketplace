@@ -45,4 +45,12 @@
 			value="/WEB-INF/views/users/list.jsp" />
 	</definition>
 
+	<definition
+		name="users.edit"
+		extends="DefaultTemplate">
+		<put-attribute
+			name="body"
+			value="/WEB-INF/views/users/form.jsp" />
+	</definition>
+
 </tiles-definitions>
