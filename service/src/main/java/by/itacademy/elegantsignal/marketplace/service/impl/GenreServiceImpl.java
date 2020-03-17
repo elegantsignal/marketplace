@@ -12,10 +12,11 @@ import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 
 @Service
 public class GenreServiceImpl implements IGenreService {
-	private IGenreDao genreDao;
+
+	private final IGenreDao genreDao;
 
 	@Autowired
-	public GenreServiceImpl(IGenreDao genreDao) {
+	public GenreServiceImpl(final IGenreDao genreDao) {
 		this.genreDao = genreDao;
 	}
 
@@ -53,4 +54,9 @@ public class GenreServiceImpl implements IGenreService {
 		return genreDao.selectAll();
 	}
 
+	@Override
+	@Deprecated
+	public void saveWithId(final IGenre genre) {
+		genreDao.insert(genre);
+	}
 }

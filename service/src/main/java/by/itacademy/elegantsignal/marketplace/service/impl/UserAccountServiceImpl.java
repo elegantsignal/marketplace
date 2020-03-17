@@ -10,17 +10,19 @@ import org.springframework.stereotype.Service;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IUserAccountDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserAccountFilter;
 import by.itacademy.elegantsignal.marketplace.service.IUserAccountService;
 
 
 @Service
 public class UserAccountServiceImpl implements IUserAccountService {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountServiceImpl.class);
 
-	private IUserAccountDao userAccountDao;
+	private final IUserAccountDao userAccountDao;
 
 	@Autowired
-	public UserAccountServiceImpl(IUserAccountDao userAccountDao) {
+	public UserAccountServiceImpl(final IUserAccountDao userAccountDao) {
 		this.userAccountDao = userAccountDao;
 	}
 
@@ -41,6 +43,15 @@ public class UserAccountServiceImpl implements IUserAccountService {
 			LOGGER.info("user updated: {}", entity);
 			userAccountDao.update(entity);
 		}
+	}
+
+	@Override
+	@Deprecated
+	public void saveWithId(final IUserAccount entity) {
+		final Date modifiedOn = new Date();
+		entity.setUpdated(modifiedOn);
+		entity.setCreated(modifiedOn);
+		userAccountDao.insert(entity);
 	}
 
 	@Override
@@ -65,4 +76,8 @@ public class UserAccountServiceImpl implements IUserAccountService {
 		return all;
 	}
 
+	@Override
+	public List<IUserAccount> find(final UserAccountFilter filter) {
+		return userAccountDao.find(filter);
+	}
 }

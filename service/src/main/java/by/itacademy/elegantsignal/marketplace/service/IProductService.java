@@ -19,4 +19,7 @@ public interface IProductService {
 
 	IProduct createEntity();
 
+	@Deprecated
+	void saveWithId(IProduct product);
+
 }

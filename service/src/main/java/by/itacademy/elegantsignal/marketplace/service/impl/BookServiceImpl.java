@@ -14,10 +14,11 @@ import by.itacademy.elegantsignal.marketplace.service.IBookService;
 
 @Service
 public class BookServiceImpl implements IBookService {
-	private IBookDao bookDao;
+
+	private final IBookDao bookDao;
 
 	@Autowired
-	public BookServiceImpl(IBookDao bookDao) {
+	public BookServiceImpl(final IBookDao bookDao) {
 		this.bookDao = bookDao;
 	}
 
@@ -61,8 +62,16 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	@Override
-	public List<IBook> find(BookFilter filter) {
+	public List<IBook> find(final BookFilter filter) {
 		return bookDao.find(filter);
 	}
 
+	@Override
+	@Deprecated
+	public void saveWithId(final IBook book) {
+		final Date modifiedOn = new Date();
+		book.setUpdated(modifiedOn);
+		book.setCreated(modifiedOn);
+		bookDao.insert(book);
+	}
 }

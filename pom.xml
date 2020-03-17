@@ -5,6 +5,7 @@
 
 
 	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>by.itacademy.elegantsignal.marketplace</groupId>
 	<artifactId>parent-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -27,6 +28,7 @@
 		<jsp.version>2.3.1</jsp.version>
 		<tiles.version>3.0.8</tiles.version>
 		<junit.version>5.4.0</junit.version>
+		<snakeyaml.version>1.26</snakeyaml.version>
 	</properties>
 
 	<dependencyManagement>
@@ -329,6 +331,14 @@
 				<artifactId>aspectjtools</artifactId>
 				<version>1.8.13</version>
 			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+			<dependency>
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+				<version>${snakeyaml.version}</version>
+			</dependency>
+
 
 		</dependencies>
 

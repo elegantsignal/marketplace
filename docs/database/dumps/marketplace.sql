@@ -454,7 +454,7 @@ CREATE TABLE public.review(
 	grade smallint NOT NULL,
 	comment text,
 	product_id smallint NOT NULL,
-	order_id integer NOT NULL,
+	order_item_id integer NOT NULL,
 	CONSTRAINT reviews_pk PRIMARY KEY (id)
 
 );
@@ -465,18 +465,6 @@ CREATE TABLE public.review(
 ALTER TABLE public.review ADD CONSTRAINT product_fk FOREIGN KEY (product_id)
 REFERENCES public.product (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
--- ddl-end --
-
--- object: order_fk | type: CONSTRAINT --
--- ALTER TABLE public.review DROP CONSTRAINT IF EXISTS order_fk CASCADE;
-ALTER TABLE public.review ADD CONSTRAINT order_fk FOREIGN KEY (order_id)
-REFERENCES public."order" (id) MATCH FULL
-ON DELETE RESTRICT ON UPDATE CASCADE;
--- ddl-end --
-
--- object: review_uq | type: CONSTRAINT --
--- ALTER TABLE public.review DROP CONSTRAINT IF EXISTS review_uq CASCADE;
-ALTER TABLE public.review ADD CONSTRAINT review_uq UNIQUE (order_id);
 -- ddl-end --
 
 -- object: public._like | type: TABLE --
@@ -510,6 +498,18 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 ALTER TABLE public.restricted_file ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
 REFERENCES public.book (id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: order_item_fk | type: CONSTRAINT --
+-- ALTER TABLE public.review DROP CONSTRAINT IF EXISTS order_item_fk CASCADE;
+ALTER TABLE public.review ADD CONSTRAINT order_item_fk FOREIGN KEY (order_item_id)
+REFERENCES public.order_item (id) MATCH FULL
+ON DELETE RESTRICT ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: review_uq | type: CONSTRAINT --
+-- ALTER TABLE public.review DROP CONSTRAINT IF EXISTS review_uq CASCADE;
+ALTER TABLE public.review ADD CONSTRAINT review_uq UNIQUE (order_item_id);
 -- ddl-end --
 
 

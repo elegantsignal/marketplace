@@ -19,16 +19,15 @@ import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
 
+
 @Controller
 @RequestMapping(value = "/book")
 public class BookController {
-
-	private IBookService bookService;
-
-	private BookToDTOConverter toDtoConverter;
+	private final IBookService bookService;
+	private final BookToDTOConverter toDtoConverter;
 
 	@Autowired
-	private BookController(IBookService bookService, BookToDTOConverter toDtoConverter) {
+	private BookController(final IBookService bookService, final BookToDTOConverter toDtoConverter) {
 		super();
 		this.bookService = bookService;
 		this.toDtoConverter = toDtoConverter;
@@ -36,15 +35,12 @@ public class BookController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(final HttpServletRequest req) {
-
 		final BookFilter filter = new BookFilter();
-
 		final List<IBook> entities = bookService.find(filter);
-		List<BookDTO> dtos = entities.stream().map(toDtoConverter).collect(Collectors.toList());
-
+		final List<BookDTO> dtos = entities.stream().map(toDtoConverter).collect(Collectors.toList());
 		final Map<String, Object> models = new HashMap<>();
+
 		models.put("gridItems", dtos);
 		return new ModelAndView("book.list", models);
 	}
-
 }

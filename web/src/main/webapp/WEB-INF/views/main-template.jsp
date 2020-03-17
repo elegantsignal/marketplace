@@ -3,7 +3,7 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="request" />
 <c:set var="pagesBook" value="${contextPath}/book" scope="request" />
-<c:set var="pagesModel" value="${contextPath}/model" scope="request" />
+<c:set var="pagesUserAccount" value="${contextPath}/users" scope="request" />
 <c:set var="pagesEngine" value="${contextPath}/engine" scope="request" />
 <c:set var="pagesCar" value="${contextPath}/car" scope="request" />
 

@@ -22,4 +22,7 @@ public interface IBookService {
 
 	List<IBook> find(BookFilter filter);
 
+	@Deprecated
+	void saveWithId(IBook book);
+
 }
