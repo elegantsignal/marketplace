@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,180" last-zoom="0.75"
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,5" last-zoom="0.75"
 	 default-schema="public" default-owner="postgres">
 <database name="marketplace" encoding="UTF8" lc-collate="en_US.utf8" lc-ctype="en_US.utf8">
 	<role name="postgres"/>
@@ -23,7 +23,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="user_account">
 	<schema name="public"/>
-	<position x="800" y="104"/>
+	<position x="800" y="100"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -64,7 +64,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="order">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="0" y="444"/>
+	<position x="0" y="440"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -77,6 +77,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="order_pk" type="pk-constr" table="public.&quot;order&quot;">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+
+	<customidxs object-type="column">
+		<object name="user_account_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="user_account_fk" index="1"/>
+	</customidxs>
 </table>
 
 <sequence name="goods_id_seq"
@@ -105,7 +113,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="book">
 	<schema name="public"/>
-	<position x="1220" y="824"/>
+	<position x="1220" y="820"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -151,7 +159,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="role">
 	<schema name="public"/>
-	<position x="1520" y="424"/>
+	<position x="1520" y="420"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -168,7 +176,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="permission">
 	<schema name="public"/>
-	<position x="1720" y="64"/>
+	<position x="1720" y="60"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -217,7 +225,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="order_item">
 	<schema name="public"/>
-	<position x="220" y="1004"/>
+	<position x="220" y="1000"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -235,7 +243,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="order_id" index="1"/>
+		<object name="order_id" index="5"/>
 		<object name="product_id" index="3"/>
 	</customidxs>
 
@@ -323,7 +331,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="author">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1820" y="564"/>
+	<position x="1820" y="560"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -355,7 +363,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="language">
 	<schema name="public"/>
-	<position x="1840" y="764"/>
+	<position x="1840" y="760"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -379,7 +387,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="genre">
 	<schema name="public"/>
-	<position x="1720" y="964"/>
+	<position x="1720" y="960"/>
 	<column name="id" not-null="true">
 		<type name="smallserial" length="0"/>
 	</column>
@@ -435,7 +443,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="product">
 	<schema name="public"/>
-	<position x="1020" y="524"/>
+	<position x="1020" y="520"/>
 	<column name="id" not-null="true">
 		<type name="smallserial" length="0"/>
 	</column>
@@ -493,7 +501,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="payment">
 	<schema name="public"/>
-	<position x="0" y="124"/>
+	<position x="0" y="120"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -558,16 +566,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.review"
 	 src-required="true" dst-required="false"/>
 
-<table name="_like">
+<table name="like">
 	<schema name="public"/>
-	<position x="440" y="484"/>
+	<position x="440" y="480"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
 	<column name="created" not-null="true">
 		<type name="timestamp" length="0"/>
 	</column>
-	<constraint name="like_pk" type="pk-constr" table="public._like">
+	<constraint name="like_pk" type="pk-constr" table="public.&quot;like&quot;">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 
@@ -588,7 +596,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-fk-pattern="{st}_fk"
 	 custom-color="#f80c3e"
 	 src-table="public.user_account"
-	 dst-table="public._like"
+	 dst-table="public.&quot;like&quot;"
 	 src-required="true" dst-required="false"/>
 
 <relationship name="product_has_many_like" type="rel1n"
@@ -597,7 +605,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-fk-pattern="{st}_fk"
 	 custom-color="#62ebf6"
 	 src-table="public.product"
-	 dst-table="public._like"
+	 dst-table="public.&quot;like&quot;"
 	 src-required="true" dst-required="false"/>
 
 <relationship name="book_has_many_restricted_file" type="rel1n"

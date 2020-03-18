@@ -33,6 +33,7 @@ public class LikeDaoImpl extends AbstractDaoImpl<ILike, Integer> implements ILik
 				"insert into %s (user_account_id, product_id, created) values(?,?,?)",
 				getTableName()),
 				true) {
+
 			@Override
 			public ILike doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setInt(1, entity.getUserAccount().getId());
@@ -72,8 +73,7 @@ public class LikeDaoImpl extends AbstractDaoImpl<ILike, Integer> implements ILik
 	@Override
 	protected ILike parseRow(final ResultSet resultSet) throws SQLException {
 		final ILike entity = createEntity();
-		
-		
+
 		entity.setId((Integer) resultSet.getInt("id"));
 
 		final IUserAccount userAccount = new UserAccount();
@@ -83,14 +83,14 @@ public class LikeDaoImpl extends AbstractDaoImpl<ILike, Integer> implements ILik
 		final IProduct product = new Product();
 		product.setId(resultSet.getInt("product_id"));
 		entity.setProduct(product);
-		
+
 		entity.setCreated(resultSet.getTimestamp("created"));
 		return entity;
 	}
 
 	@Override
 	protected String getTableName() {
-		return "_like";
+		return "\"like\"";
 	}
 
 }

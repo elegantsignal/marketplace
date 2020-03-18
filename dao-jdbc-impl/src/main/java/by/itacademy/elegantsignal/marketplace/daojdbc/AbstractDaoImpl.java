@@ -57,7 +57,7 @@ public abstract class AbstractDaoImpl<ENTITY, ID> implements IDao<ENTITY, ID> {
 
 	@Override
 	public ENTITY get(final ID id) {
-		StatementAction<ENTITY> action = statement -> {
+		final StatementAction<ENTITY> action = statement -> {
 			statement.executeQuery("select * from " + getTableName() + " where id=" + id);
 
 			final ResultSet resultSet = statement.getResultSet();
@@ -72,13 +72,14 @@ public abstract class AbstractDaoImpl<ENTITY, ID> implements IDao<ENTITY, ID> {
 			resultSet.close();
 			return result;
 		};
-		ENTITY entityById = executeStatement(action);
+		final ENTITY entityById = executeStatement(action);
 		return entityById;
 	}
 
 	@Override
 	public List<ENTITY> selectAll() {
-		StatementAction<List<ENTITY>> action = new StatementAction<List<ENTITY>>() {
+		final StatementAction<List<ENTITY>> action = new StatementAction<List<ENTITY>>() {
+
 			@Override
 			public List<ENTITY> doWithStatement(final Statement statement) throws SQLException {
 				statement.executeQuery("select * from " + getTableName());
@@ -102,6 +103,7 @@ public abstract class AbstractDaoImpl<ENTITY, ID> implements IDao<ENTITY, ID> {
 	public void delete(final ID id) {
 		executeStatement(
 				new PreparedStatementAction<Integer>(String.format("delete from %s where id=?", getTableName())) {
+
 					@Override
 					public Integer doWithPreparedStatement(final PreparedStatement prepareStatement)
 							throws SQLException {
@@ -113,7 +115,8 @@ public abstract class AbstractDaoImpl<ENTITY, ID> implements IDao<ENTITY, ID> {
 
 	@Override
 	public void deleteAll() {
-		executeStatement(new PreparedStatementAction<Integer>("delete from \"" + getTableName() + "\"") {
+		executeStatement(new PreparedStatementAction<Integer>("delete from " + getTableName()) {
+
 			@Override
 			public Integer doWithPreparedStatement(final PreparedStatement prepareStatement) throws SQLException {
 				final int executeUpdate = prepareStatement.executeUpdate();

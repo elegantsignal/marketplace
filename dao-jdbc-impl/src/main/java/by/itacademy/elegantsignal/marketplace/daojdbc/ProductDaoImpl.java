@@ -32,6 +32,7 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 				"insert into %s (user_account_id, type, price, created, updated) values(?,?,?,?,?)",
 				getTableName()),
 				true) {
+
 			@Override
 			public IProduct doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setInt(1, entity.getUserAccount().getId());
