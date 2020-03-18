@@ -8,9 +8,9 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 
 public interface IProduct extends IBaseEntity {
 
-	IUserAccount getUserAccount();
+	IUser getUser();
 
-	void setUserAccount(IUserAccount userAccount);
+	void setUser(IUser user);
 
 	ProductType getType();
 

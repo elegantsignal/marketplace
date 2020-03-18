@@ -3,7 +3,7 @@
 <h4 class="header">Edit User</h4>
 <div class="row">
 
-	<form:form class="col s12" method="POST" action="${pagesUserAccount}" modelAttribute="formModel">
+	<form:form class="col s12" method="POST" action="${pagesUser}" modelAttribute="formModel">
 		<form:input path="id" type="hidden" />
 		<div class="row">
 			<div class="input-field col s12">
@@ -30,7 +30,7 @@
 				</c:if>
 			</div>
 			<div class="col s3">
-				<a class="btn waves-effect waves-light right" href="${pagesUserAccount}">Cancel</a>
+				<a class="btn waves-effect waves-light right" href="${pagesUser}">Cancel</a>
 			</div>
 		</div>
 	</form:form>

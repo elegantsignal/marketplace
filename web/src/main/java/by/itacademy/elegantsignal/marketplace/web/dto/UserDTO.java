@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.validation.constraints.Size;
 
 
-public class UserAccountDTO {
+public class UserDTO {
 
 	private Integer id;
 	private Date created;

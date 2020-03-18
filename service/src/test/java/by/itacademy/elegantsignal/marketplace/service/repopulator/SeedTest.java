@@ -16,7 +16,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.service.AbstractTest;
 
 
@@ -36,7 +36,7 @@ class SeedTest extends AbstractTest {
 	private <T> void populate(final Map<String, List<T>> document) {
 		document.forEach((modelName, modelData) -> {
 			switch (modelName) {
-			case "UserAccount":
+			case "User":
 				for (final T userData : modelData) {
 					createUser((Map<String, T>) userData);
 				}
@@ -70,20 +70,20 @@ class SeedTest extends AbstractTest {
 	}
 
 	protected <T> void createUser(final Map<String, T> userData) {
-		final IUserAccount userAccount = userAccountService.createEntity();
-		userAccount.setId((Integer) userData.get("id"));
-		userAccount.setName((String) userData.get("name"));
-		userAccount.setEmail((String) userData.get("email"));
-		userAccount.setPassword((String) userData.get("password"));
-		userAccount.setCreated(new Date());
-		userAccount.setUpdated(new Date());
-		userAccountService.saveWithId(userAccount);
+		final IUser user = userService.createEntity();
+		user.setId((Integer) userData.get("id"));
+		user.setName((String) userData.get("name"));
+		user.setEmail((String) userData.get("email"));
+		user.setPassword((String) userData.get("password"));
+		user.setCreated(new Date());
+		user.setUpdated(new Date());
+		userService.saveWithId(user);
 	}
 
 	private <T> void createProduct(final Map<String, T> productData) {
 		final IProduct product = productService.createEntity();
 		product.setId((Integer) productData.get("id"));
-		product.setUserAccount(userAccountService.get((Integer) productData.get("user_account_id")));
+		product.setUser(userService.get((Integer) productData.get("user_id")));
 		product.setType(ProductType.valueOf((String) productData.get("type")));
 		product.setPrice(BigDecimal.valueOf((Integer) productData.get("price")));
 		product.setCreated(new Date());

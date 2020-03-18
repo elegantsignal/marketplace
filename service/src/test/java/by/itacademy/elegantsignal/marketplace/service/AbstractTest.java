@@ -27,7 +27,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILanguage;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILike;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
 @SpringJUnitConfig(locations = "classpath:service-context-test.xml")
@@ -36,7 +36,7 @@ public abstract class AbstractTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractTest.class);
 
 	@Autowired
-	protected IUserAccountService userAccountService;
+	protected IUserService userService;
 
 	@Autowired
 	protected IProductService productService;
@@ -122,20 +122,20 @@ public abstract class AbstractTest {
 		return clazz.getEnumConstants()[x];
 	}
 
-	protected IUserAccount saveNewUserAccount() {
-		final IUserAccount entity = userAccountService.createEntity();
-		entity.setName("UserAccount-" + getRandomPrefix());
+	protected IUser saveNewUser() {
+		final IUser entity = userService.createEntity();
+		entity.setName("User-" + getRandomPrefix());
 		entity.setEmail("email-" + getRandomPrefix());
 		entity.setPassword("password-" + getRandomPrefix());
 		entity.setCreated(new Date());
 		entity.setUpdated(new Date());
-		userAccountService.save(entity);
+		userService.save(entity);
 		return entity;
 	}
 
 	protected IProduct saveNewProduct() {
 		final IProduct entity = productService.createEntity();
-		entity.setUserAccount(saveNewUserAccount());
+		entity.setUser(saveNewUser());
 		entity.setType(randomEnum(ProductType.class));
 		entity.setPrice((BigDecimal.valueOf(getRandomObjectsCount())));
 		entity.setCreated(new Date());
@@ -174,7 +174,7 @@ public abstract class AbstractTest {
 
 	protected ILike saveNewLike() {
 		final ILike entity = likeService.createEntity();
-		entity.setUserAccount(saveNewUserAccount());
+		entity.setUser(saveNewUser());
 		entity.setProduct(saveNewProduct());
 		entity.setCreated(new Date());
 		likeService.save(entity);
@@ -183,7 +183,7 @@ public abstract class AbstractTest {
 
 	protected IOrder saveNewOrder() {
 		final IOrder entity = orderService.createEntity();
-		entity.setUserAccount(saveNewUserAccount());
+		entity.setUser(saveNewUser());
 		entity.setCreated(new Date());
 		entity.setUpdated(new Date());
 		orderService.save(entity);

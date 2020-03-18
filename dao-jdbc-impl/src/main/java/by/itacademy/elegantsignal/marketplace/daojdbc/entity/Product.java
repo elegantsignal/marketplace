@@ -5,25 +5,25 @@ import java.util.Date;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
 public class Product extends BaseEntity implements IProduct {
 
-	private IUserAccount userAccount;
+	private IUser user;
 	private ProductType type;
 	private BigDecimal price;
 	private Date created;
 	private Date updated;
 
 	@Override
-	public IUserAccount getUserAccount() {
-		return userAccount;
+	public IUser getUser() {
+		return user;
 	}
 
 	@Override
-	public void setUserAccount(IUserAccount userAccount) {
-		this.userAccount = userAccount;
+	public void setUser(IUser user) {
+		this.user = user;
 	}
 
 	@Override

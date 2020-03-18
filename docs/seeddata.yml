@@ -1,5 +1,5 @@
 ---
-UserAccount:
+User:
   - id: 1
     name: asimov
     email: asimov@exampl.com
@@ -20,15 +20,15 @@ UserAccount:
     password: "123456"
 
 Product:
-  - user_account_id: 1
+  - user_id: 1
     id: 1
     type: book
     price: 10
-  - user_account_id: 1
+  - user_id: 1
     id: 2
     type: book
     price: 15
-  - user_account_id: 1
+  - user_id: 1
     id: 3
     type: book
     price: 20

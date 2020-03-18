@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IOrderDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderFilter;
 import by.itacademy.elegantsignal.marketplace.daojdbc.entity.Order;
-import by.itacademy.elegantsignal.marketplace.daojdbc.entity.UserAccount;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.User;
 import by.itacademy.elegantsignal.marketplace.daojdbc.util.PreparedStatementAction;
 
 
@@ -28,13 +28,13 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 	@Override
 	public void insert(final IOrder entity) {
 		executeStatement(new PreparedStatementAction<IOrder>(String.format(
-				"insert into \"%s\" (user_account_id, created, updated) values(?,?,?)",
+				"insert into %s (user_id, created, updated) values(?,?,?)",
 				getTableName()),
 				true) {
 
 			@Override
 			public IOrder doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
-				pStmt.setInt(1, entity.getUserAccount().getId());
+				pStmt.setInt(1, entity.getUser().getId());
 				pStmt.setObject(2, entity.getCreated(), Types.TIMESTAMP);
 				pStmt.setObject(3, entity.getUpdated(), Types.TIMESTAMP);
 
@@ -73,9 +73,9 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 		final IOrder entity = createEntity();
 		entity.setId((Integer) resultSet.getInt("id"));
 
-		final IUserAccount userAccount = new UserAccount();
-		userAccount.setId(resultSet.getInt("user_account_id"));
-		entity.setUserAccount(userAccount);
+		final IUser user = new User();
+		user.setId(resultSet.getInt("user_id"));
+		entity.setUser(user);
 
 		entity.setCreated(resultSet.getTimestamp("created"));
 		entity.setUpdated(resultSet.getTimestamp("updated"));
@@ -84,7 +84,7 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 
 	@Override
 	protected String getTableName() {
-		return "order";
+		return "\"order\"";
 	}
 
 }

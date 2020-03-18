@@ -33,9 +33,9 @@ CREATE SEQUENCE public.user_id_seq
 ALTER SEQUENCE public.user_id_seq OWNER TO postgres;
 -- ddl-end --
 
--- object: public.user_account | type: TABLE --
--- DROP TABLE IF EXISTS public.user_account CASCADE;
-CREATE TABLE public.user_account(
+-- object: public."user" | type: TABLE --
+-- DROP TABLE IF EXISTS public."user" CASCADE;
+CREATE TABLE public."user"(
 	id serial NOT NULL,
 	name character varying(50) NOT NULL,
 	email character varying(32) NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE public."order"(
 	id serial NOT NULL,
 	created timestamp NOT NULL,
 	updated timestamp NOT NULL,
-	user_account_id integer NOT NULL,
+	user_id integer NOT NULL,
 	CONSTRAINT order_pk PRIMARY KEY (id)
 
 );
@@ -357,10 +357,10 @@ REFERENCES public.genre (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: user_account_fk | type: CONSTRAINT --
--- ALTER TABLE public."order" DROP CONSTRAINT IF EXISTS user_account_fk CASCADE;
-ALTER TABLE public."order" ADD CONSTRAINT user_account_fk FOREIGN KEY (user_account_id)
-REFERENCES public.user_account (id) MATCH FULL
+-- object: user_fk | type: CONSTRAINT --
+-- ALTER TABLE public."order" DROP CONSTRAINT IF EXISTS user_fk CASCADE;
+ALTER TABLE public."order" ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
+REFERENCES public."user" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
@@ -368,11 +368,11 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public.product CASCADE;
 CREATE TABLE public.product(
 	id smallserial NOT NULL,
-	user_account_id integer NOT NULL,
 	type varchar(16) NOT NULL,
 	price decimal(6,2) NOT NULL,
 	created timestamp,
 	updated timestamp,
+	user_id integer NOT NULL,
 	CONSTRAINT product_pk PRIMARY KEY (id)
 
 );
@@ -397,10 +397,10 @@ REFERENCES public.product (id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: user_account_fk | type: CONSTRAINT --
--- ALTER TABLE public.product DROP CONSTRAINT IF EXISTS user_account_fk CASCADE;
-ALTER TABLE public.product ADD CONSTRAINT user_account_fk FOREIGN KEY (user_account_id)
-REFERENCES public.user_account (id) MATCH FULL
+-- object: user_fk | type: CONSTRAINT --
+-- ALTER TABLE public.product DROP CONSTRAINT IF EXISTS user_fk CASCADE;
+ALTER TABLE public.product ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
+REFERENCES public."user" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
@@ -423,26 +423,26 @@ REFERENCES public."order" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: public.many_user_account_has_many_role | type: TABLE --
--- DROP TABLE IF EXISTS public.many_user_account_has_many_role CASCADE;
-CREATE TABLE public.many_user_account_has_many_role(
-	user_account_id integer NOT NULL,
-	user_account_id1 integer NOT NULL,
-	CONSTRAINT many_user_account_has_many_role_pk PRIMARY KEY (user_account_id,user_account_id1)
+-- object: public.many_user_has_many_role | type: TABLE --
+-- DROP TABLE IF EXISTS public.many_user_has_many_role CASCADE;
+CREATE TABLE public.many_user_has_many_role(
+	user_id integer NOT NULL,
+	user_id1 integer NOT NULL,
+	CONSTRAINT many_user_has_many_role_pk PRIMARY KEY (user_id,user_id1)
 
 );
 -- ddl-end --
 
--- object: user_account_fk | type: CONSTRAINT --
--- ALTER TABLE public.many_user_account_has_many_role DROP CONSTRAINT IF EXISTS user_account_fk CASCADE;
-ALTER TABLE public.many_user_account_has_many_role ADD CONSTRAINT user_account_fk FOREIGN KEY (user_account_id)
-REFERENCES public.user_account (id) MATCH FULL
+-- object: user_fk | type: CONSTRAINT --
+-- ALTER TABLE public.many_user_has_many_role DROP CONSTRAINT IF EXISTS user_fk CASCADE;
+ALTER TABLE public.many_user_has_many_role ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
+REFERENCES public."user" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: role_fk | type: CONSTRAINT --
--- ALTER TABLE public.many_user_account_has_many_role DROP CONSTRAINT IF EXISTS role_fk CASCADE;
-ALTER TABLE public.many_user_account_has_many_role ADD CONSTRAINT role_fk FOREIGN KEY (user_account_id1)
+-- ALTER TABLE public.many_user_has_many_role DROP CONSTRAINT IF EXISTS role_fk CASCADE;
+ALTER TABLE public.many_user_has_many_role ADD CONSTRAINT role_fk FOREIGN KEY (user_id1)
 REFERENCES public.role (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
@@ -471,18 +471,18 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public."like" CASCADE;
 CREATE TABLE public."like"(
 	id serial NOT NULL,
-	user_account_id integer NOT NULL,
-	product_id smallint NOT NULL,
 	created timestamp NOT NULL,
+	product_id smallint NOT NULL,
+	user_id integer NOT NULL,
 	CONSTRAINT like_pk PRIMARY KEY (id)
 
 );
 -- ddl-end --
 
--- object: user_account_fk | type: CONSTRAINT --
--- ALTER TABLE public."like" DROP CONSTRAINT IF EXISTS user_account_fk CASCADE;
-ALTER TABLE public."like" ADD CONSTRAINT user_account_fk FOREIGN KEY (user_account_id)
-REFERENCES public.user_account (id) MATCH FULL
+-- object: user_fk | type: CONSTRAINT --
+-- ALTER TABLE public."like" DROP CONSTRAINT IF EXISTS user_fk CASCADE;
+ALTER TABLE public."like" ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
+REFERENCES public."user" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 

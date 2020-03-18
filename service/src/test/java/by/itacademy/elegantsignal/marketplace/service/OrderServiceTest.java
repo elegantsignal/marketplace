@@ -21,7 +21,7 @@ public class OrderServiceTest extends AbstractTest {
 		final IOrder entityFromDb = orderService.get(entity.getId());
 
 		assertNotNull(entityFromDb);
-		assertEquals(entity.getUserAccount().getId(), entityFromDb.getUserAccount().getId());
+		assertEquals(entity.getUser().getId(), entityFromDb.getUser().getId());
 		assertNotNull(entityFromDb.getId());
 		assertNotNull(entityFromDb.getCreated());
 		assertNotNull(entityFromDb.getUpdated());
@@ -41,7 +41,7 @@ public class OrderServiceTest extends AbstractTest {
 
 		for (final IOrder entityFromDb : allEntities) {
 			assertNotNull(entityFromDb.getId());
-			assertNotNull(entityFromDb.getUserAccount());
+			assertNotNull(entityFromDb.getUser());
 			assertNotNull(entityFromDb.getCreated());
 			assertNotNull(entityFromDb.getUpdated());
 		}

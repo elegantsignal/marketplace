@@ -8,30 +8,30 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.IUserAccountDao;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserAccountFilter;
-import by.itacademy.elegantsignal.marketplace.daojdbc.entity.UserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.IUserDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.User;
 import by.itacademy.elegantsignal.marketplace.daojdbc.util.PreparedStatementAction;
 
 
 @Repository
-public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> implements IUserAccountDao {
+public class UserDaoImpl extends AbstractDaoImpl<IUser, Integer> implements IUserDao {
 
 	@Override
-	public IUserAccount createEntity() {
-		return new UserAccount();
+	public IUser createEntity() {
+		return new User();
 	}
 
 	@Override
-	public void insert(final IUserAccount entity) {
-		executeStatement(new PreparedStatementAction<IUserAccount>(String.format(
+	public void insert(final IUser entity) {
+		executeStatement(new PreparedStatementAction<IUser>(String.format(
 				"insert into %s (name, email, password, created, updated) values(?,?,?,?,?)",
 				getTableName()),
 				true) {
 
 			@Override
-			public IUserAccount doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
+			public IUser doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setString(1, entity.getName());
 				pStmt.setString(2, entity.getEmail());
 				pStmt.setString(3, entity.getPassword());
@@ -54,23 +54,23 @@ public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> i
 	}
 
 	@Override
-	public void update(final IUserAccount entity) {
+	public void update(final IUser entity) {
 		throw new RuntimeException("will be implemented in ORM layer. Too complex for plain jdbc ");
 	}
 
 	@Override
-	public List<IUserAccount> find(final UserAccountFilter filter) {
+	public List<IUser> find(final UserFilter filter) {
 		return selectAll();
 	}
 
 	@Override
-	public long getCount(final UserAccountFilter filter) {
+	public long getCount(final UserFilter filter) {
 		return 2;
 	}
 
 	@Override
-	protected IUserAccount parseRow(final ResultSet resultSet) throws SQLException {
-		final IUserAccount entity = createEntity();
+	protected IUser parseRow(final ResultSet resultSet) throws SQLException {
+		final IUser entity = createEntity();
 		entity.setId((Integer) resultSet.getObject("id"));
 		entity.setName(resultSet.getString("name"));
 		entity.setEmail(resultSet.getString("email"));
@@ -82,7 +82,7 @@ public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> i
 
 	@Override
 	protected String getTableName() {
-		return "user_account";
+		return "\"user\"";
 	}
 
 }

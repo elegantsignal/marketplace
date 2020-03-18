@@ -8,38 +8,38 @@
 	<caption>List of users</caption>
 	<tbody>
 		<tr>
-			<th scope="col"><mytaglib:sort-link pageUrl="${pagesUserAccount}" column="id">id</mytaglib:sort-link></th>
-			<th scope="col"><mytaglib:sort-link pageUrl="${pagesUserAccount}" column="username">username</mytaglib:sort-link></th>
-			<th scope="col"><mytaglib:sort-link pageUrl="${pagesUserAccount}" column="email">email</mytaglib:sort-link></th>
-			<th scope="col"><mytaglib:sort-link pageUrl="${pagesUserAccount}" column="password">password</mytaglib:sort-link></th>
-			<th scope="col"><mytaglib:sort-link pageUrl="${pagesUserAccount}" column="created">created</mytaglib:sort-link></th>
+			<th scope="col"><mytaglib:sort-link pageUrl="${pagesUser}" column="id">id</mytaglib:sort-link></th>
+			<th scope="col"><mytaglib:sort-link pageUrl="${pagesUser}" column="username">username</mytaglib:sort-link></th>
+			<th scope="col"><mytaglib:sort-link pageUrl="${pagesUser}" column="email">email</mytaglib:sort-link></th>
+			<th scope="col"><mytaglib:sort-link pageUrl="${pagesUser}" column="password">password</mytaglib:sort-link></th>
+			<th scope="col"><mytaglib:sort-link pageUrl="${pagesUser}" column="created">created</mytaglib:sort-link></th>
 			<th scope="col"></th>
 		</tr>
-		<c:forEach var="userAccount" items="${gridItems}" varStatus="loopCounter">
+		<c:forEach var="user" items="${gridItems}" varStatus="loopCounter">
 			<tr>
 				<td>
-					<c:out value="${userAccount.id}" />
+					<c:out value="${user.id}" />
 				</td>
 				<td>
-					<c:out value="${userAccount.name}" />
+					<c:out value="${user.name}" />
 				</td>
 				<td>
-					<c:out value="${userAccount.email}" />
+					<c:out value="${user.email}" />
 				</td>
 				<td>
-					<c:out value="${userAccount.password}" />
+					<c:out value="${user.password}" />
 				</td>
 				<td>
-					<c:out value="${userAccount.created}" />
+					<c:out value="${user.created}" />
 				</td>
 				<td class="right">
-					<a class="btn-floating" href="${pagesUserAccount}/${userAccount.id}">
+					<a class="btn-floating" href="${pagesUser}/${user.id}">
 						<i class="material-icons" aria-hidden="true">info</i>
 					</a>
-					<a class="btn-floating" href="${pagesUserAccount}/${userAccount.id}/edit">
+					<a class="btn-floating" href="${pagesUser}/${user.id}/edit">
 						<i class="material-icons" aria-hidden="true">edit</i>
 					</a>
-					<a class="btn-floating red" href="${pagesUserAccount}/${userAccount.id}/delete">
+					<a class="btn-floating red" href="${pagesUser}/${user.id}/delete">
 						<i class="material-icons" aria-hidden="true">delete</i>
 					</a>
 				</td>
@@ -49,6 +49,6 @@
 </table>
 <jspFragments:paging />
 
-<a class="waves-effect waves-light btn right" href="${pagesUserAccount}/add">
+<a class="waves-effect waves-light btn right" href="${pagesUser}/add">
 	<i class="material-icons" aria-hidden="true">add</i>
 </a>

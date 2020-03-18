@@ -9,16 +9,16 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
-public class UserAccountServiceTest extends AbstractTest {
+public class UserServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		final IUserAccount entity = saveNewUserAccount();
+		final IUser entity = saveNewUser();
 
-		final IUserAccount entityFromDb = userAccountService.get(entity.getId());
+		final IUser entityFromDb = userService.get(entity.getId());
 
 		assertNotNull(entityFromDb);
 		assertEquals(entity.getName(), entityFromDb.getName());
@@ -30,16 +30,16 @@ public class UserAccountServiceTest extends AbstractTest {
 
 	@Test
 	public void testGetAll() {
-		final int initialCount = userAccountService.getAll().size();
+		final int initialCount = userService.getAll().size();
 
 		final int randomObjectsCount = getRandomObjectsCount();
 		for (int i = 0; i < randomObjectsCount; i++) {
-			saveNewUserAccount();
+			saveNewUser();
 		}
 
-		final List<IUserAccount> allEntities = userAccountService.getAll();
+		final List<IUser> allEntities = userService.getAll();
 
-		for (final IUserAccount entityFromDb : allEntities) {
+		for (final IUser entityFromDb : allEntities) {
 			assertNotNull(entityFromDb.getName());
 			assertNotNull(entityFromDb.getId());
 			assertNotNull(entityFromDb.getCreated());
@@ -51,15 +51,15 @@ public class UserAccountServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete() {
-		final IUserAccount entity = saveNewUserAccount();
-		userAccountService.delete(entity.getId());
-		assertNull(userAccountService.get(entity.getId()));
+		final IUser entity = saveNewUser();
+		userService.delete(entity.getId());
+		assertNull(userService.get(entity.getId()));
 	}
 
 	@Test
 	public void testDeleteAll() {
-		saveNewUserAccount();
-		userAccountService.deleteAll();
-		assertEquals(0, userAccountService.getAll().size());
+		saveNewUser();
+		userService.deleteAll();
+		assertEquals(0, userService.getAll().size());
 	}
 }

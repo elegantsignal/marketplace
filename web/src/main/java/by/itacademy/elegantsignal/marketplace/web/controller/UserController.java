@@ -18,25 +18,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserAccountFilter;
-import by.itacademy.elegantsignal.marketplace.service.IUserAccountService;
-import by.itacademy.elegantsignal.marketplace.web.converter.UserAccountFromDTOConverter;
-import by.itacademy.elegantsignal.marketplace.web.converter.UserAccountToDTOConverter;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
+import by.itacademy.elegantsignal.marketplace.service.IUserService;
+import by.itacademy.elegantsignal.marketplace.web.converter.UserFromDTOConverter;
+import by.itacademy.elegantsignal.marketplace.web.converter.UserToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
-import by.itacademy.elegantsignal.marketplace.web.dto.UserAccountDTO;
+import by.itacademy.elegantsignal.marketplace.web.dto.UserDTO;
 
 
 @Controller
 @RequestMapping(value = "/users")
-public class UserAccountController extends AbstractController {
+public class UserController extends AbstractController {
 
 	@Autowired
-	private IUserAccountService userAccountService;
+	private IUserService userService;
 	@Autowired
-	private UserAccountToDTOConverter toDtoConverter;
+	private UserToDTOConverter toDtoConverter;
 	@Autowired
-	private UserAccountFromDTOConverter fromDtoConverter;
+	private UserFromDTOConverter fromDtoConverter;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(final HttpServletRequest req,
@@ -47,11 +47,11 @@ public class UserAccountController extends AbstractController {
 		gridState.setPage(pageNumber);
 		gridState.setSort(sortColumn, "id");
 
-		final UserAccountFilter filter = new UserAccountFilter();
+		final UserFilter filter = new UserFilter();
 
-		final List<IUserAccount> entities = userAccountService.find(filter);
-		final List<UserAccountDTO> dtos = entities.stream().map(toDtoConverter).collect(Collectors.toList());
-		gridState.setTotalCount(userAccountService.getCount(filter));
+		final List<IUser> entities = userService.find(filter);
+		final List<UserDTO> dtos = entities.stream().map(toDtoConverter).collect(Collectors.toList());
+		gridState.setTotalCount(userService.getCount(filter));
 
 		final Map<String, Object> models = new HashMap<>();
 		models.put("gridItems", dtos);
@@ -62,33 +62,33 @@ public class UserAccountController extends AbstractController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView showForm() {
 		final Map<String, Object> hashMap = new HashMap<>();
-		final IUserAccount newEntity = userAccountService.createEntity();
+		final IUser newEntity = userService.createEntity();
 		hashMap.put("formModel", toDtoConverter.apply(newEntity));
 
 		return new ModelAndView("users.edit", hashMap);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String save(@Valid @ModelAttribute("formModel") final UserAccountDTO formModel, final BindingResult result) {
+	public String save(@Valid @ModelAttribute("formModel") final UserDTO formModel, final BindingResult result) {
 		if (result.hasErrors()) {
 			return "users.edit";
 		} else {
-			final IUserAccount entity = fromDtoConverter.apply(formModel);
-			userAccountService.save(entity);
+			final IUser entity = fromDtoConverter.apply(formModel);
+			userService.save(entity);
 			return "redirect:/users";
 		}
 	}
 
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
 	public String delete(@PathVariable(name = "id", required = true) final Integer id) {
-		userAccountService.delete(id);
+		userService.delete(id);
 		return "redirect:/users";
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ModelAndView viewDetails(@PathVariable(name = "id", required = true) final Integer id) {
-		final IUserAccount dbModel = userAccountService.get(id);
-		final UserAccountDTO dto = toDtoConverter.apply(dbModel);
+		final IUser dbModel = userService.get(id);
+		final UserDTO dto = toDtoConverter.apply(dbModel);
 		final Map<String, Object> hashMap = new HashMap<>();
 		hashMap.put("formModel", dto);
 		hashMap.put("readonly", true);
@@ -98,7 +98,7 @@ public class UserAccountController extends AbstractController {
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@PathVariable(name = "id", required = true) final Integer id) {
-		final UserAccountDTO dto = toDtoConverter.apply(userAccountService.get(id));
+		final UserDTO dto = toDtoConverter.apply(userService.get(id));
 
 		final Map<String, Object> hashMap = new HashMap<>();
 		hashMap.put("formModel", dto);

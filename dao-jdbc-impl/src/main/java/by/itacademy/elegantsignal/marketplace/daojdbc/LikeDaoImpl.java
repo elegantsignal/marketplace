@@ -11,11 +11,11 @@ import org.springframework.stereotype.Repository;
 import by.itacademy.elegantsignal.marketplace.daoapi.ILikeDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILike;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.LikeFilter;
 import by.itacademy.elegantsignal.marketplace.daojdbc.entity.Like;
 import by.itacademy.elegantsignal.marketplace.daojdbc.entity.Product;
-import by.itacademy.elegantsignal.marketplace.daojdbc.entity.UserAccount;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.User;
 import by.itacademy.elegantsignal.marketplace.daojdbc.util.PreparedStatementAction;
 
 
@@ -30,13 +30,13 @@ public class LikeDaoImpl extends AbstractDaoImpl<ILike, Integer> implements ILik
 	@Override
 	public void insert(final ILike entity) {
 		executeStatement(new PreparedStatementAction<ILike>(String.format(
-				"insert into %s (user_account_id, product_id, created) values(?,?,?)",
+				"insert into %s (user_id, product_id, created) values(?,?,?)",
 				getTableName()),
 				true) {
 
 			@Override
 			public ILike doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
-				pStmt.setInt(1, entity.getUserAccount().getId());
+				pStmt.setInt(1, entity.getUser().getId());
 				pStmt.setInt(2, entity.getProduct().getId());
 				pStmt.setObject(3, entity.getCreated(), Types.TIMESTAMP);
 
@@ -76,9 +76,9 @@ public class LikeDaoImpl extends AbstractDaoImpl<ILike, Integer> implements ILik
 
 		entity.setId((Integer) resultSet.getInt("id"));
 
-		final IUserAccount userAccount = new UserAccount();
-		userAccount.setId(resultSet.getInt("user_account_id"));
-		entity.setUserAccount(userAccount);
+		final IUser user = new User();
+		user.setId(resultSet.getInt("user_id"));
+		entity.setUser(user);
 
 		final IProduct product = new Product();
 		product.setId(resultSet.getInt("product_id"));

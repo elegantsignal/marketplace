@@ -5,9 +5,9 @@ import java.util.Date;
 
 public interface IOrder extends IBaseEntity {
 
-	IUserAccount getUserAccount();
+	IUser getUser();
 
-	void setUserAccount(IUserAccount userAccount);
+	void setUser(IUser user);
 
 	Date getCreated();
 

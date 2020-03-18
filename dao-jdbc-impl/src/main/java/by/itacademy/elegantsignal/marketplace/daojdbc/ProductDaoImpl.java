@@ -11,10 +11,10 @@ import org.springframework.stereotype.Repository;
 import by.itacademy.elegantsignal.marketplace.daoapi.IProductDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.ProductFilter;
 import by.itacademy.elegantsignal.marketplace.daojdbc.entity.Product;
-import by.itacademy.elegantsignal.marketplace.daojdbc.entity.UserAccount;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.User;
 import by.itacademy.elegantsignal.marketplace.daojdbc.util.PreparedStatementAction;
 
 
@@ -29,13 +29,13 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 	@Override
 	public void insert(final IProduct entity) {
 		executeStatement(new PreparedStatementAction<IProduct>(String.format(
-				"insert into %s (user_account_id, type, price, created, updated) values(?,?,?,?,?)",
+				"insert into %s (user_id, type, price, created, updated) values(?,?,?,?,?)",
 				getTableName()),
 				true) {
 
 			@Override
 			public IProduct doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
-				pStmt.setInt(1, entity.getUserAccount().getId());
+				pStmt.setInt(1, entity.getUser().getId());
 				pStmt.setString(2, entity.getType().name());
 				pStmt.setBigDecimal(3, entity.getPrice());
 				pStmt.setObject(4, entity.getCreated(), Types.TIMESTAMP);
@@ -76,9 +76,9 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 		final IProduct entity = createEntity();
 		entity.setId((Integer) resultSet.getInt("id"));
 
-		final IUserAccount userAccount = new UserAccount();
-		userAccount.setId(resultSet.getInt("user_account_id"));
-		entity.setUserAccount(userAccount);
+		final IUser user = new User();
+		user.setId(resultSet.getInt("user_id"));
+		entity.setUser(user);
 
 		entity.setType(ProductType.valueOf(resultSet.getString("type")));
 		entity.setPrice(resultSet.getBigDecimal("price"));

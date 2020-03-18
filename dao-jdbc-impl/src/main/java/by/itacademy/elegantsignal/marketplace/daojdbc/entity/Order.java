@@ -3,23 +3,23 @@ package by.itacademy.elegantsignal.marketplace.daojdbc.entity;
 import java.util.Date;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
 public class Order extends BaseEntity implements IOrder {
 
-	private IUserAccount userAccount;
+	private IUser user;
 	private Date created;
 	private Date updated;
 
 	@Override
-	public IUserAccount getUserAccount() {
-		return userAccount;
+	public IUser getUser() {
+		return user;
 	}
 
 	@Override
-	public void setUserAccount(final IUserAccount userAccount) {
-		this.userAccount = userAccount;
+	public void setUser(final IUser user) {
+		this.user = user;
 	}
 
 	@Override

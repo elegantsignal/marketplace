@@ -21,7 +21,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<role name="postgres"/>
 </sequence>
 
-<table name="user_account">
+<table name="user">
 	<schema name="public"/>
 	<position x="800" y="100"/>
 	<column name="id" not-null="true">
@@ -42,13 +42,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="updated" not-null="true">
 		<type name="timestamp" length="0"/>
 	</column>
-	<constraint name="user_pk" type="pk-constr" table="public.user_account">
+	<constraint name="user_pk" type="pk-constr" table="public.&quot;user&quot;">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="username_uq" type="uq-constr" table="public.user_account">
+	<constraint name="username_uq" type="uq-constr" table="public.&quot;user&quot;">
 		<columns names="name" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="email_uq" type="uq-constr" table="public.user_account">
+	<constraint name="email_uq" type="uq-constr" table="public.&quot;user&quot;">
 		<columns names="email" ref-type="src-columns"/>
 	</constraint>
 </table>
@@ -79,11 +79,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="user_account_id" index="3"/>
+		<object name="user_id" index="3"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="user_account_fk" index="1"/>
+		<object name="user_fk" index="1"/>
 	</customidxs>
 </table>
 
@@ -433,7 +433,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
 	 custom-color="#095061"
-	 src-table="public.user_account"
+	 src-table="public.&quot;user&quot;"
 	 dst-table="public.&quot;order&quot;"
 	 src-required="true" dst-required="false">
 	<label ref-type="name-label">
@@ -464,11 +464,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="user_account_id" index="1"/>
+		<object name="user_id" index="5"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="user_account_fk" index="1"/>
+		<object name="user_fk" index="1"/>
 	</customidxs>
 </table>
 
@@ -495,7 +495,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
 	 custom-color="#c29e9a"
-	 src-table="public.user_account"
+	 src-table="public.&quot;user&quot;"
 	 dst-table="public.product"
 	 src-required="true" dst-required="false"/>
 
@@ -525,16 +525,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.payment"
 	 src-required="true" dst-required="false"/>
 
-<relationship name="many_user_account_has_many_role" type="relnn"
+<relationship name="many_user_has_many_role" type="relnn"
 	 src-col-pattern="{st}_{sc}" dst-col-pattern="{st}_{sc}"
 	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
 	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
 	 pk-col-pattern="id"
 	 custom-color="#2de849"
-	 src-table="public.user_account"
+	 src-table="public.&quot;user&quot;"
 	 dst-table="public.role"
 	 src-required="false" dst-required="false"
-	 table-name="many_user_account_has_many_role">
+	 table-name="many_user_has_many_role">
 	<label ref-type="name-label">
 		<position x="-9.35376" y="-0.670347"/>
 	</label>
@@ -581,21 +581,21 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 	<customidxs object-type="column">
 		<object name="product_id" index="2"/>
-		<object name="user_account_id" index="1"/>
+		<object name="user_id" index="3"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
 		<object name="product_fk" index="2"/>
-		<object name="user_account_fk" index="1"/>
+		<object name="user_fk" index="1"/>
 	</customidxs>
 </table>
 
-<relationship name="user_account_has_many_like" type="rel1n"
+<relationship name="user_has_many_like" type="rel1n"
 	 src-col-pattern="{st}_{sc}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
 	 custom-color="#f80c3e"
-	 src-table="public.user_account"
+	 src-table="public.&quot;user&quot;"
 	 dst-table="public.&quot;like&quot;"
 	 src-required="true" dst-required="false"/>
 

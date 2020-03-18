@@ -21,7 +21,7 @@ public class ProductServiceTest extends AbstractTest {
 		final IProduct entityFromDb = productService.get(entity.getId());
 
 		assertNotNull(entityFromDb);
-		assertEquals(entity.getUserAccount().getId(), entityFromDb.getUserAccount().getId());
+		assertEquals(entity.getUser().getId(), entityFromDb.getUser().getId());
 		assertNotNull(entityFromDb.getId());
 		assertNotNull(entityFromDb.getCreated());
 		assertNotNull(entityFromDb.getUpdated());
@@ -41,7 +41,7 @@ public class ProductServiceTest extends AbstractTest {
 
 		for (final IProduct entityFromDb : allEntities) {
 			assertNotNull(entityFromDb.getId());
-			assertNotNull(entityFromDb.getUserAccount());
+			assertNotNull(entityFromDb.getUser());
 			assertNotNull(entityFromDb.getPrice());
 			assertNotNull(entityFromDb.getCreated());
 			assertNotNull(entityFromDb.getUpdated());

@@ -23,7 +23,7 @@ public class LikeServiceTest extends AbstractTest {
 		assertNotNull(entityFromDb.getId());
 		assertNotNull(entityFromDb.getCreated());
 
-		assertEquals(entity.getUserAccount().getId(), entityFromDb.getUserAccount().getId());
+		assertEquals(entity.getUser().getId(), entityFromDb.getUser().getId());
 		assertEquals(entity.getProduct().getId(), entityFromDb.getProduct().getId());
 	}
 
@@ -40,7 +40,7 @@ public class LikeServiceTest extends AbstractTest {
 
 		for (final ILike entityFromDb : allEntities) {
 			assertNotNull(entityFromDb.getId());
-			assertNotNull(entityFromDb.getUserAccount());
+			assertNotNull(entityFromDb.getUser());
 			assertNotNull(entityFromDb.getProduct());
 			assertNotNull(entityFromDb.getCreated());
 		}

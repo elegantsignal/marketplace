@@ -2,10 +2,10 @@ package by.itacademy.elegantsignal.marketplace.daojdbc.entity;
 
 import java.util.Date;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
-public class UserAccount extends BaseEntity implements IUserAccount {
+public class User extends BaseEntity implements IUser {
 
 	private String name;
 	private String email;
