@@ -204,11 +204,11 @@ ON DELETE CASCADE ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public.order_item CASCADE;
 CREATE TABLE public.order_item(
 	id serial NOT NULL,
-	order_id integer NOT NULL,
 	amount money NOT NULL,
-	product_id smallint,
 	delivered bool NOT NULL DEFAULT false,
+	product_id smallint,
 	fee_charged bool NOT NULL DEFAULT false,
+	order_id integer NOT NULL,
 	CONSTRAINT order_item_pk PRIMARY KEY (id)
 
 );

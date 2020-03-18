@@ -25,26 +25,36 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILanguage;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILike;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
 
 
 @SpringJUnitConfig(locations = "classpath:service-context-test.xml")
 public abstract class AbstractTest {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractTest.class);
 
 	@Autowired
 	protected IUserAccountService userAccountService;
+
 	@Autowired
 	protected IProductService productService;
+
 	@Autowired
 	protected IBookService bookService;
+
 	@Autowired
 	protected IGenreService genreService;
+
 	@Autowired
 	protected ILanguageService languageService;
+
 	@Autowired
 	protected ILikeService likeService;
+
+	@Autowired
+	protected IOrderService orderService;
 
 	private static final Random RANDOM = new Random();
 
@@ -82,13 +92,13 @@ public abstract class AbstractTest {
 
 	private String getScript() {
 
-		StringBuilder contentBuilder = new StringBuilder();
+		final StringBuilder contentBuilder = new StringBuilder();
 
 		try (Stream<String> stream = Files.lines(
 				Paths.get("../docs/database/dumps/marketplace.sql"),
 				StandardCharsets.UTF_8)) {
 			stream.forEach(s -> contentBuilder.append(s).append("\n"));
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 
@@ -107,8 +117,8 @@ public abstract class AbstractTest {
 		return RANDOM;
 	}
 
-	public static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
-		int x = RANDOM.nextInt(clazz.getEnumConstants().length);
+	public static <T extends Enum<?>> T randomEnum(final Class<T> clazz) {
+		final int x = RANDOM.nextInt(clazz.getEnumConstants().length);
 		return clazz.getEnumConstants()[x];
 	}
 
@@ -168,6 +178,15 @@ public abstract class AbstractTest {
 		entity.setProduct(saveNewProduct());
 		entity.setCreated(new Date());
 		likeService.save(entity);
+		return entity;
+	}
+
+	protected IOrder saveNewOrder() {
+		final IOrder entity = orderService.createEntity();
+		entity.setUserAccount(saveNewUserAccount());
+		entity.setCreated(new Date());
+		entity.setUpdated(new Date());
+		orderService.save(entity);
 		return entity;
 	}
 }

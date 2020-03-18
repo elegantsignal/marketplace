@@ -1,5 +1,4 @@
-<project
-	xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
@@ -59,13 +58,18 @@
 				<version>42.2.5</version>
 				<!-- <version>9.4-1200-jdbc41</version> -->
 			</dependency>
-			
+
 			<!-- JUnit -->
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter</artifactId>
 				<version>${junit.version}</version>
 				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.platform</groupId>
+				<artifactId>junit-platform-commons</artifactId>
+				<version>1.5.2</version>
 			</dependency>
 
 			<!-- Logging libraries -->
@@ -331,7 +335,7 @@
 				<artifactId>aspectjtools</artifactId>
 				<version>1.8.13</version>
 			</dependency>
-			
+
 			<!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
 			<dependency>
 				<groupId>org.yaml</groupId>

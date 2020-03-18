@@ -8,37 +8,35 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.IProductDao;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import by.itacademy.elegantsignal.marketplace.daoapi.IOrderDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUserAccount;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.ProductFilter;
-import by.itacademy.elegantsignal.marketplace.daojdbc.entity.Product;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderFilter;
+import by.itacademy.elegantsignal.marketplace.daojdbc.entity.Order;
 import by.itacademy.elegantsignal.marketplace.daojdbc.entity.UserAccount;
 import by.itacademy.elegantsignal.marketplace.daojdbc.util.PreparedStatementAction;
 
 
 @Repository
-public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implements IProductDao {
+public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IOrderDao {
 
 	@Override
-	public IProduct createEntity() {
-		return new Product();
+	public IOrder createEntity() {
+		return new Order();
 	}
 
 	@Override
-	public void insert(final IProduct entity) {
-		executeStatement(new PreparedStatementAction<IProduct>(String.format(
-				"insert into %s (user_account_id, type, price, created, updated) values(?,?,?,?,?)",
+	public void insert(final IOrder entity) {
+		executeStatement(new PreparedStatementAction<IOrder>(String.format(
+				"insert into \"%s\" (user_account_id, created, updated) values(?,?,?)",
 				getTableName()),
 				true) {
+
 			@Override
-			public IProduct doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
+			public IOrder doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setInt(1, entity.getUserAccount().getId());
-				pStmt.setString(2, entity.getType().name());
-				pStmt.setBigDecimal(3, entity.getPrice());
-				pStmt.setObject(4, entity.getCreated(), Types.TIMESTAMP);
-				pStmt.setObject(5, entity.getUpdated(), Types.TIMESTAMP);
+				pStmt.setObject(2, entity.getCreated(), Types.TIMESTAMP);
+				pStmt.setObject(3, entity.getUpdated(), Types.TIMESTAMP);
 
 				pStmt.executeUpdate();
 
@@ -56,31 +54,29 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 	}
 
 	@Override
-	public void update(final IProduct entity) {
+	public void update(final IOrder entity) {
 		throw new RuntimeException("will be implemented in ORM layer. Too complex for plain jdbc ");
 	}
 
 	@Override
-	public List<IProduct> find(final ProductFilter filter) {
+	public List<IOrder> find(final OrderFilter filter) {
 		throw new RuntimeException("will be implemented in ORM layer. Too complex for plain jdbc ");
 	}
 
 	@Override
-	public long getCount(final ProductFilter filter) {
+	public long getCount(final OrderFilter filter) {
 		throw new RuntimeException("will be implemented in ORM layer. Too complex for plain jdbc ");
 	}
 
 	@Override
-	protected IProduct parseRow(final ResultSet resultSet) throws SQLException {
-		final IProduct entity = createEntity();
+	protected IOrder parseRow(final ResultSet resultSet) throws SQLException {
+		final IOrder entity = createEntity();
 		entity.setId((Integer) resultSet.getInt("id"));
 
 		final IUserAccount userAccount = new UserAccount();
 		userAccount.setId(resultSet.getInt("user_account_id"));
 		entity.setUserAccount(userAccount);
 
-		entity.setType(ProductType.valueOf(resultSet.getString("type")));
-		entity.setPrice(resultSet.getBigDecimal("price"));
 		entity.setCreated(resultSet.getTimestamp("created"));
 		entity.setUpdated(resultSet.getTimestamp("updated"));
 		return entity;
@@ -88,7 +84,7 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 
 	@Override
 	protected String getTableName() {
-		return "\"product\"";
+		return "order";
 	}
 
 }
