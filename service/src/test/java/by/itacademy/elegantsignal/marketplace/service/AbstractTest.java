@@ -26,7 +26,9 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILanguage;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILike;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
@@ -55,6 +57,12 @@ public abstract class AbstractTest {
 
 	@Autowired
 	protected IOrderService orderService;
+
+	@Autowired
+	protected IOrderItemService orderItemService;
+
+	@Autowired
+	protected IReviewService reviewService;
 
 	private static final Random RANDOM = new Random();
 
@@ -95,7 +103,7 @@ public abstract class AbstractTest {
 		final StringBuilder contentBuilder = new StringBuilder();
 
 		try (Stream<String> stream = Files.lines(
-				Paths.get("../docs/database/dumps/marketplace.sql"),
+				Paths.get("../docs/database/marketplace.sql"),
 				StandardCharsets.UTF_8)) {
 			stream.forEach(s -> contentBuilder.append(s).append("\n"));
 		} catch (final IOException e) {
@@ -111,6 +119,10 @@ public abstract class AbstractTest {
 
 	protected int getRandomObjectsCount() {
 		return RANDOM.nextInt(9) + 1;
+	}
+
+	protected int getRandomFromRange(final Integer max) {
+		return RANDOM.nextInt(max);
 	}
 
 	public Random getRANDOM() {
@@ -130,17 +142,6 @@ public abstract class AbstractTest {
 		entity.setCreated(new Date());
 		entity.setUpdated(new Date());
 		userService.save(entity);
-		return entity;
-	}
-
-	protected IProduct saveNewProduct() {
-		final IProduct entity = productService.createEntity();
-		entity.setUser(saveNewUser());
-		entity.setType(randomEnum(ProductType.class));
-		entity.setPrice((BigDecimal.valueOf(getRandomObjectsCount())));
-		entity.setCreated(new Date());
-		entity.setUpdated(new Date());
-		productService.save(entity);
 		return entity;
 	}
 
@@ -187,6 +188,37 @@ public abstract class AbstractTest {
 		entity.setCreated(new Date());
 		entity.setUpdated(new Date());
 		orderService.save(entity);
+		return entity;
+	}
+
+	protected IProduct saveNewProduct() {
+		final IProduct entity = productService.createEntity();
+		entity.setUser(saveNewUser());
+		entity.setType(randomEnum(ProductType.class));
+		entity.setPrice((BigDecimal.valueOf(getRandomObjectsCount())));
+		entity.setCreated(new Date());
+		entity.setUpdated(new Date());
+		productService.save(entity);
+		return entity;
+	}
+
+	protected IOrderItem saveNewOrderItem() {
+		final IOrderItem entity = orderItemService.createEntity();
+		entity.setOrder(saveNewOrder());
+		entity.setProduct(saveNewProduct());
+		entity.setAmount(BigDecimal.valueOf(getRandomFromRange(100)).movePointLeft(2));
+		orderItemService.save(entity);
+		return entity;
+	}
+
+	protected IReview saveNewReview() {
+		final IReview entity = reviewService.createEntity();
+		entity.setOrderItem(saveNewOrderItem());
+		entity.setGrade(getRandomFromRange(5));
+		entity.setComment("Comment-" + getRandomPrefix());
+		entity.setCreated(new Date());
+		entity.setUpdated(new Date());
+		reviewService.save(entity);
 		return entity;
 	}
 }

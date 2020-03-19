@@ -67,9 +67,9 @@ ALTER SEQUENCE public.order_id_seq OWNER TO postgres;
 -- DROP TABLE IF EXISTS public."order" CASCADE;
 CREATE TABLE public."order"(
 	id serial NOT NULL,
+	user_id integer NOT NULL,
 	created timestamp NOT NULL,
 	updated timestamp NOT NULL,
-	user_id integer NOT NULL,
 	CONSTRAINT order_pk PRIMARY KEY (id)
 
 );
@@ -176,26 +176,26 @@ CREATE TABLE public.permission(
 );
 -- ddl-end --
 
--- object: public.many_role_has_many_permission | type: TABLE --
--- DROP TABLE IF EXISTS public.many_role_has_many_permission CASCADE;
-CREATE TABLE public.many_role_has_many_permission(
+-- object: public.role2permission | type: TABLE --
+-- DROP TABLE IF EXISTS public.role2permission CASCADE;
+CREATE TABLE public.role2permission(
 	role_id integer NOT NULL,
 	role_id1 integer NOT NULL,
-	CONSTRAINT many_role_has_many_permission_pk PRIMARY KEY (role_id,role_id1)
+	CONSTRAINT role2permission_pk PRIMARY KEY (role_id,role_id1)
 
 );
 -- ddl-end --
 
 -- object: role_fk | type: CONSTRAINT --
--- ALTER TABLE public.many_role_has_many_permission DROP CONSTRAINT IF EXISTS role_fk CASCADE;
-ALTER TABLE public.many_role_has_many_permission ADD CONSTRAINT role_fk FOREIGN KEY (role_id)
+-- ALTER TABLE public.role2permission DROP CONSTRAINT IF EXISTS role_fk CASCADE;
+ALTER TABLE public.role2permission ADD CONSTRAINT role_fk FOREIGN KEY (role_id)
 REFERENCES public.role (id) MATCH FULL
 ON DELETE CASCADE ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: permission_fk | type: CONSTRAINT --
--- ALTER TABLE public.many_role_has_many_permission DROP CONSTRAINT IF EXISTS permission_fk CASCADE;
-ALTER TABLE public.many_role_has_many_permission ADD CONSTRAINT permission_fk FOREIGN KEY (role_id1)
+-- ALTER TABLE public.role2permission DROP CONSTRAINT IF EXISTS permission_fk CASCADE;
+ALTER TABLE public.role2permission ADD CONSTRAINT permission_fk FOREIGN KEY (role_id1)
 REFERENCES public.permission (id) MATCH FULL
 ON DELETE CASCADE ON UPDATE CASCADE;
 -- ddl-end --
@@ -233,12 +233,12 @@ CREATE TABLE public.restricted_file(
 -- DROP TABLE IF EXISTS public.download_links CASCADE;
 CREATE TABLE public.download_links(
 	id serial NOT NULL,
+	order_item_id integer NOT NULL,
+	restricted_file_id integer NOT NULL,
 	created timestamp NOT NULL,
 	token varchar(64),
 	valid interval HOUR  NOT NULL,
 	use_count integer NOT NULL,
-	restricted_file_id integer NOT NULL,
-	order_item_id integer NOT NULL,
 	CONSTRAINT download_pk PRIMARY KEY (id)
 
 );
@@ -262,11 +262,11 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public.author CASCADE;
 CREATE TABLE public.author(
 	id serial NOT NULL,
+	book_id integer,
 	firstaname varchar(128) NOT NULL,
 	lastname varchar(128),
 	photo varchar,
 	bio text,
-	book_id integer,
 	CONSTRAINT author_pk PRIMARY KEY (id)
 
 );
@@ -307,26 +307,26 @@ CREATE TABLE public.genre(
 );
 -- ddl-end --
 
--- object: public.many_book_has_many_language | type: TABLE --
--- DROP TABLE IF EXISTS public.many_book_has_many_language CASCADE;
-CREATE TABLE public.many_book_has_many_language(
+-- object: public.book2language | type: TABLE --
+-- DROP TABLE IF EXISTS public.book2language CASCADE;
+CREATE TABLE public.book2language(
 	book_id integer NOT NULL,
 	book_id1 integer NOT NULL,
-	CONSTRAINT many_book_has_many_language_pk PRIMARY KEY (book_id,book_id1)
+	CONSTRAINT book2language_pk PRIMARY KEY (book_id,book_id1)
 
 );
 -- ddl-end --
 
 -- object: book_fk | type: CONSTRAINT --
--- ALTER TABLE public.many_book_has_many_language DROP CONSTRAINT IF EXISTS book_fk CASCADE;
-ALTER TABLE public.many_book_has_many_language ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
+-- ALTER TABLE public.book2language DROP CONSTRAINT IF EXISTS book_fk CASCADE;
+ALTER TABLE public.book2language ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
 REFERENCES public.book (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: language_fk | type: CONSTRAINT --
--- ALTER TABLE public.many_book_has_many_language DROP CONSTRAINT IF EXISTS language_fk CASCADE;
-ALTER TABLE public.many_book_has_many_language ADD CONSTRAINT language_fk FOREIGN KEY (book_id1)
+-- ALTER TABLE public.book2language DROP CONSTRAINT IF EXISTS language_fk CASCADE;
+ALTER TABLE public.book2language ADD CONSTRAINT language_fk FOREIGN KEY (book_id1)
 REFERENCES public.language (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
@@ -366,11 +366,11 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public.product CASCADE;
 CREATE TABLE public.product(
 	id smallserial NOT NULL,
+	user_id integer NOT NULL,
 	type varchar(16) NOT NULL,
 	price decimal(6,2) NOT NULL,
 	created timestamp,
 	updated timestamp,
-	user_id integer NOT NULL,
 	CONSTRAINT product_pk PRIMARY KEY (id)
 
 );
@@ -406,9 +406,9 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public.payment CASCADE;
 CREATE TABLE public.payment(
 	id serial NOT NULL,
+	order_id integer NOT NULL,
 	payload text NOT NULL,
 	created timestamp,
-	order_id integer NOT NULL,
 	CONSTRAINT payment_pk PRIMARY KEY (id)
 
 );
@@ -421,26 +421,26 @@ REFERENCES public."order" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: public.many_user_has_many_role | type: TABLE --
--- DROP TABLE IF EXISTS public.many_user_has_many_role CASCADE;
-CREATE TABLE public.many_user_has_many_role(
+-- object: public.user2role | type: TABLE --
+-- DROP TABLE IF EXISTS public.user2role CASCADE;
+CREATE TABLE public.user2role(
 	user_id integer NOT NULL,
 	user_id1 integer NOT NULL,
-	CONSTRAINT many_user_has_many_role_pk PRIMARY KEY (user_id,user_id1)
+	CONSTRAINT user2role_pk PRIMARY KEY (user_id,user_id1)
 
 );
 -- ddl-end --
 
 -- object: user_fk | type: CONSTRAINT --
--- ALTER TABLE public.many_user_has_many_role DROP CONSTRAINT IF EXISTS user_fk CASCADE;
-ALTER TABLE public.many_user_has_many_role ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
+-- ALTER TABLE public.user2role DROP CONSTRAINT IF EXISTS user_fk CASCADE;
+ALTER TABLE public.user2role ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
 REFERENCES public."user" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: role_fk | type: CONSTRAINT --
--- ALTER TABLE public.many_user_has_many_role DROP CONSTRAINT IF EXISTS role_fk CASCADE;
-ALTER TABLE public.many_user_has_many_role ADD CONSTRAINT role_fk FOREIGN KEY (user_id1)
+-- ALTER TABLE public.user2role DROP CONSTRAINT IF EXISTS role_fk CASCADE;
+ALTER TABLE public.user2role ADD CONSTRAINT role_fk FOREIGN KEY (user_id1)
 REFERENCES public.role (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
@@ -450,30 +450,22 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 CREATE TABLE public.review(
 	id serial NOT NULL,
 	order_item_id integer NOT NULL,
-	product_id smallint NOT NULL,
 	grade smallint NOT NULL,
 	comment text,
 	created timestamp NOT NULL,
-	updateted timestamp NOT NULL,
+	updated timestamp NOT NULL,
 	CONSTRAINT reviews_pk PRIMARY KEY (id)
 
 );
--- ddl-end --
-
--- object: product_fk | type: CONSTRAINT --
--- ALTER TABLE public.review DROP CONSTRAINT IF EXISTS product_fk CASCADE;
-ALTER TABLE public.review ADD CONSTRAINT product_fk FOREIGN KEY (product_id)
-REFERENCES public.product (id) MATCH FULL
-ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: public."like" | type: TABLE --
 -- DROP TABLE IF EXISTS public."like" CASCADE;
 CREATE TABLE public."like"(
 	id serial NOT NULL,
-	created timestamp NOT NULL,
 	product_id smallint NOT NULL,
 	user_id integer NOT NULL,
+	created timestamp NOT NULL,
 	CONSTRAINT like_pk PRIMARY KEY (id)
 
 );

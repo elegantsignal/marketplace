@@ -23,7 +23,7 @@ export CONTAINER="postgresql_postgres_1"
 export PG_USER="postgres"
 export DB_NAME="marketplace"
 
-docker exec -it $CONTAINER pg_dump -U $PG_USER --schema-only --no-owner $DB_NAME > "dumps/${DB_NAME}_schema_pg_dump.sql"
+docker exec -it $CONTAINER pg_dump -U $PG_USER --schema-only --no-owner $DB_NAME > "${DB_NAME}_schema_pg_dump.sql"
 ```
 
 ## Links
