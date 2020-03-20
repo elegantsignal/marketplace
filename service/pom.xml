@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>by.itacademy.elegantsignal.marketplace</groupId>
-			<artifactId>dao-jdbc-impl</artifactId>
+			<artifactId>dao-orm-impl</artifactId>
 		</dependency>
 
 		<dependency>

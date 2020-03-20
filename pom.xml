@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
@@ -12,6 +13,7 @@
 
 	<modules>
 		<module>dao-api</module>
+		<module>dao-orm-impl</module>
 		<module>dao-jdbc-impl</module>
 		<module>service</module>
 		<module>web</module>
@@ -39,6 +41,12 @@
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
+			<dependency>
+				<groupId>by.itacademy.elegantsignal.marketplace</groupId>
+				<artifactId>dao-orm-impl</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			
 			<dependency>
 				<groupId>by.itacademy.elegantsignal.marketplace</groupId>
 				<artifactId>dao-jdbc-impl</artifactId>

@@ -15,6 +15,12 @@
 
 	<import resource="dao-context.xml" />
 
+	<tx:annotation-driven />
+	<bean
+		id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+
 	<context:component-scan base-package="by.itacademy.elegantsignal.marketplace.service.impl" />
 
 </beans>

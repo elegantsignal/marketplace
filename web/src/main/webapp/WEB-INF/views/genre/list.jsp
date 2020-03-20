@@ -9,7 +9,7 @@
 	<tbody>
 		<tr>
 			<th scope="col"><mytaglib:sort-link pageUrl="${pagesGenre}" column="id">id</mytaglib:sort-link></th>
-			<th scope="col"><mytaglib:sort-link pageUrl="${pagesGenre}" column="genre">genre</mytaglib:sort-link></th>
+			<th scope="col"><mytaglib:sort-link pageUrl="${pagesGenre}" column="name">genre</mytaglib:sort-link></th>
 			<th scope="col"></th>
 		</tr>
 		<c:forEach var="genre" items="${gridItems}" varStatus="loopCounter">

@@ -48,6 +48,7 @@ public class GenreController extends AbstractController {
 		gridState.setSort(sortColumn, "id");
 
 		final GenreFilter filter = new GenreFilter();
+		prepareFilter(gridState, filter);
 
 		final List<IGenre> entities = genreService.find(filter);
 		final List<GenreDTO> dtos = entities.stream().map(toDtoConverter).collect(Collectors.toList());
@@ -55,7 +56,6 @@ public class GenreController extends AbstractController {
 
 		final Map<String, Object> models = new HashMap<>();
 		models.put("gridItems", dtos);
-		System.out.println(models);
 		return new ModelAndView("genre.list", models);
 	}
 
