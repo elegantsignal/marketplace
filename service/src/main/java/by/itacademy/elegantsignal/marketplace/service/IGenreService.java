@@ -3,6 +3,7 @@ package by.itacademy.elegantsignal.marketplace.service;
 import java.util.List;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.GenreFilter;
 
 
 public interface IGenreService {
@@ -21,5 +22,9 @@ public interface IGenreService {
 
 	@Deprecated
 	void saveWithId(IGenre genre);
+
+	List<IGenre> find(GenreFilter filter);
+
+	long getCount(GenreFilter filter);
 
 }

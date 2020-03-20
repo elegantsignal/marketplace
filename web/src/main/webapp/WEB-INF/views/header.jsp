@@ -6,7 +6,7 @@
 					<li><a href="${contextPath}">home</a></li>
 					<li><a href="${pagesBook}">books</a></li>
 					<li><a href="${pagesUser}">users</a></li>
-					<li><a href="${pagesEngine}">engines</a></li>
+					<li><a href="${pagesGenre}">genre</a></li>
 					<li><a href="${pagesCar}">cars</a></li>
 				</ul>
 

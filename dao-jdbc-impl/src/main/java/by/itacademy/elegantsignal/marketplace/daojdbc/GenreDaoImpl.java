@@ -28,6 +28,7 @@ public class GenreDaoImpl extends AbstractDaoImpl<IGenre, Integer> implements IG
 				"insert into %s (name) values(?)",
 				getTableName()),
 				true) {
+
 			@Override
 			public IGenre doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setString(1, entity.getName());
@@ -54,12 +55,12 @@ public class GenreDaoImpl extends AbstractDaoImpl<IGenre, Integer> implements IG
 
 	@Override
 	public List<IGenre> find(final GenreFilter filter) {
-		throw new RuntimeException("will be implemented in ORM layer. Too complex for plain jdbc ");
+		return selectAll();
 	}
 
 	@Override
 	public long getCount(final GenreFilter filter) {
-		throw new RuntimeException("will be implemented in ORM layer. Too complex for plain jdbc ");
+		return 2;
 	}
 
 	@Override
