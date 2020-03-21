@@ -206,7 +206,7 @@ CREATE TABLE public.order_item(
 	id serial NOT NULL,
 	order_id integer NOT NULL,
 	product_id smallint,
-	amount money NOT NULL,
+	amount numeric(12,2) NOT NULL,
 	CONSTRAINT order_item_pk PRIMARY KEY (id)
 
 );
@@ -368,7 +368,7 @@ CREATE TABLE public.product(
 	id smallserial NOT NULL,
 	user_id integer NOT NULL,
 	type varchar(16) NOT NULL,
-	price decimal(6,2) NOT NULL,
+	price numeric(6,2) NOT NULL,
 	created timestamp,
 	updated timestamp,
 	CONSTRAINT product_pk PRIMARY KEY (id)
