@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
@@ -14,6 +16,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
 public class ReviewServiceTest extends AbstractTest {
 
 	@Test
+	@Transactional
 	public void testCreate() {
 		final IReview entity = saveNewReview();
 
