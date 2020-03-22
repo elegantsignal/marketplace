@@ -2,18 +2,31 @@ package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
 
 
+@Entity
 public class Review extends BaseEntity implements IReview {
 
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = OrderItem.class)
 	private IOrderItem orderItem;
 
+	@Column
 	private Integer grade;
+
+	@Column
 	private String comment;
 
+	@Column
 	private Date created;
+
+	@Column
 	private Date updated;
 
 	@Override

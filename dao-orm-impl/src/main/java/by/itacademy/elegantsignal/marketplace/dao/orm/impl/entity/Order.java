@@ -2,14 +2,26 @@ package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
+@Entity(name = "Order")
+@javax.persistence.Table(name = "`order`")
 public class Order extends BaseEntity implements IOrder {
 
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
 	private IUser user;
+
+	@Column
 	private Date created;
+
+	@Column
 	private Date updated;
 
 	@Override

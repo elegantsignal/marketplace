@@ -23,6 +23,10 @@
 			<property
 				name="hibernate.format_sql"
 				value="false" />
+
+			<property
+				name="hibernate.globally_quoted_identifiers"
+				value="false" />
 		</properties>
 	</persistence-unit>
 </persistence>

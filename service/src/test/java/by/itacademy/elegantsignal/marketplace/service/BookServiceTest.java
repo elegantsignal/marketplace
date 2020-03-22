@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
@@ -15,6 +17,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 public class BookServiceTest extends AbstractTest {
 
 	@Test
+	@Transactional
 	public void testCreate() {
 		final IBook entity = saveNewBook();
 

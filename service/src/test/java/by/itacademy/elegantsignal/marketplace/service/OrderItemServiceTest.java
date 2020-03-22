@@ -6,20 +6,20 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 
 
 public class OrderItemServiceTest extends AbstractTest {
 
 	@Test
+	@Transactional
 	public void testCreate() {
 		final IOrderItem entity = saveNewOrderItem();
 		final IOrderItem entityFromDb = orderItemService.get(entity.getId());
-
-
 
 		assertEquals(entity.getOrder().getId(), entityFromDb.getOrder().getId());
 		assertEquals(entity.getProduct().getId(), entityFromDb.getProduct().getId());

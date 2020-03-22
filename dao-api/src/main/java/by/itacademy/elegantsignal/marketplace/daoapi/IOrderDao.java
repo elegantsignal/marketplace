@@ -11,4 +11,6 @@ public interface IOrderDao extends IDao<IOrder, Integer> {
 	List<IOrder> find(OrderFilter filter);
 
 	long getCount(OrderFilter filter);
+
+	IOrder getFullInfo(Integer id);
 }

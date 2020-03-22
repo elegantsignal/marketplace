@@ -7,14 +7,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 
 
+   
 public class OrderServiceTest extends AbstractTest {
 
 	@Test
+	@Transactional
 	public void testCreate() {
 		final IOrder entity = saveNewOrder();
 

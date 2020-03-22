@@ -33,4 +33,10 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public IOrder getFullInfo(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

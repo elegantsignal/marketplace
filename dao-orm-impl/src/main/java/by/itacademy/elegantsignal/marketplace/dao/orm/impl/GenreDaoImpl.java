@@ -13,7 +13,6 @@ import javax.persistence.metamodel.SingularAttribute;
 import org.hibernate.jpa.criteria.OrderImpl;
 import org.springframework.stereotype.Repository;
 
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.BaseEntity_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Genre;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Genre_;
 import by.itacademy.elegantsignal.marketplace.daoapi.IGenreDao;
@@ -65,12 +64,12 @@ public class GenreDaoImpl extends AbstractDaoImpl<IGenre, Integer> implements IG
 
 	private SingularAttribute<? super Genre, ?> toMetamodelFormat(final String sortColumn) {
 		switch (sortColumn) {
-		case "id":
-			return BaseEntity_.id;
-		case "name":
-			return Genre_.name;
-		default:
-			throw new UnsupportedOperationException("sorting is not supported by column:" + sortColumn);
+			case "id":
+				return Genre_.id;
+			case "name":
+				return Genre_.name;
+			default:
+				throw new UnsupportedOperationException("sorting is not supported by column:" + sortColumn);
 		}
 	}
 }
