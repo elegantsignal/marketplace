@@ -3,18 +3,39 @@ package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
 import java.nio.file.Path;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 
-
+@Entity
 public class Book extends BaseEntity implements IBook {
 
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Product.class)
 	private IProduct product;
+
+	@Column
 	private String title;
+
+	@Column
+	@Convert(converter = PathConverter.class)
 	private Path cover;
+
+	@Column
 	private Date published;
+
+	@Column
 	private String description;
+
+	@Column
 	private Date created;
+
+	@Column
 	private Date updated;
 
 	@Override
