@@ -1,4 +1,4 @@
-package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
+package by.itacademy.elegantsignal.marketplace.dao.orm.converter;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
