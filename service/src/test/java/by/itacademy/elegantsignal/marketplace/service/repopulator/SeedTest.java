@@ -36,28 +36,28 @@ class SeedTest extends AbstractTest {
 	private <T> void populate(final Map<String, List<T>> document) {
 		document.forEach((modelName, modelData) -> {
 			switch (modelName) {
-			case "User":
-				for (final T userData : modelData) {
-					createUser((Map<String, T>) userData);
-				}
-				break;
-			case "Product":
-				for (final T productData : modelData) {
-					createProduct((Map<String, T>) productData);
-				}
-				break;
-			case "Genre":
-				for (final T genreData : modelData) {
-					createGenre((Map<String, T>) genreData);
-				}
-				break;
-			case "Book":
-				for (final T bookData : modelData) {
-					createBook((Map<String, T>) bookData);
-				}
-				break;
-			default:
-				break;
+				case "User":
+					for (final T userData : modelData) {
+						createUser((Map<String, T>) userData);
+					}
+					break;
+				case "Product":
+					for (final T productData : modelData) {
+						createProduct((Map<String, T>) productData);
+					}
+					break;
+				case "Genre":
+					for (final T genreData : modelData) {
+						createGenre((Map<String, T>) genreData);
+					}
+					break;
+				case "Book":
+					for (final T bookData : modelData) {
+						createBook((Map<String, T>) bookData);
+					}
+					break;
+				default:
+					break;
 			}
 		});
 	}

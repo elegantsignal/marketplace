@@ -9,12 +9,13 @@ import by.itacademy.elegantsignal.marketplace.service.IUserService;
 
 
 public class ServiceSpringContextExample {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleSpringContextExample.class);
 
-	public static void main(String[] args) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("service-context.xml");
+	public static void main(final String[] args) {
+		final ApplicationContext context = new ClassPathXmlApplicationContext("service-context.xml");
 		LOGGER.info("ICarService: {}", context.getBean(IUserService.class));
-		LOGGER.info("all beans: {}", context.getBeanDefinitionNames());
+		LOGGER.info("all beans: {}", context.getBeanDefinitionNames().toString());
 
 		((ClassPathXmlApplicationContext) context).close();
 

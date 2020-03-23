@@ -7,8 +7,8 @@
 <c:set var="pagesGenre" value="${contextPath}/genre" scope="request" />
 <c:set var="pagesCar" value="${contextPath}/car" scope="request" />
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title><tiles:insertAttribute name="title" /></title>
 

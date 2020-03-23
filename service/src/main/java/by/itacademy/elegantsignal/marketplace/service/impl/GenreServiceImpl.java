@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IGenreDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.GenreFilter;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 
@@ -63,12 +62,12 @@ public class GenreServiceImpl implements IGenreService {
 	}
 
 	@Override
-	public List<IGenre> find(GenreFilter filter) {
+	public List<IGenre> find(final GenreFilter filter) {
 		return genreDao.find(filter);
 	}
 
 	@Override
-	public long getCount(GenreFilter filter) {
+	public long getCount(final GenreFilter filter) {
 		return genreDao.getCount(filter);
 	}
 }

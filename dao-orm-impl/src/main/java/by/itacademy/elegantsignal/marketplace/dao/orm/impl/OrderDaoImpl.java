@@ -25,18 +25,25 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 	@Override
 	public List<IOrder> find(final OrderFilter filter) {
 		// TODO Auto-generated method stub
-		return null;
+		System.err.println("UNIMPLEMENTED: find(); Timestamp: 3:33:22 PM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: find(); Timestamp: 3:33:22 PM");
+		// return null;
 	}
 
 	@Override
 	public long getCount(final OrderFilter filter) {
 		// TODO Auto-generated method stub
-		return 0;
+		System.err.println("UNIMPLEMENTED: getCount(); Timestamp: 3:33:22 PM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: getCount(); Timestamp: 3:33:22 PM");
+		// return 0;
 	}
 
 	@Override
-	public IOrder getFullInfo(Integer id) {
+	public IOrder getFullInfo(final Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		System.err.println("UNIMPLEMENTED: getFullInfo(); Timestamp: 3:33:22 PM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: getFullInfo(); Timestamp: 3:33:22 PM");
+		// return null;
 	}
+
 }

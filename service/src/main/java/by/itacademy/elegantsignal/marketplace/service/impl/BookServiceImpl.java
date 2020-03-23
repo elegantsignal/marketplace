@@ -41,8 +41,7 @@ public class BookServiceImpl implements IBookService {
 
 	@Override
 	public IBook get(final Integer id) {
-		final IBook entity = bookDao.get(id);
-		return entity;
+		return bookDao.get(id);
 	}
 
 	@Override
@@ -57,8 +56,7 @@ public class BookServiceImpl implements IBookService {
 
 	@Override
 	public List<IBook> getAll() {
-		final List<IBook> all = bookDao.selectAll();
-		return all;
+		return bookDao.selectAll();
 	}
 
 	@Override

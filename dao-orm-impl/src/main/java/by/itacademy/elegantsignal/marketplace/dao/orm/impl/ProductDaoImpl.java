@@ -25,12 +25,17 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 	@Override
 	public List<IProduct> find(final ProductFilter filter) {
 		// TODO Auto-generated method stub
-		return null;
+		System.err.println("UNIMPLEMENTED: find(); Timestamp: 3:32:55 PM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: find(); Timestamp: 3:32:55 PM");
+		// return null;
 	}
 
 	@Override
 	public long getCount(final ProductFilter filter) {
 		// TODO Auto-generated method stub
-		return 0;
+		System.err.println("UNIMPLEMENTED: getCount(); Timestamp: 3:32:55 PM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: getCount(); Timestamp: 3:32:55 PM");
+		// return 0;
 	}
+
 }

@@ -13,6 +13,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import org.hibernate.jpa.criteria.OrderImpl;
 import org.springframework.stereotype.Repository;
 
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.BaseEntity_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User_;
 import by.itacademy.elegantsignal.marketplace.daoapi.IUserDao;
@@ -65,7 +66,7 @@ public class UserDaoImpl extends AbstractDaoImpl<IUser, Integer> implements IUse
 	private SingularAttribute<? super User, ?> toMetamodelFormat(final String sortColumn) {
 		switch (sortColumn) {
 			case "id":
-				return User_.id;
+				return BaseEntity_.id;
 			case "name":
 				return User_.name;
 			default:

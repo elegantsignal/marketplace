@@ -56,8 +56,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public IUser get(final Integer id) {
-		final IUser entity = userDao.get(id);
-		return entity;
+		return userDao.get(id);
 	}
 
 	@Override
@@ -72,8 +71,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<IUser> getAll() {
-		final List<IUser> all = userDao.selectAll();
-		return all;
+		return userDao.selectAll();
 	}
 
 	@Override
@@ -82,7 +80,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public long getCount(UserFilter filter) {
+	public long getCount(final UserFilter filter) {
 		return userDao.getCount(filter);
 	}
 }

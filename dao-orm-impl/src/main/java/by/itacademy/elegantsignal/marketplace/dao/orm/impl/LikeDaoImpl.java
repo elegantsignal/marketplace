@@ -25,12 +25,17 @@ public class LikeDaoImpl extends AbstractDaoImpl<ILike, Integer> implements ILik
 	@Override
 	public List<ILike> find(final LikeFilter filter) {
 		// TODO Auto-generated method stub
-		return null;
+		System.err.println("UNIMPLEMENTED: find(); Timestamp: 3:33:08 PM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: find(); Timestamp: 3:33:08 PM");
+		// return null;
 	}
 
 	@Override
 	public long getCount(final LikeFilter filter) {
 		// TODO Auto-generated method stub
-		return 0;
+		System.err.println("UNIMPLEMENTED: getCount(); Timestamp: 3:33:08 PM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: getCount(); Timestamp: 3:33:08 PM");
+		// return 0;
 	}
+
 }

@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -13,6 +12,7 @@ import javax.persistence.ManyToOne;
 import by.itacademy.elegantsignal.marketplace.dao.orm.converter.PathConverter;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+
 
 @Entity
 public class Book extends BaseEntity implements IBook {
@@ -45,7 +45,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setProduct(IProduct product) {
+	public void setProduct(final IProduct product) {
 		this.product = product;
 	}
 
@@ -55,7 +55,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
@@ -65,7 +65,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setCover(Path cover) {
+	public void setCover(final Path cover) {
 		this.cover = cover;
 	}
 
@@ -75,7 +75,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setPublished(Date published) {
+	public void setPublished(final Date published) {
 		this.published = published;
 	}
 
@@ -85,7 +85,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -95,7 +95,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setCreated(Date created) {
+	public void setCreated(final Date created) {
 		this.created = created;
 	}
 
@@ -105,7 +105,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setUpdated(Date updated) {
+	public void setUpdated(final Date updated) {
 		this.updated = updated;
 	}
 }

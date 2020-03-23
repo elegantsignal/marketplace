@@ -11,10 +11,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,14 +32,19 @@ import by.itacademy.elegantsignal.marketplace.web.dto.UserDTO;
 @RequestMapping(value = "/users")
 public class UserController extends AbstractController {
 
+	private static final String FORM_MODEL = "formModel";
+	private static final String USERS_EDIT = "users.edit";
+
 	@Autowired
 	private IUserService userService;
+
 	@Autowired
 	private UserToDTOConverter toDtoConverter;
+
 	@Autowired
 	private UserFromDTOConverter fromDtoConverter;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping()
 	public ModelAndView index(final HttpServletRequest req,
 			@RequestParam(name = "page", required = false) final Integer pageNumber,
 			@RequestParam(name = "sort", required = false) final String sortColumn) {
@@ -55,23 +61,22 @@ public class UserController extends AbstractController {
 
 		final Map<String, Object> models = new HashMap<>();
 		models.put("gridItems", dtos);
-		System.out.println(models);
 		return new ModelAndView("users.list", models);
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	@GetMapping(value = "/add")
 	public ModelAndView showForm() {
 		final Map<String, Object> hashMap = new HashMap<>();
 		final IUser newEntity = userService.createEntity();
-		hashMap.put("formModel", toDtoConverter.apply(newEntity));
+		hashMap.put(FORM_MODEL, toDtoConverter.apply(newEntity));
 
-		return new ModelAndView("users.edit", hashMap);
+		return new ModelAndView(USERS_EDIT, hashMap);
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String save(@Valid @ModelAttribute("formModel") final UserDTO formModel, final BindingResult result) {
+	@PostMapping()
+	public String save(@Valid @ModelAttribute(FORM_MODEL) final UserDTO formModel, final BindingResult result) {
 		if (result.hasErrors()) {
-			return "users.edit";
+			return USERS_EDIT;
 		} else {
 			final IUser entity = fromDtoConverter.apply(formModel);
 			userService.save(entity);
@@ -79,31 +84,31 @@ public class UserController extends AbstractController {
 		}
 	}
 
-	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}/delete")
 	public String delete(@PathVariable(name = "id", required = true) final Integer id) {
 		userService.delete(id);
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public ModelAndView viewDetails(@PathVariable(name = "id", required = true) final Integer id) {
 		final IUser dbModel = userService.get(id);
 		final UserDTO dto = toDtoConverter.apply(dbModel);
 		final Map<String, Object> hashMap = new HashMap<>();
-		hashMap.put("formModel", dto);
+		hashMap.put(FORM_MODEL, dto);
 		hashMap.put("readonly", true);
 
-		return new ModelAndView("users.edit", hashMap);
+		return new ModelAndView(USERS_EDIT, hashMap);
 	}
 
-	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}/edit")
 	public ModelAndView edit(@PathVariable(name = "id", required = true) final Integer id) {
 		final UserDTO dto = toDtoConverter.apply(userService.get(id));
 
 		final Map<String, Object> hashMap = new HashMap<>();
-		hashMap.put("formModel", dto);
+		hashMap.put(FORM_MODEL, dto);
 
-		return new ModelAndView("users.edit", hashMap);
+		return new ModelAndView(USERS_EDIT, hashMap);
 	}
 
 }

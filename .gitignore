@@ -29,6 +29,7 @@ hs_err_pid*
 .classpath
 
 # Other
+target
 *.out.xml
 *.factorypath
 .vs

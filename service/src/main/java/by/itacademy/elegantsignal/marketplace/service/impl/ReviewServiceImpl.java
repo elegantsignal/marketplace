@@ -40,8 +40,7 @@ public class ReviewServiceImpl implements IReviewService {
 
 	@Override
 	public IReview get(final Integer id) {
-		final IReview entity = reviewDao.get(id);
-		return entity;
+		return reviewDao.get(id);
 	}
 
 	@Override
@@ -56,8 +55,7 @@ public class ReviewServiceImpl implements IReviewService {
 
 	@Override
 	public List<IReview> getAll() {
-		final List<IReview> all = reviewDao.selectAll();
-		return all;
+		return reviewDao.selectAll();
 	}
 
 	@Override

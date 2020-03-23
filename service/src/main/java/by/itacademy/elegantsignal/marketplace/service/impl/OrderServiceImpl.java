@@ -40,8 +40,7 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Override
 	public IOrder get(final Integer id) {
-		final IOrder entity = orderDao.get(id);
-		return entity;
+		return orderDao.get(id);
 	}
 
 	@Override
@@ -56,8 +55,7 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Override
 	public List<IOrder> getAll() {
-		final List<IOrder> all = orderDao.selectAll();
-		return all;
+		return orderDao.selectAll();
 	}
 
 	@Override

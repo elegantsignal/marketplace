@@ -13,10 +13,11 @@ import by.itacademy.elegantsignal.marketplace.service.ILikeService;
 
 @Service
 public class LikeServiceImpl implements ILikeService {
-	private ILikeDao likeDao;
+
+	private final ILikeDao likeDao;
 
 	@Autowired
-	public LikeServiceImpl(ILikeDao likeDao) {
+	public LikeServiceImpl(final ILikeDao likeDao) {
 		this.likeDao = likeDao;
 	}
 
@@ -38,8 +39,7 @@ public class LikeServiceImpl implements ILikeService {
 
 	@Override
 	public ILike get(final Integer id) {
-		final ILike entity = likeDao.get(id);
-		return entity;
+		return likeDao.get(id);
 	}
 
 	@Override
@@ -54,8 +54,7 @@ public class LikeServiceImpl implements ILikeService {
 
 	@Override
 	public List<ILike> getAll() {
-		final List<ILike> all = likeDao.selectAll();
-		return all;
+		return likeDao.selectAll();
 	}
 
 }

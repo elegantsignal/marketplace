@@ -44,7 +44,7 @@ public abstract class AbstractDaoImpl<T, ID> implements IDao<T, ID> {
 
 	@Override
 	public void update(T entity) {
-		entity = entityManager.merge(entity);
+		entityManager.merge(entity);
 		entityManager.flush();
 	}
 

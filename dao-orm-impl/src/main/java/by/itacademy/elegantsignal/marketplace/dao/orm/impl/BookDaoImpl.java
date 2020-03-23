@@ -13,6 +13,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import org.hibernate.jpa.criteria.OrderImpl;
 import org.springframework.stereotype.Repository;
 
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.BaseEntity_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Book;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Book_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User;
@@ -55,7 +56,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 	private SingularAttribute<? super Book, ?> toMetamodelFormat(final String sortColumn) {
 		switch (sortColumn) {
 			case "id":
-				return Book_.id;
+				return BaseEntity_.id;
 			case "title":
 				return Book_.title;
 			default:
@@ -64,7 +65,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 	}
 
 	@Override
-	public long getCount(BookFilter filter) {
+	public long getCount(final BookFilter filter) {
 		final EntityManager em = getEntityManager();
 		final CriteriaBuilder cb = em.getCriteriaBuilder();
 		final CriteriaQuery<Long> cq = cb.createQuery(Long.class);
@@ -73,6 +74,5 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		final TypedQuery<Long> q = em.createQuery(cq);
 		return q.getSingleResult();
 	}
-
 
 }

@@ -13,6 +13,7 @@ import by.itacademy.elegantsignal.marketplace.service.IProductService;
 
 @Service
 public class ProductServiceImpl implements IProductService {
+
 	private final IProductDao productDao;
 
 	@Autowired
@@ -39,8 +40,7 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public IProduct get(final Integer id) {
-		final IProduct entity = productDao.get(id);
-		return entity;
+		return productDao.get(id);
 	}
 
 	@Override
@@ -55,8 +55,7 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public List<IProduct> getAll() {
-		final List<IProduct> all = productDao.selectAll();
-		return all;
+		return productDao.selectAll();
 	}
 
 	@Override
