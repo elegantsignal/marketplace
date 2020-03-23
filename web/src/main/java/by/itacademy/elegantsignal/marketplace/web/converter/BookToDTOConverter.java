@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
 
+
 @Component
 public class BookToDTOConverter implements Function<IBook, BookDTO> {
 

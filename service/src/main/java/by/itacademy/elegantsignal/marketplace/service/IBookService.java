@@ -33,4 +33,6 @@ public interface IBookService {
 	@Transactional
 	void saveWithId(IBook book);
 
+	long getCount(BookFilter filter);
+
 }

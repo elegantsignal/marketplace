@@ -74,4 +74,9 @@ public class BookServiceImpl implements IBookService {
 		book.setCreated(modifiedOn);
 		bookDao.insert(book);
 	}
+
+	@Override
+	public long getCount(final BookFilter filter) {
+		return bookDao.getCount(filter);
+	}
 }
