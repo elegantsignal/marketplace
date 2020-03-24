@@ -66,4 +66,9 @@ public class ProductServiceImpl implements IProductService {
 		product.setCreated(modifiedOn);
 		productDao.insert(product);
 	}
+
+	@Override
+	public IProduct getFullInfo(Integer id) {
+		return productDao.getFullInfo(id);
+	}
 }

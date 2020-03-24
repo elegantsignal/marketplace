@@ -74,7 +74,7 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 	@Override
 	protected IProduct parseRow(final ResultSet resultSet) throws SQLException {
 		final IProduct entity = createEntity();
-		entity.setId((Integer) resultSet.getInt("id"));
+		entity.setId(resultSet.getInt("id"));
 
 		final IUser user = new User();
 		user.setId(resultSet.getInt("user_id"));
@@ -90,6 +90,14 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 	@Override
 	protected String getTableName() {
 		return "\"product\"";
+	}
+
+	@Override
+	public IProduct getFullInfo(Integer id) {
+		// TODO Auto-generated method stub
+		System.err.println("UNIMPLEMENTED: getFullInfo(); Timestamp: 8:57:30 PM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: getFullInfo(); Timestamp: 8:57:30 PM");
+		// return null;
 	}
 
 }

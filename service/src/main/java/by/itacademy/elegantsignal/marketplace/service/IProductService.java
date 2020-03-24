@@ -29,4 +29,6 @@ public interface IProductService {
 	@Transactional
 	void saveWithId(IProduct product);
 
+	IProduct getFullInfo(Integer id);
+
 }

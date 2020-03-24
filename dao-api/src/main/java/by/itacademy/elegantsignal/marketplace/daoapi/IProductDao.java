@@ -11,4 +11,6 @@ public interface IProductDao extends IDao<IProduct, Integer> {
 	List<IProduct> find(ProductFilter filter);
 
 	long getCount(ProductFilter filter);
+
+	IProduct getFullInfo(Integer id);
 }

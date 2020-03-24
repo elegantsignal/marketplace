@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.junit.jupiter.api.Test;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
@@ -17,11 +15,12 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 public class ProductServiceTest extends AbstractTest {
 
 	@Test
-	@Transactional
 	public void testCreate() {
 		final IProduct entity = saveNewProduct();
 
-		final IProduct entityFromDb = productService.get(entity.getId());
+		// TODO: fix me full load
+//		final IProduct entityFromDb = productService.get(entity.getId());
+		final IProduct entityFromDb = productService.getFullInfo(entity.getId());
 
 		assertNotNull(entityFromDb);
 		assertEquals(entity.getUser().getId(), entityFromDb.getUser().getId());
