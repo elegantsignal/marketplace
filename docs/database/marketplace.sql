@@ -176,26 +176,26 @@ CREATE TABLE public.permission(
 );
 -- ddl-end --
 
--- object: public.role2permission | type: TABLE --
--- DROP TABLE IF EXISTS public.role2permission CASCADE;
-CREATE TABLE public.role2permission(
+-- object: public.role_2_permission | type: TABLE --
+-- DROP TABLE IF EXISTS public.role_2_permission CASCADE;
+CREATE TABLE public.role_2_permission(
 	role_id integer NOT NULL,
 	role_id1 integer NOT NULL,
-	CONSTRAINT role2permission_pk PRIMARY KEY (role_id,role_id1)
+	CONSTRAINT role_2_permission_pk PRIMARY KEY (role_id,role_id1)
 
 );
 -- ddl-end --
 
 -- object: role_fk | type: CONSTRAINT --
--- ALTER TABLE public.role2permission DROP CONSTRAINT IF EXISTS role_fk CASCADE;
-ALTER TABLE public.role2permission ADD CONSTRAINT role_fk FOREIGN KEY (role_id)
+-- ALTER TABLE public.role_2_permission DROP CONSTRAINT IF EXISTS role_fk CASCADE;
+ALTER TABLE public.role_2_permission ADD CONSTRAINT role_fk FOREIGN KEY (role_id)
 REFERENCES public.role (id) MATCH FULL
 ON DELETE CASCADE ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: permission_fk | type: CONSTRAINT --
--- ALTER TABLE public.role2permission DROP CONSTRAINT IF EXISTS permission_fk CASCADE;
-ALTER TABLE public.role2permission ADD CONSTRAINT permission_fk FOREIGN KEY (role_id1)
+-- ALTER TABLE public.role_2_permission DROP CONSTRAINT IF EXISTS permission_fk CASCADE;
+ALTER TABLE public.role_2_permission ADD CONSTRAINT permission_fk FOREIGN KEY (role_id1)
 REFERENCES public.permission (id) MATCH FULL
 ON DELETE CASCADE ON UPDATE CASCADE;
 -- ddl-end --
@@ -307,50 +307,50 @@ CREATE TABLE public.genre(
 );
 -- ddl-end --
 
--- object: public.book2language | type: TABLE --
--- DROP TABLE IF EXISTS public.book2language CASCADE;
-CREATE TABLE public.book2language(
+-- object: public.book_2_language | type: TABLE --
+-- DROP TABLE IF EXISTS public.book_2_language CASCADE;
+CREATE TABLE public.book_2_language(
 	book_id integer NOT NULL,
 	book_id1 integer NOT NULL,
-	CONSTRAINT book2language_pk PRIMARY KEY (book_id,book_id1)
+	CONSTRAINT book_2_language_pk PRIMARY KEY (book_id,book_id1)
 
 );
 -- ddl-end --
 
 -- object: book_fk | type: CONSTRAINT --
--- ALTER TABLE public.book2language DROP CONSTRAINT IF EXISTS book_fk CASCADE;
-ALTER TABLE public.book2language ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
+-- ALTER TABLE public.book_2_language DROP CONSTRAINT IF EXISTS book_fk CASCADE;
+ALTER TABLE public.book_2_language ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
 REFERENCES public.book (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: language_fk | type: CONSTRAINT --
--- ALTER TABLE public.book2language DROP CONSTRAINT IF EXISTS language_fk CASCADE;
-ALTER TABLE public.book2language ADD CONSTRAINT language_fk FOREIGN KEY (book_id1)
+-- ALTER TABLE public.book_2_language DROP CONSTRAINT IF EXISTS language_fk CASCADE;
+ALTER TABLE public.book_2_language ADD CONSTRAINT language_fk FOREIGN KEY (book_id1)
 REFERENCES public.language (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: public.book2genre | type: TABLE --
--- DROP TABLE IF EXISTS public.book2genre CASCADE;
-CREATE TABLE public.book2genre(
+-- object: public.book_2_genre | type: TABLE --
+-- DROP TABLE IF EXISTS public.book_2_genre CASCADE;
+CREATE TABLE public.book_2_genre(
 	book_id integer NOT NULL,
 	book_id1 smallint NOT NULL,
-	CONSTRAINT book2genre_pk PRIMARY KEY (book_id,book_id1)
+	CONSTRAINT book_2_genre_pk PRIMARY KEY (book_id,book_id1)
 
 );
 -- ddl-end --
 
 -- object: book_fk | type: CONSTRAINT --
--- ALTER TABLE public.book2genre DROP CONSTRAINT IF EXISTS book_fk CASCADE;
-ALTER TABLE public.book2genre ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
+-- ALTER TABLE public.book_2_genre DROP CONSTRAINT IF EXISTS book_fk CASCADE;
+ALTER TABLE public.book_2_genre ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
 REFERENCES public.book (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: genre_fk | type: CONSTRAINT --
--- ALTER TABLE public.book2genre DROP CONSTRAINT IF EXISTS genre_fk CASCADE;
-ALTER TABLE public.book2genre ADD CONSTRAINT genre_fk FOREIGN KEY (book_id1)
+-- ALTER TABLE public.book_2_genre DROP CONSTRAINT IF EXISTS genre_fk CASCADE;
+ALTER TABLE public.book_2_genre ADD CONSTRAINT genre_fk FOREIGN KEY (book_id1)
 REFERENCES public.genre (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
@@ -421,26 +421,26 @@ REFERENCES public."order" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: public.user2role | type: TABLE --
--- DROP TABLE IF EXISTS public.user2role CASCADE;
-CREATE TABLE public.user2role(
+-- object: public.user_2_role | type: TABLE --
+-- DROP TABLE IF EXISTS public.user_2_role CASCADE;
+CREATE TABLE public.user_2_role(
 	user_id integer NOT NULL,
 	user_id1 integer NOT NULL,
-	CONSTRAINT user2role_pk PRIMARY KEY (user_id,user_id1)
+	CONSTRAINT user_2_role_pk PRIMARY KEY (user_id,user_id1)
 
 );
 -- ddl-end --
 
 -- object: user_fk | type: CONSTRAINT --
--- ALTER TABLE public.user2role DROP CONSTRAINT IF EXISTS user_fk CASCADE;
-ALTER TABLE public.user2role ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
+-- ALTER TABLE public.user_2_role DROP CONSTRAINT IF EXISTS user_fk CASCADE;
+ALTER TABLE public.user_2_role ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
 REFERENCES public."user" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: role_fk | type: CONSTRAINT --
--- ALTER TABLE public.user2role DROP CONSTRAINT IF EXISTS role_fk CASCADE;
-ALTER TABLE public.user2role ADD CONSTRAINT role_fk FOREIGN KEY (user_id1)
+-- ALTER TABLE public.user_2_role DROP CONSTRAINT IF EXISTS role_fk CASCADE;
+ALTER TABLE public.user_2_role ADD CONSTRAINT role_fk FOREIGN KEY (user_id1)
 REFERENCES public.role (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
