@@ -7,26 +7,32 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+
 
 @Entity
 public class Product extends BaseEntity implements IProduct {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
 	private IUser user;
-	
+
 	@Column
 	private ProductType type;
-	
+
 	@Column
 	private BigDecimal price;
-	
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "product", targetEntity = Book.class)
+	private IBook book;
+
 	@Column
 	private Date created;
-	
+
 	@Column
 	private Date updated;
 
@@ -36,7 +42,7 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setUser(IUser user) {
+	public void setUser(final IUser user) {
 		this.user = user;
 	}
 
@@ -46,7 +52,7 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setType(ProductType type) {
+	public void setType(final ProductType type) {
 		this.type = type;
 	}
 
@@ -56,7 +62,7 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setPrice(BigDecimal price) {
+	public void setPrice(final BigDecimal price) {
 		this.price = price;
 	}
 
@@ -66,7 +72,7 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setCreated(Date created) {
+	public void setCreated(final Date created) {
 		this.created = created;
 	}
 
@@ -76,8 +82,18 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setUpdated(Date updated) {
+	public void setUpdated(final Date updated) {
 		this.updated = updated;
+	}
+
+	@Override
+	public IBook getBook() {
+		return book;
+	}
+
+	@Override
+	public void setBook(final IBook book) {
+		this.book = book;
 	}
 
 }

@@ -1,6 +1,5 @@
 package by.itacademy.elegantsignal.marketplace.daojdbc.entity;
 
-import java.nio.file.Path;
 import java.util.Date;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
@@ -11,7 +10,7 @@ public class Book extends BaseEntity implements IBook {
 
 	private IProduct product;
 	private String title;
-	private Path cover;
+	private String cover;
 	private Date published;
 	private String description;
 	private Date created;
@@ -23,7 +22,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setProduct(IProduct product) {
+	public void setProduct(final IProduct product) {
 		this.product = product;
 	}
 
@@ -33,17 +32,17 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
 	@Override
-	public Path getCover() {
+	public String getCover() {
 		return cover;
 	}
 
 	@Override
-	public void setCover(Path cover) {
+	public void setCover(final String cover) {
 		this.cover = cover;
 	}
 
@@ -53,7 +52,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setPublished(Date published) {
+	public void setPublished(final Date published) {
 		this.published = published;
 	}
 
@@ -63,7 +62,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -73,7 +72,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setCreated(Date created) {
+	public void setCreated(final Date created) {
 		this.created = created;
 	}
 
@@ -83,7 +82,7 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public void setUpdated(Date updated) {
+	public void setUpdated(final Date updated) {
 		this.updated = updated;
 	}
 

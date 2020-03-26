@@ -28,4 +28,8 @@ public interface IProduct extends IBaseEntity {
 
 	void setUpdated(Date update);
 
+	IBook getBook();
+
+	void setBook(IBook book);
+
 }

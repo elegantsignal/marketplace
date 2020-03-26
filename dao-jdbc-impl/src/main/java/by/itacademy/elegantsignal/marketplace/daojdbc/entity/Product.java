@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
@@ -64,6 +65,22 @@ public class Product extends BaseEntity implements IProduct {
 	@Override
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+
+	@Override
+	public IBook getBook() {
+		// TODO Auto-generated method stub
+		System.err.println("UNIMPLEMENTED: getBook(); Timestamp: 1:46:43 AM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: getBook(); Timestamp: 1:46:43 AM");
+		// return null;
+	}
+
+	@Override
+	public void setBook(IBook book) {
+		// TODO Auto-generated method stub
+		System.err.println("UNIMPLEMENTED: setBook(); Timestamp: 1:46:43 AM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: setBook(); Timestamp: 1:46:43 AM");
+		// 
 	}
 
 }

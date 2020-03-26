@@ -62,4 +62,13 @@ public class UserServiceTest extends AbstractTest {
 		userService.deleteAll();
 		assertEquals(0, userService.getAll().size());
 	}
+
+	@Test
+	public void testGetCount() {
+		final int randomObjectsCount = getRandomObjectsCount();
+		for (int i = 0; i < randomObjectsCount; i++) {
+			saveNewUser();
+		}
+		assertEquals(randomObjectsCount, userService.getAll().size());
+	}
 }

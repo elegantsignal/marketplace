@@ -35,4 +35,6 @@ public interface IBookService {
 
 	long getCount(BookFilter filter);
 
+	IBook getFullInfo(Integer id);
+
 }

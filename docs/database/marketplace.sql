@@ -122,8 +122,7 @@ ALTER SEQUENCE public.song_id_seq OWNER TO postgres;
 -- object: public.book | type: TABLE --
 -- DROP TABLE IF EXISTS public.book CASCADE;
 CREATE TABLE public.book(
-	id serial NOT NULL,
-	product_id smallint NOT NULL,
+	id integer NOT NULL,
 	title varchar(32) NOT NULL,
 	cover varchar(128),
 	published date NOT NULL,
@@ -205,7 +204,7 @@ ON DELETE CASCADE ON UPDATE CASCADE;
 CREATE TABLE public.order_item(
 	id serial NOT NULL,
 	order_id integer NOT NULL,
-	product_id smallint,
+	product_id integer,
 	amount numeric(12,2) NOT NULL,
 	CONSTRAINT order_item_pk PRIMARY KEY (id)
 
@@ -261,8 +260,8 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- object: public.author | type: TABLE --
 -- DROP TABLE IF EXISTS public.author CASCADE;
 CREATE TABLE public.author(
-	id serial NOT NULL,
 	book_id integer,
+	id serial NOT NULL,
 	firstaname varchar(128) NOT NULL,
 	lastname varchar(128),
 	photo varchar,
@@ -281,21 +280,6 @@ REFERENCES public.book (id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: public.language | type: TABLE --
--- DROP TABLE IF EXISTS public.language CASCADE;
-CREATE TABLE public.language(
-	id serial NOT NULL,
-	code varchar(3),
-	name varchar(128) NOT NULL,
-	CONSTRAINT language_pk PRIMARY KEY (id),
-	CONSTRAINT language_name_uq UNIQUE (name),
-	CONSTRAINT language_code_name_uq UNIQUE (code,name)
-
-);
--- ddl-end --
-COMMENT ON COLUMN public.language.code IS 'ISO 639-2';
--- ddl-end --
-
 -- object: public.genre | type: TABLE --
 -- DROP TABLE IF EXISTS public.genre CASCADE;
 CREATE TABLE public.genre(
@@ -305,30 +289,6 @@ CREATE TABLE public.genre(
 	CONSTRAINT genere_uq UNIQUE (name)
 
 );
--- ddl-end --
-
--- object: public.book_2_language | type: TABLE --
--- DROP TABLE IF EXISTS public.book_2_language CASCADE;
-CREATE TABLE public.book_2_language(
-	book_id integer NOT NULL,
-	book_id1 integer NOT NULL,
-	CONSTRAINT book_2_language_pk PRIMARY KEY (book_id,book_id1)
-
-);
--- ddl-end --
-
--- object: book_fk | type: CONSTRAINT --
--- ALTER TABLE public.book_2_language DROP CONSTRAINT IF EXISTS book_fk CASCADE;
-ALTER TABLE public.book_2_language ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
-REFERENCES public.book (id) MATCH FULL
-ON DELETE RESTRICT ON UPDATE CASCADE;
--- ddl-end --
-
--- object: language_fk | type: CONSTRAINT --
--- ALTER TABLE public.book_2_language DROP CONSTRAINT IF EXISTS language_fk CASCADE;
-ALTER TABLE public.book_2_language ADD CONSTRAINT language_fk FOREIGN KEY (book_id1)
-REFERENCES public.language (id) MATCH FULL
-ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: public.book_2_genre | type: TABLE --
@@ -365,12 +325,12 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- object: public.product | type: TABLE --
 -- DROP TABLE IF EXISTS public.product CASCADE;
 CREATE TABLE public.product(
-	id smallserial NOT NULL,
+	id serial NOT NULL,
 	user_id integer NOT NULL,
 	type varchar(16) NOT NULL,
 	price numeric(6,2) NOT NULL,
-	created timestamp,
-	updated timestamp,
+	created timestamp NOT NULL,
+	updated timestamp NOT NULL,
 	CONSTRAINT product_pk PRIMARY KEY (id)
 
 );
@@ -378,14 +338,14 @@ CREATE TABLE public.product(
 
 -- object: product_fk | type: CONSTRAINT --
 -- ALTER TABLE public.book DROP CONSTRAINT IF EXISTS product_fk CASCADE;
-ALTER TABLE public.book ADD CONSTRAINT product_fk FOREIGN KEY (product_id)
+ALTER TABLE public.book ADD CONSTRAINT product_fk FOREIGN KEY (id)
 REFERENCES public.product (id) MATCH FULL
-ON DELETE RESTRICT ON UPDATE CASCADE;
+ON DELETE CASCADE ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: book_uq | type: CONSTRAINT --
 -- ALTER TABLE public.book DROP CONSTRAINT IF EXISTS book_uq CASCADE;
-ALTER TABLE public.book ADD CONSTRAINT book_uq UNIQUE (product_id);
+ALTER TABLE public.book ADD CONSTRAINT book_uq UNIQUE (id);
 -- ddl-end --
 
 -- object: product_fk | type: CONSTRAINT --
@@ -449,11 +409,11 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public.review CASCADE;
 CREATE TABLE public.review(
 	id serial NOT NULL,
-	order_item_id integer NOT NULL,
 	grade smallint NOT NULL,
 	comment text,
 	created timestamp NOT NULL,
 	updated timestamp NOT NULL,
+	order_item_id integer NOT NULL,
 	CONSTRAINT reviews_pk PRIMARY KEY (id)
 
 );
@@ -463,7 +423,7 @@ CREATE TABLE public.review(
 -- DROP TABLE IF EXISTS public."like" CASCADE;
 CREATE TABLE public."like"(
 	id serial NOT NULL,
-	product_id smallint NOT NULL,
+	product_id integer NOT NULL,
 	user_id integer NOT NULL,
 	created timestamp NOT NULL,
 	CONSTRAINT like_pk PRIMARY KEY (id)

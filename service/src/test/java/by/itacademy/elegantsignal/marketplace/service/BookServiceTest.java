@@ -3,11 +3,8 @@ package by.itacademy.elegantsignal.marketplace.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-
-import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,18 +14,21 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 public class BookServiceTest extends AbstractTest {
 
 	@Test
-	@Transactional
 	public void testCreate() {
-		final IBook entity = saveNewBook();
+		final IBook book = saveNewBook();
+		final IBook bookFromDb = bookService.getFullInfo(book.getId());
 
-		final IBook entityFromDb = bookService.get(entity.getId());
+		assertEquals(book.getId(), bookFromDb.getId());
+		assertEquals(book.getId(), bookFromDb.getProduct().getId());
 
-		assertNotNull(entityFromDb);
-		assertNotNull(entityFromDb.getId());
-		assertEquals(entity.getProduct().getId(), entityFromDb.getProduct().getId());
-		assertNotNull(entityFromDb.getCreated());
-		assertNotNull(entityFromDb.getUpdated());
-		assertTrue(entityFromDb.getCreated().equals(entityFromDb.getUpdated()));
+		assertEquals(book.getCreated(), book.getUpdated());
+		assertEquals(book.getCreated(), bookFromDb.getCreated());
+		assertEquals(book.getUpdated(), bookFromDb.getUpdated());
+
+		assertEquals(book.getTitle(), bookFromDb.getTitle());
+		assertEquals(book.getDescription(), bookFromDb.getDescription());
+		assertEquals(book.getCover(), bookFromDb.getCover());
+		assertEquals(book.getPublished(), bookFromDb.getPublished());
 	}
 
 	@Test
@@ -57,9 +57,13 @@ public class BookServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete() {
-		final IBook entity = saveNewBook();
-		bookService.delete(entity.getId());
-		assertNull(bookService.get(entity.getId()));
+		final IBook book = saveNewBook();
+
+		bookService.delete(book.getId());
+		assertNull(bookService.get(book.getId()));
+
+		// Corresponding product should be also deleted
+		assertNull(productService.get(book.getProduct().getId()));
 	}
 
 	@Test

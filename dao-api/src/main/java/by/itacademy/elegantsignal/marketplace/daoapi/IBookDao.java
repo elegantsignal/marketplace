@@ -11,4 +11,6 @@ public interface IBookDao extends IDao<IBook, Integer> {
 	List<IBook> find(BookFilter filter);
 
 	long getCount(BookFilter filter);
+
+	IBook getFullInfo(Integer id);
 }

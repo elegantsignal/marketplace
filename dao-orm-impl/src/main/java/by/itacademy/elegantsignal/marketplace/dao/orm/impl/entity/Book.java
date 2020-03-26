@@ -1,29 +1,32 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
 
-import java.nio.file.Path;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
-import by.itacademy.elegantsignal.marketplace.dao.orm.converter.PathConverter;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 
 
 @Entity
-public class Book extends BaseEntity implements IBook {
+public class Book implements IBook {
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Product.class)
+	@Id
+	private Integer id;
+
+	@OneToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Product.class)
+	@PrimaryKeyJoinColumn
 	private IProduct product;
 
 	@JoinTable(name = "book_2_genre", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
@@ -35,8 +38,7 @@ public class Book extends BaseEntity implements IBook {
 	private String title;
 
 	@Column
-	@Convert(converter = PathConverter.class)
-	private Path cover;
+	private String cover;
 
 	@Column
 	private Date published;
@@ -49,6 +51,16 @@ public class Book extends BaseEntity implements IBook {
 
 	@Column
 	private Date updated;
+
+	@Override
+	public Integer getId() {
+		return this.id;
+	}
+
+	@Override
+	public void setId(final Integer id) {
+		this.id = id;
+	}
 
 	public Set<IGenre> getGenre() {
 		return genre;
@@ -79,12 +91,12 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public Path getCover() {
+	public String getCover() {
 		return cover;
 	}
 
 	@Override
-	public void setCover(final Path cover) {
+	public void setCover(final String cover) {
 		this.cover = cover;
 	}
 
@@ -127,4 +139,5 @@ public class Book extends BaseEntity implements IBook {
 	public void setUpdated(final Date updated) {
 		this.updated = updated;
 	}
+
 }

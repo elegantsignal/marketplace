@@ -96,7 +96,7 @@ class SeedTest extends AbstractTest {
 		book.setId((Integer) bookData.get("id"));
 		book.setProduct(productService.get((Integer) bookData.get("product_id")));
 		book.setTitle((String) bookData.get("title"));
-		book.setCover(Paths.get((String) bookData.get("cover")));
+		book.setCover(Paths.get((String) bookData.get("cover")).toString());
 		book.setPublished((Date) bookData.get("published"));
 		book.setDescription((String) bookData.get("description"));
 		book.setCreated(new Date());

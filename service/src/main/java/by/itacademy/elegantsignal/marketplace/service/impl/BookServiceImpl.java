@@ -15,12 +15,8 @@ import by.itacademy.elegantsignal.marketplace.service.IBookService;
 @Service
 public class BookServiceImpl implements IBookService {
 
-	private final IBookDao bookDao;
-
 	@Autowired
-	public BookServiceImpl(final IBookDao bookDao) {
-		this.bookDao = bookDao;
-	}
+	private IBookDao bookDao;
 
 	@Override
 	public IBook createEntity() {
@@ -28,20 +24,29 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	@Override
-	public void save(final IBook entity) {
+	public void save(final IBook book) {
 		final Date modifiedOn = new Date();
-		entity.setUpdated(modifiedOn);
-		if (entity.getId() == null) {
-			entity.setCreated(modifiedOn);
-			bookDao.insert(entity);
+
+		book.setUpdated(modifiedOn);
+
+		if (book.getId() == null) {
+			book.setId(book.getProduct().getId());
+			book.setCreated(modifiedOn);
+			bookDao.insert(book);
 		} else {
-			bookDao.update(entity);
+			bookDao.update(book);
 		}
 	}
 
 	@Override
 	public IBook get(final Integer id) {
 		return bookDao.get(id);
+	}
+
+	@Override
+	public IBook getFullInfo(final Integer id) {
+		return bookDao.getFullInfo(id);
+
 	}
 
 	@Override
@@ -77,4 +82,5 @@ public class BookServiceImpl implements IBookService {
 	public long getCount(final BookFilter filter) {
 		return bookDao.getCount(filter);
 	}
+
 }

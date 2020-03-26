@@ -142,16 +142,19 @@ public abstract class AbstractTest {
 	}
 
 	protected IBook saveNewBook() {
-		final IBook entity = bookService.createEntity();
-		entity.setProduct(saveNewProduct());
-		entity.setTitle("The title#" + getRandomPrefix());
-		entity.setCover(Paths.get("img", "cover", getRandomPrefix()));
-		entity.setPublished(new Date());
-		entity.setDescription("Description-" + getRandomPrefix());
-		entity.setCreated(new Date());
-		entity.setUpdated(new Date());
-		bookService.save(entity);
-		return entity;
+		return saveNewBook(saveNewProduct());
+	}
+
+	protected IBook saveNewBook(final IProduct product) {
+		final IBook book = bookService.createEntity();
+		book.setProduct(product);
+
+		book.setTitle("The title#" + getRandomPrefix());
+		book.setCover(Paths.get("img", "cover", getRandomPrefix()).toString());
+		book.setPublished(new Date());
+		book.setDescription("Description-" + getRandomPrefix());
+		bookService.save(book);
+		return book;
 	}
 
 	protected IGenre saveNewGenre() {

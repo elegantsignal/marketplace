@@ -7,7 +7,7 @@ services:
     image: postgres:10
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: 1
     volumes:
       - jd2_marketplace_postgresql:/var/lib/postgresql/data
     ports:

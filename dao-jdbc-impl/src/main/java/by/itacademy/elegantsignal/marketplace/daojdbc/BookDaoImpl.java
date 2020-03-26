@@ -31,6 +31,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		executeStatement(new PreparedStatementAction<IBook>(String.format(
 				"insert into %s (product_id, title, cover, published, description, created, updated) values(?,?,?,?,?,?,?)",
 				getTableName()), true) {
+
 			@Override
 			public IBook doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setInt(1, entity.getProduct().getId());
@@ -81,7 +82,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		entity.setProduct(product);
 
 		entity.setTitle(resultSet.getString("title"));
-		entity.setCover(Paths.get(resultSet.getString("cover")));
+		entity.setCover(Paths.get(resultSet.getString("cover")).toString());
 		entity.setPublished(resultSet.getTimestamp("published"));
 		entity.setDescription(resultSet.getString("description"));
 		entity.setCreated(resultSet.getTimestamp("created"));
@@ -92,6 +93,14 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 	@Override
 	protected String getTableName() {
 		return "book";
+	}
+
+	@Override
+	public IBook getFullInfo(final Integer id) {
+		// TODO Auto-generated method stub
+		System.err.println("UNIMPLEMENTED: getFullInfo(); Timestamp: 12:06:08 AM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: getFullInfo(); Timestamp: 12:06:08 AM");
+		// return null;
 	}
 
 }
