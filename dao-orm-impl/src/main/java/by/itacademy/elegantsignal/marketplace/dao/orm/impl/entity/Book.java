@@ -1,10 +1,12 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import by.itacademy.elegantsignal.marketplace.dao.orm.converter.LocalDateAttributeConverter;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
@@ -41,7 +44,8 @@ public class Book implements IBook {
 	private String cover;
 
 	@Column
-	private Date published;
+	@Convert(converter = LocalDateAttributeConverter.class)
+	private LocalDate published;
 
 	@Column
 	private String description;
@@ -101,12 +105,12 @@ public class Book implements IBook {
 	}
 
 	@Override
-	public Date getPublished() {
+	public LocalDate getPublished() {
 		return published;
 	}
 
 	@Override
-	public void setPublished(final Date published) {
+	public void setPublished(final LocalDate published) {
 		this.published = published;
 	}
 

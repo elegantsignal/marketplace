@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.daojdbc.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
@@ -11,7 +12,7 @@ public class Book extends BaseEntity implements IBook {
 	private IProduct product;
 	private String title;
 	private String cover;
-	private Date published;
+	private LocalDate published;
 	private String description;
 	private Date created;
 	private Date updated;
@@ -47,12 +48,12 @@ public class Book extends BaseEntity implements IBook {
 	}
 
 	@Override
-	public Date getPublished() {
+	public LocalDate getPublished() {
 		return published;
 	}
 
 	@Override
-	public void setPublished(final Date published) {
+	public void setPublished(final LocalDate published) {
 		this.published = published;
 	}
 

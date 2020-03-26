@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -151,7 +152,7 @@ public abstract class AbstractTest {
 
 		book.setTitle("The title#" + getRandomPrefix());
 		book.setCover(Paths.get("img", "cover", getRandomPrefix()).toString());
-		book.setPublished(new Date());
+		book.setPublished(LocalDate.now());
 		book.setDescription("Description-" + getRandomPrefix());
 		bookService.save(book);
 		return book;

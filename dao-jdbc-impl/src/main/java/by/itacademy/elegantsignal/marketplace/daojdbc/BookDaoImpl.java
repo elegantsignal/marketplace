@@ -36,7 +36,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 			public IBook doWithPreparedStatement(final PreparedStatement pStmt) throws SQLException {
 				pStmt.setInt(1, entity.getProduct().getId());
 				pStmt.setString(2, entity.getTitle());
-				pStmt.setString(3, entity.getCover().toString());
+				pStmt.setString(3, entity.getCover());
 				pStmt.setObject(4, entity.getPublished(), Types.TIMESTAMP);
 				pStmt.setString(5, entity.getDescription());
 				pStmt.setObject(6, entity.getCreated(), Types.TIMESTAMP);
@@ -83,7 +83,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 
 		entity.setTitle(resultSet.getString("title"));
 		entity.setCover(Paths.get(resultSet.getString("cover")).toString());
-		entity.setPublished(resultSet.getTimestamp("published"));
+		entity.setPublished(resultSet.getDate("published").toLocalDate());
 		entity.setDescription(resultSet.getString("description"));
 		entity.setCreated(resultSet.getTimestamp("created"));
 		entity.setUpdated(resultSet.getTimestamp("updated"));

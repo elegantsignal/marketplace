@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +98,7 @@ class SeedTest extends AbstractTest {
 		book.setProduct(productService.get((Integer) bookData.get("product_id")));
 		book.setTitle((String) bookData.get("title"));
 		book.setCover(Paths.get((String) bookData.get("cover")).toString());
-		book.setPublished((Date) bookData.get("published"));
+		book.setPublished((LocalDate) bookData.get("published"));
 		book.setDescription((String) bookData.get("description"));
 		book.setCreated(new Date());
 		book.setUpdated(new Date());
