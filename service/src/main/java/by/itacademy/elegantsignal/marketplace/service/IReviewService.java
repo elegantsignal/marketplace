@@ -28,4 +28,6 @@ public interface IReviewService {
 	@Deprecated
 	@Transactional
 	void saveWithId(IReview review);
+
+	IReview getFullInfo(Integer id);
 }

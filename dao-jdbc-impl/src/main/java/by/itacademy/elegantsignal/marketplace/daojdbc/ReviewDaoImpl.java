@@ -91,4 +91,12 @@ public class ReviewDaoImpl extends AbstractDaoImpl<IReview, Integer> implements 
 		return "\"review\"";
 	}
 
+	@Override
+	public IReview getFullInfo(Integer id) {
+		// TODO Auto-generated method stub
+		System.err.println("UNIMPLEMENTED: getFullInfo(); Timestamp: 4:44:43 PM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: getFullInfo(); Timestamp: 4:44:43 PM");
+		// return null;
+	}
+
 }

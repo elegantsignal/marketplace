@@ -42,6 +42,12 @@ public class ReviewServiceImpl implements IReviewService {
 	public IReview get(final Integer id) {
 		return reviewDao.get(id);
 	}
+	
+	@Override
+	public IReview getFullInfo(Integer id) {
+		return reviewDao.getFullInfo(id);
+
+	}
 
 	@Override
 	public void delete(final Integer id) {
@@ -66,4 +72,6 @@ public class ReviewServiceImpl implements IReviewService {
 		review.setCreated(modifiedOn);
 		reviewDao.insert(review);
 	}
+
+
 }

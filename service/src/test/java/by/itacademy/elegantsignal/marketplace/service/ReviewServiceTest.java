@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.junit.jupiter.api.Test;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
@@ -16,7 +14,6 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
 public class ReviewServiceTest extends AbstractTest {
 
 	@Test
-	@Transactional
 	public void testCreate() {
 		final IReview entity = saveNewReview();
 
@@ -25,11 +22,20 @@ public class ReviewServiceTest extends AbstractTest {
 		assertNotNull(entityFromDb);
 		assertNotNull(entityFromDb.getId());
 
-		assertEquals(entity.getOrderItem().getId(), entityFromDb.getOrderItem().getId());
+//		assertEquals(entity.getOrderItem().getId(), entityFromDb.getOrderItem().getId());
 		assertEquals(entity.getGrade(), entityFromDb.getGrade());
 		assertEquals(entity.getComment(), entityFromDb.getComment());
 		assertEquals(entity.getCreated(), entityFromDb.getCreated());
 		assertEquals(entity.getUpdated(), entityFromDb.getUpdated());
+	}
+	
+	@Test
+	public void testGetFullInfo() {
+		final IReview entity = saveNewReview();
+
+		final IReview entityFromDb = reviewService.getFullInfo(entity.getId());
+
+		assertEquals(entity.getOrderItem().getId(), entityFromDb.getOrderItem().getId());
 	}
 
 	@Test

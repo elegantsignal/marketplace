@@ -11,4 +11,6 @@ public interface IReviewDao extends IDao<IReview, Integer> {
 	List<IReview> find(ReviewFilter filter);
 
 	long getCount(ReviewFilter filter);
+
+	IReview getFullInfo(Integer id);
 }
