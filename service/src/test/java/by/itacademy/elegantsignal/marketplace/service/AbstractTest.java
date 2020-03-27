@@ -29,6 +29,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
@@ -60,6 +61,9 @@ public abstract class AbstractTest {
 
 	@Autowired
 	protected IReviewService reviewService;
+
+	@Autowired
+	protected IRoleService roleService;
 
 	private static final Random RANDOM = new Random();
 
@@ -217,5 +221,12 @@ public abstract class AbstractTest {
 		entity.setUpdated(new Date());
 		reviewService.save(entity);
 		return entity;
+	}
+
+	protected IRole saveNewRole() {
+		final IRole role = roleService.createEntity();
+		role.setName("Role-" + getRandomPrefix());
+		roleService.save(role);
+		return role;
 	}
 }
