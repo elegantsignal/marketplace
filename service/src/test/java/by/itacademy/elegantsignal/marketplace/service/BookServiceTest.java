@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 
 
 public class BookServiceTest extends AbstractTest {
@@ -75,23 +78,45 @@ public class BookServiceTest extends AbstractTest {
 		bookService.deleteAll();
 		assertEquals(0, bookService.getAll().size());
 	}
-	
+
 	@Test
 	public void testBook2Genre() {
 		final IBook book = saveNewBook();
-		
-		Set<IGenre> genreSet = new HashSet<IGenre>();
+
+		final Set<IGenre> genreSet = new HashSet<IGenre>();
 		final int genreCount = getRandomObjectsCount();
 		for (int i = 0; i < genreCount; i++) {
 			genreSet.add(saveNewGenre());
 		}
-		
+
 		book.setGenre(genreSet);
 		bookService.save(book);
-		
+
 		final IBook bookFromDb = bookService.getFullInfo(book.getId());
 
 		assertEquals(genreCount, bookFromDb.getGenre().size());
+	}
+
+	@Test
+	public void testUserBooks() {
+		final IUser user = saveNewUser();
+
+		final int bookCount = getRandomObjectsCount();
+		for (int i = 0; i < bookCount; i++) {
+			final IProduct product = saveNewProduct(user);
+			saveNewBook(product);
+		}
+
+		// Generate several addition books
+		for (int i = 0; i < bookCount; i++) {
+			saveNewBook();
+		}
+
+		final BookFilter bookFilter = new BookFilter(user);
+		final List<IBook> booksList = bookService.find(bookFilter);
+
+		assertEquals(bookCount, booksList.size());
+
 	}
 
 }

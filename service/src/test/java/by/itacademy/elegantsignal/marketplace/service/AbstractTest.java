@@ -184,14 +184,19 @@ public abstract class AbstractTest {
 	}
 
 	protected IProduct saveNewProduct() {
-		final IProduct entity = productService.createEntity();
-		entity.setUser(saveNewUser());
-		entity.setType(randomEnum(ProductType.class));
-		entity.setPrice((BigDecimal.valueOf(getRandomObjectsCount())));
-		entity.setCreated(new Date());
-		entity.setUpdated(new Date());
-		productService.save(entity);
-		return entity;
+		final IUser user = saveNewUser();
+		return saveNewProduct(user);
+	}
+
+	protected IProduct saveNewProduct(final IUser user) {
+		final IProduct product = productService.createEntity();
+		product.setUser(user);
+		product.setType(randomEnum(ProductType.class));
+		product.setPrice((BigDecimal.valueOf(getRandomObjectsCount())));
+		product.setCreated(new Date());
+		product.setUpdated(new Date());
+		productService.save(product);
+		return product;
 	}
 
 	protected IOrderItem saveNewOrderItem() {
