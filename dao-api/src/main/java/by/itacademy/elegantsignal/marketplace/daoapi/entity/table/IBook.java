@@ -2,6 +2,7 @@ package by.itacademy.elegantsignal.marketplace.daoapi.entity.table;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 
 public interface IBook extends IBaseEntity {
@@ -33,5 +34,9 @@ public interface IBook extends IBaseEntity {
 	Date getUpdated();
 
 	void setUpdated(Date update);
+
+	Set<IGenre> getGenre();
+
+	void setGenre(Set<IGenre> genre);
 
 }

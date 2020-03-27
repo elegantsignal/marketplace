@@ -66,10 +66,12 @@ public class Book implements IBook {
 		this.id = id;
 	}
 
+	@Override
 	public Set<IGenre> getGenre() {
 		return genre;
 	}
 
+	@Override
 	public void setGenre(final Set<IGenre> genre) {
 		this.genre = genre;
 	}

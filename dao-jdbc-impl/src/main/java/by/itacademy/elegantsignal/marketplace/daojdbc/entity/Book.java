@@ -2,8 +2,10 @@ package by.itacademy.elegantsignal.marketplace.daojdbc.entity;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 
 
@@ -85,6 +87,22 @@ public class Book extends BaseEntity implements IBook {
 	@Override
 	public void setUpdated(final Date updated) {
 		this.updated = updated;
+	}
+
+	@Override
+	public Set<IGenre> getGenre() {
+		// TODO Auto-generated method stub
+		System.err.println("UNIMPLEMENTED: getGenre(); Timestamp: 1:45:51 AM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: getGenre(); Timestamp: 1:45:51 AM");
+		// return null;
+	}
+
+	@Override
+	public void setGenre(Set<IGenre> genre) {
+		// TODO Auto-generated method stub
+		System.err.println("UNIMPLEMENTED: setGenre(); Timestamp: 1:45:51 AM");
+		throw new UnsupportedOperationException("UNIMPLEMENTED: setGenre(); Timestamp: 1:45:51 AM");
+		// 
 	}
 
 }

@@ -56,4 +56,5 @@ public class GenreServiceTest extends AbstractTest {
 		genreService.deleteAll();
 		assertEquals(0, genreService.getAll().size());
 	}
+
 }

@@ -46,6 +46,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		cq.select(from); // define what need to be selected
 
 		from.fetch(Book_.product, JoinType.LEFT);
+		from.fetch(Book_.genre, JoinType.LEFT);
 		// .. where id=...
 		cq.where(cb.equal(from.get(Book_.id), id)); // where id=?
 

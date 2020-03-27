@@ -70,4 +70,5 @@ public class GenreServiceImpl implements IGenreService {
 	public long getCount(final GenreFilter filter) {
 		return genreDao.getCount(filter);
 	}
+
 }

@@ -11,4 +11,5 @@ public interface IGenreDao extends IDao<IGenre, Integer> {
 	List<IGenre> find(GenreFilter filter);
 
 	long getCount(GenreFilter filter);
+
 }

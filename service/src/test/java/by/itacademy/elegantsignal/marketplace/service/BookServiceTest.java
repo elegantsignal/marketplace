@@ -4,11 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 
 
 public class BookServiceTest extends AbstractTest {
@@ -72,4 +75,23 @@ public class BookServiceTest extends AbstractTest {
 		bookService.deleteAll();
 		assertEquals(0, bookService.getAll().size());
 	}
+	
+	@Test
+	public void testBook2Genre() {
+		final IBook book = saveNewBook();
+		
+		Set<IGenre> genreSet = new HashSet<IGenre>();
+		final int genreCount = getRandomObjectsCount();
+		for (int i = 0; i < genreCount; i++) {
+			genreSet.add(saveNewGenre());
+		}
+		
+		book.setGenre(genreSet);
+		bookService.save(book);
+		
+		final IBook bookFromDb = bookService.getFullInfo(book.getId());
+
+		assertEquals(genreCount, bookFromDb.getGenre().size());
+	}
+
 }
