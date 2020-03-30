@@ -159,46 +159,6 @@ CREATE TABLE public.role(
 );
 -- ddl-end --
 
--- object: public.permission | type: TABLE --
--- DROP TABLE IF EXISTS public.permission CASCADE;
-CREATE TABLE public.permission(
-	id serial NOT NULL,
-	content_type smallint NOT NULL,
-	"create" bool NOT NULL DEFAULT FALSE,
-	read bool NOT NULL DEFAULT FALSE,
-	update bool NOT NULL DEFAULT FALSE,
-	delete bool NOT NULL DEFAULT FALSE,
-	read_all bool NOT NULL DEFAULT FALSE,
-	edit_all bool NOT NULL DEFAULT FALSE,
-	CONSTRAINT permission_pk PRIMARY KEY (id)
-
-);
--- ddl-end --
-
--- object: public.role_2_permission | type: TABLE --
--- DROP TABLE IF EXISTS public.role_2_permission CASCADE;
-CREATE TABLE public.role_2_permission(
-	role_id integer NOT NULL,
-	permission_id integer NOT NULL,
-	CONSTRAINT role_2_permission_pk PRIMARY KEY (role_id,permission_id)
-
-);
--- ddl-end --
-
--- object: role_fk | type: CONSTRAINT --
--- ALTER TABLE public.role_2_permission DROP CONSTRAINT IF EXISTS role_fk CASCADE;
-ALTER TABLE public.role_2_permission ADD CONSTRAINT role_fk FOREIGN KEY (role_id)
-REFERENCES public.role (id) MATCH FULL
-ON DELETE CASCADE ON UPDATE CASCADE;
--- ddl-end --
-
--- object: permission_fk | type: CONSTRAINT --
--- ALTER TABLE public.role_2_permission DROP CONSTRAINT IF EXISTS permission_fk CASCADE;
-ALTER TABLE public.role_2_permission ADD CONSTRAINT permission_fk FOREIGN KEY (permission_id)
-REFERENCES public.permission (id) MATCH FULL
-ON DELETE CASCADE ON UPDATE CASCADE;
--- ddl-end --
-
 -- object: public.order_item | type: TABLE --
 -- DROP TABLE IF EXISTS public.order_item CASCADE;
 CREATE TABLE public.order_item(
@@ -257,22 +217,6 @@ REFERENCES public.restricted_file (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: public.author | type: TABLE --
--- DROP TABLE IF EXISTS public.author CASCADE;
-CREATE TABLE public.author(
-	id serial NOT NULL,
-	firstaname varchar(128) NOT NULL,
-	lastname varchar(128),
-	photo varchar,
-	bio text,
-	book_id integer,
-	CONSTRAINT author_pk PRIMARY KEY (id)
-
-);
--- ddl-end --
-ALTER TABLE public.author OWNER TO postgres;
--- ddl-end --
-
 -- object: public.genre | type: TABLE --
 -- DROP TABLE IF EXISTS public.genre CASCADE;
 CREATE TABLE public.genre(
@@ -315,13 +259,6 @@ ON DELETE CASCADE ON UPDATE CASCADE;
 -- object: book_uq | type: CONSTRAINT --
 -- ALTER TABLE public.book DROP CONSTRAINT IF EXISTS book_uq CASCADE;
 ALTER TABLE public.book ADD CONSTRAINT book_uq UNIQUE (id);
--- ddl-end --
-
--- object: book_fk | type: CONSTRAINT --
--- ALTER TABLE public.author DROP CONSTRAINT IF EXISTS book_fk CASCADE;
-ALTER TABLE public.author ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
-REFERENCES public.book (id) MATCH FULL
-ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: public.book_2_genre | type: TABLE --
