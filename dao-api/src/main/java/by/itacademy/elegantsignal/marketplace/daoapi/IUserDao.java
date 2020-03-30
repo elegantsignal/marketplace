@@ -12,4 +12,6 @@ public interface IUserDao extends IDao<IUser, Integer> {
 
 	long getCount(UserFilter filter);
 
+	IUser getFullInfo(Integer id);
+
 }

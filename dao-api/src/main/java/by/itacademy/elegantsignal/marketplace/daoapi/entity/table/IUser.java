@@ -1,6 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.daoapi.entity.table;
 
 import java.util.Date;
+import java.util.Set;
 
 
 public interface IUser extends IBaseEntity {
@@ -24,5 +25,9 @@ public interface IUser extends IBaseEntity {
 	Date getUpdated();
 
 	void setUpdated(Date update);
+
+	Set<IRole> getRole();
+
+	void setRole(Set<IRole> roleList);
 
 }

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -22,6 +24,7 @@ public class Product extends BaseEntity implements IProduct {
 	private IUser user;
 
 	@Column
+	@Enumerated(EnumType.STRING)
 	private ProductType type;
 
 	@Column

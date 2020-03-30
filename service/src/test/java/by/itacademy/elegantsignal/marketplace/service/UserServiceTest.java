@@ -5,10 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
@@ -71,4 +74,22 @@ public class UserServiceTest extends AbstractTest {
 		}
 		assertEquals(randomObjectsCount, userService.getAll().size());
 	}
+
+	@Test
+	public void testUserRole() {
+		final IRole role = saveNewRole();
+		assertNotNull(role.getId());
+		assertNotNull(role.getName());
+		final Set<IRole> roleSet = new HashSet<IRole>();
+		roleSet.add(role);
+
+		final IUser user = saveNewUser(roleSet);
+
+		final IUser userFromDb = userService.getFullInfo(user.getId());
+		final Set<IRole> roleSetFromDb = userFromDb.getRole();
+
+		final IRole firstRoleFromDb = roleSetFromDb.iterator().next();
+		assertEquals(role.getName(), firstRoleFromDb.getName());
+	}
+
 }

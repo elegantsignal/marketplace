@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
@@ -72,6 +73,25 @@ public class UserDaoImpl extends AbstractDaoImpl<IUser, Integer> implements IUse
 			default:
 				throw new UnsupportedOperationException("sorting is not supported by column:" + sortColumn);
 		}
+	}
+
+	@Override
+	public IUser getFullInfo(final Integer id) {
+		final EntityManager em = getEntityManager();
+		final CriteriaBuilder cb = em.getCriteriaBuilder();
+
+		final CriteriaQuery<IUser> cq = cb.createQuery(IUser.class); // define returning result
+		final Root<User> from = cq.from(User.class); // define table for select
+
+		cq.select(from); // define what need to be selected
+
+		from.fetch(User_.role, JoinType.LEFT);
+		// .. where id=...
+		cq.where(cb.equal(from.get(User_.id), id)); // where id=?
+
+		final TypedQuery<IUser> q = em.createQuery(cq);
+
+		return q.getSingleResult();
 	}
 
 }

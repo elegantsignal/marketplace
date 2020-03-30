@@ -58,6 +58,11 @@ public class UserServiceImpl implements IUserService {
 	public IUser get(final Integer id) {
 		return userDao.get(id);
 	}
+	
+	@Override
+	public IUser getFullInfo(Integer id) {
+		return userDao.getFullInfo(id);
+	}
 
 	@Override
 	public void delete(final Integer id) {
@@ -83,4 +88,6 @@ public class UserServiceImpl implements IUserService {
 	public long getCount(final UserFilter filter) {
 		return userDao.getCount(filter);
 	}
+
+
 }

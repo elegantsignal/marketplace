@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.RoleName;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILike;
@@ -136,14 +138,22 @@ public abstract class AbstractTest {
 	}
 
 	protected IUser saveNewUser() {
-		final IUser entity = userService.createEntity();
-		entity.setName("User-" + getRandomPrefix());
-		entity.setEmail("email-" + getRandomPrefix());
-		entity.setPassword("password-" + getRandomPrefix());
-		entity.setCreated(new Date());
-		entity.setUpdated(new Date());
-		userService.save(entity);
-		return entity;
+		final IUser user = userService.createEntity();
+		user.setName("User-" + getRandomPrefix());
+		user.setEmail("email-" + getRandomPrefix());
+		user.setPassword("password-" + getRandomPrefix());
+		userService.save(user);
+		return user;
+	}
+
+	protected IUser saveNewUser(final Set<IRole> roleSet) {
+		final IUser user = userService.createEntity();
+		user.setName("User-" + getRandomPrefix());
+		user.setEmail("email-" + getRandomPrefix());
+		user.setPassword("password-" + getRandomPrefix());
+		user.setRole(roleSet);
+		userService.save(user);
+		return user;
 	}
 
 	protected IBook saveNewBook() {
@@ -181,8 +191,6 @@ public abstract class AbstractTest {
 	protected IOrder saveNewOrder() {
 		final IOrder entity = orderService.createEntity();
 		entity.setUser(saveNewUser());
-		entity.setCreated(new Date());
-		entity.setUpdated(new Date());
 		orderService.save(entity);
 		return entity;
 	}
@@ -197,8 +205,6 @@ public abstract class AbstractTest {
 		product.setUser(user);
 		product.setType(randomEnum(ProductType.class));
 		product.setPrice((BigDecimal.valueOf(getRandomObjectsCount())));
-		product.setCreated(new Date());
-		product.setUpdated(new Date());
 		productService.save(product);
 		return product;
 	}
@@ -217,15 +223,13 @@ public abstract class AbstractTest {
 		entity.setOrderItem(saveNewOrderItem());
 		entity.setGrade(getRandomFromRange(5));
 		entity.setComment("Comment-" + getRandomPrefix());
-		entity.setCreated(new Date());
-		entity.setUpdated(new Date());
 		reviewService.save(entity);
 		return entity;
 	}
 
 	protected IRole saveNewRole() {
 		final IRole role = roleService.createEntity();
-		role.setName("Role-" + getRandomPrefix());
+		role.setName(randomEnum(RoleName.class));
 		roleService.save(role);
 		return role;
 	}

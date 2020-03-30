@@ -34,4 +34,6 @@ public interface IUserService {
 
 	long getCount(UserFilter filter);
 
+	IUser getFullInfo(Integer id);
+
 }

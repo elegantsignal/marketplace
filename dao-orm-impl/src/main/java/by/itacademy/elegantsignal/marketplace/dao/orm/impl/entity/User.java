@@ -1,10 +1,16 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
@@ -26,6 +32,11 @@ public class User extends BaseEntity implements IUser {
 
 	@Column
 	private Date updated;
+
+	@JoinTable(name = "user_2_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") })
+	@ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY)
+	private Set<IRole> role;
 
 	@Override
 	public String getName() {
@@ -75,6 +86,16 @@ public class User extends BaseEntity implements IUser {
 	@Override
 	public void setUpdated(final Date updated) {
 		this.updated = updated;
+	}
+
+	@Override
+	public Set<IRole> getRole() {
+		return this.role;
+	}
+
+	@Override
+	public void setRole(final Set<IRole> role) {
+		this.role = role;
 	}
 
 }
