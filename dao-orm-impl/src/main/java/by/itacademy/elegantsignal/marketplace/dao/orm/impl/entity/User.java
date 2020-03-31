@@ -27,7 +27,7 @@ public class User extends BaseEntity implements IUser {
 	@Column
 	private String password;
 
-	@Column
+	@Column(updatable = false)
 	private Date created;
 
 	@Column

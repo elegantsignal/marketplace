@@ -20,6 +20,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/custom.css">
 
+<script src="${contextPath}/resources/js/init-materialize-forms.js"></script>
+
+
 </head>
 <body>
 	<tiles:insertAttribute name="header" />
