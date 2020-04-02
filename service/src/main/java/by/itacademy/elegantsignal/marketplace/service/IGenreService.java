@@ -31,6 +31,8 @@ public interface IGenreService {
 
 	List<IGenre> find(GenreFilter filter);
 
+	IGenre findOne(GenreFilter genreFilter);
+
 	long getCount(GenreFilter filter);
 
 }

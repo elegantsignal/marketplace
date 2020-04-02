@@ -71,4 +71,9 @@ public class GenreServiceImpl implements IGenreService {
 		return genreDao.getCount(filter);
 	}
 
+	@Override
+	public IGenre findOne(GenreFilter genreFilter) {
+		return genreDao.findOne(genreFilter);
+	}
+
 }

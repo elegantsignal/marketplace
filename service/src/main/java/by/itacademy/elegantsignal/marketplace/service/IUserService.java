@@ -32,6 +32,8 @@ public interface IUserService {
 
 	List<IUser> find(UserFilter filter);
 
+	IUser findOne(UserFilter filter);
+
 	long getCount(UserFilter filter);
 
 	IUser getFullInfo(Integer id);

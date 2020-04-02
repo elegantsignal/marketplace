@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,6 +8,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 
@@ -65,12 +67,40 @@ public class GenreDaoImpl extends AbstractDaoImpl<IGenre, Integer> implements IG
 
 	private SingularAttribute<? super Genre, ?> toMetamodelFormat(final String sortColumn) {
 		switch (sortColumn) {
-		case "id":
-			return BaseEntity_.id;
-		case "name":
-			return Genre_.name;
-		default:
-			throw new UnsupportedOperationException("sorting is not supported by column:" + sortColumn);
+			case "id":
+				return BaseEntity_.id;
+			case "name":
+				return Genre_.name;
+			default:
+				throw new UnsupportedOperationException("sorting is not supported by column:" + sortColumn);
+		}
+	}
+
+	@Override
+	public IGenre findOne(final GenreFilter filter) {
+		final EntityManager em = getEntityManager();
+		final CriteriaBuilder cb = em.getCriteriaBuilder();
+		final CriteriaQuery<IGenre> cq = cb.createQuery(IGenre.class);
+		final Root<Genre> from = cq.from(Genre.class);
+		cq.select(from);
+
+		applyFilter(filter, cb, cq, from);
+
+		final TypedQuery<IGenre> q = em.createQuery(cq);
+		return q.getSingleResult();
+	}
+
+	private void applyFilter(final GenreFilter filter, final CriteriaBuilder cb, final CriteriaQuery<?> cq,
+			final Root<Genre> from) {
+		final List<Predicate> ands = new ArrayList<>();
+
+		final String genreName = filter.getName();
+		if (genreName != null) {
+			ands.add(cb.equal(from.get(Genre_.name), genreName));
+		}
+
+		if (!ands.isEmpty()) {
+			cq.where(cb.and(ands.toArray(new Predicate[0])));
 		}
 	}
 }

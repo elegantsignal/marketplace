@@ -14,4 +14,6 @@ public interface IUserDao extends IDao<IUser, Integer> {
 
 	IUser getFullInfo(Integer id);
 
+	IUser findOne(UserFilter filter);
+
 }

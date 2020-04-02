@@ -60,6 +60,11 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 	@Override
+	public IUser findOne(UserFilter filter) {
+		return userDao.findOne(filter);
+	}
+	
+	@Override
 	public IUser getFullInfo(Integer id) {
 		return userDao.getFullInfo(id);
 	}
@@ -88,6 +93,8 @@ public class UserServiceImpl implements IUserService {
 	public long getCount(final UserFilter filter) {
 		return userDao.getCount(filter);
 	}
+
+
 
 
 }

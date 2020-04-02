@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 
 
@@ -36,5 +37,6 @@ public interface IBookService {
 	long getCount(BookFilter filter);
 
 	IBook getFullInfo(Integer id);
+
 
 }
