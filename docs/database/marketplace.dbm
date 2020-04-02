@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,0" last-zoom="0.95"
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,144" last-zoom="0.95"
 	 default-owner="postgres">
 <database name="marketplace" encoding="UTF8" lc-collate="en_US.utf8" lc-ctype="en_US.utf8">
 	<role name="postgres"/>
@@ -64,7 +64,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="order">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="240" y="380"/>
+	<position x="260" y="344"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -105,7 +105,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="book">
 	<schema name="public"/>
-	<position x="960" y="660"/>
+	<position x="920" y="620"/>
 	<column name="title" not-null="true">
 		<type name="varchar" length="32"/>
 	</column>
@@ -136,7 +136,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="role">
 	<schema name="public"/>
-	<position x="1140" y="100"/>
+	<position x="1140" y="104"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -153,7 +153,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="order_item">
 	<schema name="public"/>
-	<position x="440" y="660"/>
+	<position x="400" y="620"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -184,7 +184,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="restricted_file">
 	<schema name="public"/>
-	<position x="1280" y="1000"/>
+	<position x="1200" y="920"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -195,7 +195,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="download_links">
 	<schema name="public"/>
-	<position x="640" y="940"/>
+	<position x="560" y="860"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -233,7 +233,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.download_links"
 	 src-required="true" dst-required="false">
 	<label ref-type="name-label">
-		<position x="0" y="0"/>
+		<position x="26.6689" y="-25.6857"/>
 	</label>
 </relationship>
 
@@ -248,7 +248,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="genre">
 	<schema name="public"/>
-	<position x="1420" y="620"/>
+	<position x="1400" y="660"/>
 	<column name="id" not-null="true">
 		<type name="smallserial" length="0"/>
 	</column>
@@ -272,13 +272,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.&quot;order&quot;"
 	 src-required="true" dst-required="false">
 	<label ref-type="name-label">
-		<position x="0" y="0"/>
+		<position x="-3.06463" y="-21.6857"/>
 	</label>
 </relationship>
 
 <table name="product">
 	<schema name="public"/>
-	<position x="660" y="380"/>
+	<position x="660" y="344"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -337,7 +337,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 custom-color="#64f130"
 	 src-table="public.product"
 	 dst-table="public.order_item"
-	 src-required="false" dst-required="false"/>
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="8.07438" y="-20.6857"/>
+	</label>
+</relationship>
 
 <relationship name="user_has_many_product" type="rel1n"
 	 src-col-pattern="{st}_{sc}"
@@ -346,11 +350,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 custom-color="#c29e9a"
 	 src-table="public.&quot;user&quot;"
 	 dst-table="public.product"
-	 src-required="true" dst-required="false"/>
+	 src-required="true" dst-required="false">
+	<label ref-type="name-label">
+		<position x="4.61012" y="-31.6857"/>
+	</label>
+</relationship>
 
 <table name="payment">
 	<schema name="public"/>
-	<position x="60" y="100"/>
+	<position x="260" y="104"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -380,7 +388,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 custom-color="#49b62d"
 	 src-table="public.&quot;order&quot;"
 	 dst-table="public.payment"
-	 src-required="true" dst-required="false"/>
+	 src-required="true" dst-required="false">
+	<label ref-type="name-label">
+		<position x="1.7553" y="-27.6857"/>
+	</label>
+</relationship>
 
 <relationship name="user_2_role" type="relnn"
 	 src-col-pattern="{st}_{sc}" dst-col-pattern="{dt}_{sc}"
@@ -399,7 +411,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="review">
 	<schema name="public"/>
-	<position x="120" y="940"/>
+	<position x="140" y="860"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -422,7 +434,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="like">
 	<schema name="public"/>
-	<position x="1120" y="360"/>
+	<position x="1100" y="340"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -449,7 +461,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 custom-color="#f80c3e"
 	 src-table="public.&quot;user&quot;"
 	 dst-table="public.&quot;like&quot;"
-	 src-required="true" dst-required="false"/>
+	 src-required="true" dst-required="false">
+	<label ref-type="name-label">
+		<position x="12.2192" y="-23.6857"/>
+	</label>
+</relationship>
 
 <relationship name="product_has_many_like" type="rel1n"
 	 src-col-pattern="{st}_{sc}"
@@ -469,7 +485,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.restricted_file"
 	 src-required="false" dst-required="false">
 	<label ref-type="name-label">
-		<position x="0" y="0"/>
+		<position x="14.8022" y="-24.6857"/>
 	</label>
 </relationship>
 
@@ -480,6 +496,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 custom-color="#082162"
 	 src-table="public.review"
 	 dst-table="public.order_item"
-	 src-required="false" dst-required="true"/>
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="-9.93848" y="-25.6857"/>
+	</label>
+</relationship>
 
 </dbmodel>
