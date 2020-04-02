@@ -33,7 +33,7 @@ import by.itacademy.elegantsignal.marketplace.web.dto.UserDTO;
 public class UserController extends AbstractController {
 
 	private static final String FORM_MODEL = "formModel";
-	private static final String USERS_EDIT = "users.edit";
+	private static final String VIEW_NAME = "users.edit";
 
 	@Autowired
 	private IUserService userService;
@@ -70,13 +70,13 @@ public class UserController extends AbstractController {
 		final IUser newEntity = userService.createEntity();
 		hashMap.put(FORM_MODEL, toDtoConverter.apply(newEntity));
 
-		return new ModelAndView(USERS_EDIT, hashMap);
+		return new ModelAndView(VIEW_NAME, hashMap);
 	}
 
 	@PostMapping()
 	public String save(@Valid @ModelAttribute(FORM_MODEL) final UserDTO formModel, final BindingResult result) {
 		if (result.hasErrors()) {
-			return USERS_EDIT;
+			return VIEW_NAME;
 		} else {
 			final IUser entity = fromDtoConverter.apply(formModel);
 			userService.save(entity);
@@ -98,7 +98,7 @@ public class UserController extends AbstractController {
 		hashMap.put(FORM_MODEL, dto);
 		hashMap.put("readonly", true);
 
-		return new ModelAndView(USERS_EDIT, hashMap);
+		return new ModelAndView(VIEW_NAME, hashMap);
 	}
 
 	@GetMapping(value = "/{id}/edit")
@@ -108,7 +108,7 @@ public class UserController extends AbstractController {
 		final Map<String, Object> hashMap = new HashMap<>();
 		hashMap.put(FORM_MODEL, dto);
 
-		return new ModelAndView(USERS_EDIT, hashMap);
+		return new ModelAndView(VIEW_NAME, hashMap);
 	}
 
 }

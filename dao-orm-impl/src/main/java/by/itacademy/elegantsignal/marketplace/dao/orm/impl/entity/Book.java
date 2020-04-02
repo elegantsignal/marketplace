@@ -50,7 +50,7 @@ public class Book implements IBook {
 	@Column
 	private String description;
 
-	@Column
+	@Column(updatable = false)
 	private Date created;
 
 	@Column

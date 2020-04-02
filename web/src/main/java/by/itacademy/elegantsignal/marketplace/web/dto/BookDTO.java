@@ -1,58 +1,59 @@
 package by.itacademy.elegantsignal.marketplace.web.dto;
 
-import java.nio.file.Path;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
+
 
 public class BookDTO {
 
 	private Integer id;
-	private IProduct product;
+	private BigDecimal price;
+	private Set<IGenre> genre;
 	private String title;
-	private Path cover;
-	private Date published;
+	private String cover;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate published;
+
 	private String description;
 	private Date created;
 	private Date updated;
-
-	public IProduct getProduct() {
-		return product;
-	}
-
-	public void setProduct(IProduct product) {
-		this.product = product;
-	}
 
 	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
-	public Path getCover() {
+	public String getCover() {
 		return cover;
 	}
 
-	public void setCover(Path cover) {
+	public void setCover(final String cover) {
 		this.cover = cover;
 	}
 
-	public Date getPublished() {
+	public LocalDate getPublished() {
 		return published;
 	}
 
-	public void setPublished(Date published) {
-		this.published = published;
+	public void setPublished(final LocalDate localDate) {
+		this.published = localDate;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -60,7 +61,7 @@ public class BookDTO {
 		return created;
 	}
 
-	public void setCreated(Date created) {
+	public void setCreated(final Date created) {
 		this.created = created;
 	}
 
@@ -68,7 +69,7 @@ public class BookDTO {
 		return updated;
 	}
 
-	public void setUpdated(Date updated) {
+	public void setUpdated(final Date updated) {
 		this.updated = updated;
 	}
 
@@ -78,6 +79,18 @@ public class BookDTO {
 
 	public Integer getId() {
 		return this.id;
+	}
+
+	public Set<IGenre> getGenre() {
+		return this.genre;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(final BigDecimal price) {
+		this.price = price;
 	}
 
 }

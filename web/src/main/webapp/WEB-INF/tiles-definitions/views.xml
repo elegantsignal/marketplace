@@ -38,6 +38,14 @@
 	</definition>
 
 	<definition
+		name="book.edit"
+		extends="DefaultTemplate">
+		<put-attribute
+			name="body"
+			value="/WEB-INF/views/book/form.jsp" />
+	</definition>
+
+	<definition
 		name="genre.list"
 		extends="DefaultTemplate">
 		<put-attribute

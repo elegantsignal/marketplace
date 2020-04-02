@@ -7,6 +7,7 @@
 		<tr>
 			<th>id</th>
 			<th>title</th>
+			<th>price</th>
 			<th>created</th>
 			<th>updated</th>
 			<th></th>
@@ -19,6 +20,9 @@
 				</td>
 				<td>
 					<c:out value="${item.title}" />
+				</td>
+				<td>
+					<c:out value="${item.price}" />
 				</td>
 				<td>
 					<fmt:formatDate pattern="yyyy-MM-dd" value="${item.created}" />

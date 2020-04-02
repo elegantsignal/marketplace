@@ -14,7 +14,7 @@ public interface IProductService {
 	List<IProduct> getAll();
 
 	@Transactional
-	void save(IProduct entity);
+	void save(IProduct product);
 
 	@Transactional
 	void delete(Integer id);
