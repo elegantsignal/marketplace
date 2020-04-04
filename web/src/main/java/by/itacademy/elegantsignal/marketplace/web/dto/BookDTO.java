@@ -7,14 +7,12 @@ import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
-
 
 public class BookDTO {
 
 	private Integer id;
 	private BigDecimal price;
-	private Set<IGenre> genre;
+	private Set<Integer> genreIds;
 	private String title;
 	private String cover;
 
@@ -81,16 +79,20 @@ public class BookDTO {
 		return this.id;
 	}
 
-	public Set<IGenre> getGenre() {
-		return this.genre;
-	}
-
 	public BigDecimal getPrice() {
 		return price;
 	}
 
 	public void setPrice(final BigDecimal price) {
 		this.price = price;
+	}
+
+	public Set<Integer> getGenreIds() {
+		return genreIds;
+	}
+
+	public void setGenreIds(final Set<Integer> genreIds) {
+		this.genreIds = genreIds;
 	}
 
 }

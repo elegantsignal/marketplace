@@ -73,6 +73,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 				<label for="description">description</label>
 			</div>
 
+			<div class="row">
+				<div class="input-field col s12">
+					<form:select
+						path="genreIds"
+						disabled="${readonly}"
+						multiple="true">
+						<form:options items="${genreChoices}" />
+					</form:select>
+					<form:errors
+						path="genreIds"
+						cssClass="red-text" />
+					<label
+						for="genreIds"
+						class="multiselect-label">genres</label>
+				</div>
+			</div>
+
 		</div>
 		<div class="row">
 			<div class="col s6"></div>

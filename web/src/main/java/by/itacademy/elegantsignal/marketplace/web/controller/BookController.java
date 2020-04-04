@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
+import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookFromDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookToDTOConverter;
@@ -39,9 +41,12 @@ public class BookController extends AbstractController {
 
 	@Autowired
 	private IBookService bookService;
-	
+
 	@Autowired
 	private IProductService productService;
+
+	@Autowired
+	private IGenreService genreService;
 
 	@Autowired
 	private BookToDTOConverter toDtoConverter;
@@ -73,7 +78,7 @@ public class BookController extends AbstractController {
 	@GetMapping(value = "/add")
 	public ModelAndView showForm() {
 		final Map<String, Object> hashMap = new HashMap<>();
-		final IProduct product= productService.createEntity();
+		final IProduct product = productService.createEntity();
 		final IBook book = bookService.createEntity();
 		book.setProduct(product);
 		hashMap.put(FORM_MODEL, toDtoConverter.apply(book));
@@ -100,11 +105,12 @@ public class BookController extends AbstractController {
 
 	@GetMapping(value = "/{id}")
 	public ModelAndView viewDetails(@PathVariable(name = "id", required = true) final Integer id) {
-		final IBook dbModel = bookService.getFullInfo(id);
-		final BookDTO dto = toDtoConverter.apply(dbModel);
+		final IBook book = bookService.getFullInfo(id);
+		final BookDTO bookDto = toDtoConverter.apply(book);
 		final Map<String, Object> hashMap = new HashMap<>();
-		hashMap.put(FORM_MODEL, dto);
+		hashMap.put(FORM_MODEL, bookDto);
 		hashMap.put("readonly", true);
+		loadCommonFormModels(hashMap);
 
 		return new ModelAndView(VIEW_NAME, hashMap);
 	}
@@ -115,7 +121,15 @@ public class BookController extends AbstractController {
 
 		final Map<String, Object> hashMap = new HashMap<>();
 		hashMap.put(FORM_MODEL, bookDto);
+		loadCommonFormModels(hashMap);
 
 		return new ModelAndView(VIEW_NAME, hashMap);
+	}
+
+	private void loadCommonFormModels(final Map<String, Object> hashMap) {
+		final Map<Integer, String> genreMap = genreService.getAll()
+				.stream()
+				.collect(Collectors.toMap(IGenre::getId, IGenre::getName));
+		hashMap.put("genreChoices", genreMap);
 	}
 }
