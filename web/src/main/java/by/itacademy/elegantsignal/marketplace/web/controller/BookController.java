@@ -1,8 +1,17 @@
 package by.itacademy.elegantsignal.marketplace.web.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
@@ -35,6 +45,8 @@ import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
 @Controller
 @RequestMapping(value = "/book")
 public class BookController extends AbstractController {
+
+	public static final String FILE_FOLDER = "/home/binbrayer/projects/elegantsignal/marketplace/media/";
 
 	private static final String FORM_MODEL = "formModel";
 	private static final String VIEW_NAME = "book.edit";
@@ -87,12 +99,35 @@ public class BookController extends AbstractController {
 	}
 
 	@PostMapping()
-	public String save(@Valid @ModelAttribute(FORM_MODEL) final BookDTO formModel, final BindingResult result) {
+	public String save(
+			@Valid @ModelAttribute(FORM_MODEL) final BookDTO formModel,
+			@RequestParam("cover") final MultipartFile file,
+			final BindingResult result) throws IOException {
+
 		if (result.hasErrors()) {
 			return VIEW_NAME;
 		} else {
+			if (!file.isEmpty()) {
+				String originName = file.getOriginalFilename().trim().toLowerCase();
+				String extension = originName.substring(originName.lastIndexOf('.')).trim().toLowerCase();
+
+				String fileName = UUID.randomUUID().toString() + extension;
+
+				InputStream inputStream = file.getInputStream();
+				Files.copy(inputStream, new File(FILE_FOLDER + fileName).toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+				formModel.setCover(fileName);
+			}
+			// save old file path
+			Path oldPath = Paths.get(FILE_FOLDER + bookService.get(formModel.getId()).getCover());
 			final IBook book = fromDtoConverter.apply(formModel);
 			bookService.save(book);
+
+			// delete old file after save
+			try {
+				Files.delete(oldPath);
+			} catch (NoSuchFileException e) {}
+
 			return "redirect:/book";
 		}
 	}
