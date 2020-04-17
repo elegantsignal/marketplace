@@ -13,6 +13,10 @@
       http://www.springframework.org/schema/context 
       http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<context:property-placeholder
+		location="classpath:jdbc.properties"
+		ignore-unresolvable="false" />
+
 	<mvc:annotation-driven />
 
 	<context:component-scan base-package="by.itacademy.elegantsignal.marketplace.web.controller" />
