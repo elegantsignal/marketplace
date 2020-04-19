@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 public class BookServiceTest extends AbstractTest {
 
 	@Test
-	public void testCreate() {
+	public void testCreate() throws IOException {
 		final IBook book = saveNewBook();
 		final IBook bookFromDb = bookService.getFullInfo(book.getId());
 
@@ -38,7 +39,7 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testGetAll() {
+	public void testGetAll() throws IOException {
 		final int initialCount = bookService.getAll().size();
 
 		final int randomObjectsCount = getRandomObjectsCount();
@@ -62,7 +63,7 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testDelete() {
+	public void testDelete() throws IOException {
 		final IBook book = saveNewBook();
 
 		bookService.delete(book.getId());
@@ -73,14 +74,14 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testDeleteAll() {
+	public void testDeleteAll() throws IOException {
 		saveNewBook();
 		bookService.deleteAll();
 		assertEquals(0, bookService.getAll().size());
 	}
 
 	@Test
-	public void testBook2Genre() {
+	public void testBook2Genre() throws IOException {
 		final IBook book = saveNewBook();
 
 		final Set<IGenre> genreSet = new HashSet<IGenre>();
@@ -98,7 +99,7 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testUserBooks() {
+	public void testUserBooks() throws IOException {
 		final IUser user = saveNewUser();
 
 		final int bookCount = getRandomObjectsCount();

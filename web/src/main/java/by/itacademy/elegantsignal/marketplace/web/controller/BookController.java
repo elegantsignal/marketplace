@@ -1,17 +1,10 @@
 package by.itacademy.elegantsignal.marketplace.web.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +42,7 @@ public class BookController extends AbstractController {
 
 	@Value("${jdbc.url}")
 	String testString;
-	
+
 	public static final String FILE_FOLDER = "/home/binbrayer/projects/elegantsignal/marketplace/media/";
 
 	private static final String FORM_MODEL = "formModel";
@@ -110,30 +103,19 @@ public class BookController extends AbstractController {
 
 		if (result.hasErrors()) {
 			return VIEW_NAME;
-		} else {
-			if (!file.isEmpty()) {
-				String originName = file.getOriginalFilename().trim().toLowerCase();
-				String extension = originName.substring(originName.lastIndexOf('.')).trim().toLowerCase();
-
-				String fileName = UUID.randomUUID().toString() + extension;
-
-				InputStream inputStream = file.getInputStream();
-				Files.copy(inputStream, new File(FILE_FOLDER + fileName).toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-				formModel.setCover(fileName);
-			}
-			// save old file path
-			Path oldPath = Paths.get(FILE_FOLDER + bookService.get(formModel.getId()).getCover());
-			final IBook book = fromDtoConverter.apply(formModel);
-			bookService.save(book);
-
-			// delete old file after save
-			try {
-				Files.delete(oldPath);
-			} catch (NoSuchFileException e) {}
-
-			return "redirect:/book";
 		}
+
+		InputStream inputStream;
+		if (!file.isEmpty()) {
+			inputStream = file.getInputStream();
+		} else {
+			inputStream = null;
+		}
+		final IBook book = fromDtoConverter.apply(formModel);
+		bookService.save(book, inputStream);
+
+		return "redirect:/book";
+
 	}
 
 	@GetMapping(value = "/{id}/delete")

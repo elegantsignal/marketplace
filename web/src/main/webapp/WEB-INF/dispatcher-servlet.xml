@@ -28,6 +28,10 @@
 		mapping="/resources/**"
 		location="/resources/" />
 
+	<mvc:resources
+		mapping="/media/**"
+		location="file:/home/binbrayer/projects/elegantsignal/marketplace/media/" />
+
 	<bean
 		id="viewResolver"
 		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">

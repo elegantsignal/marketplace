@@ -1,5 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -10,10 +12,14 @@ import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
+import by.itacademy.elegantsignal.marketplace.service.IFileService;
 
 
 @Service
 public class BookServiceImpl implements IBookService {
+
+	@Autowired
+	private IFileService fileService;
 
 	@Autowired
 	private IBookDao bookDao;
@@ -24,10 +30,26 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	@Override
-	public void save(final IBook book) {
+	public void save(final IBook book) throws IOException {
 		final Date modifiedOn = new Date();
 
 		book.setUpdated(modifiedOn);
+
+		if (book.getId() == null) {
+			book.setId(book.getProduct().getId());
+			book.setCreated(modifiedOn);
+			bookDao.insert(book);
+		} else {
+			bookDao.update(book);
+		}
+	}
+
+	@Override
+	public void save(final IBook book, final InputStream inputStream) throws IOException {
+		final Date modifiedOn = new Date();
+
+		book.setUpdated(modifiedOn);
+		book.setCover(fileService.saveTmpImage(inputStream));
 
 		if (book.getId() == null) {
 			book.setId(book.getProduct().getId());

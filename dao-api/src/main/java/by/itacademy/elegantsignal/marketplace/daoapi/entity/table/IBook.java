@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.daoapi.entity.table;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
@@ -15,9 +16,9 @@ public interface IBook extends IBaseEntity {
 
 	void setTitle(String title);
 
-	String getCover();
+	File getCover();
 
-	void setCover(String cover);
+	void setCover(File file);
 
 	LocalDate getPublished();
 

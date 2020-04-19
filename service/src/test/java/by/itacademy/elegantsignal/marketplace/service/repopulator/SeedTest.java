@@ -50,7 +50,12 @@ class SeedTest extends AbstractTest {
 					break;
 				case "Book":
 					for (final T bookData : modelData) {
-						createBook((Map<String, T>) bookData);
+						try {
+							createBook((Map<String, T>) bookData);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					break;
 				default:
@@ -67,7 +72,7 @@ class SeedTest extends AbstractTest {
 		userService.save(user);
 	}
 
-	private <T> void createBook(final Map<String, T> bookData) {
+	private <T> void createBook(final Map<String, T> bookData) throws IOException {
 
 		// get user associated to book
 		final UserFilter userFilter = new UserFilter();
@@ -106,7 +111,8 @@ class SeedTest extends AbstractTest {
 		book.setGenre(genreSet);
 
 		book.setTitle((String) bookData.get("title"));
-		book.setCover(Paths.get((String) bookData.get("cover")).toString());
+		// TODO: implement cover
+//		book.setCover(Paths.get((String) bookData.get("cover")).toString());
 		final Date date = (Date) bookData.get("published");
 		book.setPublished(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 		book.setDescription((String) bookData.get("description"));

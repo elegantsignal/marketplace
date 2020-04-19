@@ -54,16 +54,11 @@
 		<div class="col s4">
 
 			<div class="card">
-				<div class="card-image">
-					<img src="https://picsum.photos/200/300?random=${item.id}">
-					<span class="card-title">Card Title</span>
-				</div>
-				<div class="card-content">
-					<p>I am a very simple card. I am good at containing small bits of information.
-						I am convenient because I require little markup to use effectively.</p>
-				</div>
-				<div class="card-action">
-					<a href="#">This is a link</a>
+				<div class="card-image book-cover">
+					<img src="${item.cover}">
+					<h3>
+						<a href="${pagesBook}/${item.id}" class="card-title">${item.title}</a>
+					</h3>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.web.dto;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
@@ -33,6 +34,14 @@ public class BookDTO {
 
 	public String getCover() {
 		return cover;
+	}
+
+	public void setCover(final File cover) {
+		if (cover != null) {
+			this.cover = cover.toString();
+			return;
+		}
+		this.cover = "";
 	}
 
 	public void setCover(final String cover) {

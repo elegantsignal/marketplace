@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import by.itacademy.elegantsignal.marketplace.dao.orm.converter.FileAtributeConverter;
 import by.itacademy.elegantsignal.marketplace.dao.orm.converter.LocalDateAttributeConverter;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
@@ -41,7 +43,8 @@ public class Book implements IBook {
 	private String title;
 
 	@Column
-	private String cover;
+	@Convert(converter = FileAtributeConverter.class)
+	private File cover;
 
 	@Column
 	@Convert(converter = LocalDateAttributeConverter.class)
@@ -97,12 +100,12 @@ public class Book implements IBook {
 	}
 
 	@Override
-	public String getCover() {
+	public File getCover() {
 		return cover;
 	}
 
 	@Override
-	public void setCover(final String cover) {
+	public void setCover(final File cover) {
 		this.cover = cover;
 	}
 

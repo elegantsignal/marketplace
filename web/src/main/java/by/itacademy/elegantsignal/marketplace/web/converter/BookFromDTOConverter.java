@@ -48,7 +48,8 @@ public class BookFromDTOConverter implements Function<BookDTO, IBook> {
 		}
 
 		book.setTitle(dto.getTitle());
-		book.setCover(dto.getCover());
+		// TODO make decision what to do with cover field
+//		book.setCover(dto.getCover());
 		book.setPublished(dto.getPublished());
 		book.setDescription(dto.getDescription());
 

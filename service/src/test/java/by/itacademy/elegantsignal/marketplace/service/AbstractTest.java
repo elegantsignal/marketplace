@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -156,23 +157,23 @@ public abstract class AbstractTest {
 		return user;
 	}
 
-	protected IBook saveNewBook() {
+	protected IBook saveNewBook() throws IOException {
 		return saveNewBook(saveNewProduct());
 	}
 
-	protected IBook saveNewBook(final IProduct product) {
+	protected IBook saveNewBook(final IProduct product) throws IOException {
 		final IBook book = bookService.createEntity();
 		book.setProduct(product);
 
 		book.setTitle("The title#" + getRandomPrefix());
-		book.setCover(Paths.get("img", "cover", getRandomPrefix()).toString());
+		book.setCover(new File("/tmp/" + getRandomPrefix()));
 		book.setPublished(LocalDate.now());
 		book.setDescription("Description-" + getRandomPrefix());
 		bookService.save(book);
 		return book;
 	}
 
-	protected IGenre saveNewGenre() {
+	protected IGenre saveNewGenre()  {
 		final IGenre entity = genreService.createEntity();
 		entity.setName("Genre-" + getRandomPrefix());
 		genreService.save(entity);

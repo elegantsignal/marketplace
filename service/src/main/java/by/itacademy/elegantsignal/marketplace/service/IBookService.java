@@ -1,5 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -15,7 +17,10 @@ public interface IBookService {
 	List<IBook> getAll();
 
 	@Transactional
-	void save(IBook entity);
+	void save(IBook entity) throws IOException;
+
+	@Transactional
+	void save(IBook book, InputStream inputStream) throws IOException;
 
 	@Transactional
 	void delete(Integer id);
