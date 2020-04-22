@@ -33,3 +33,6 @@ target
 *.out.xml
 *.factorypath
 .vs
+
+#media storage
+media
