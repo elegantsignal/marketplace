@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <h4 class="header">books</h4>
 <table class="bordered highlight">
 	<tbody>
 		<tr>
-			<th>id</th>
+			<th><spring:message code="table.column.id" /></th>
 			<th>title</th>
 			<th>price</th>
 			<th>created</th>

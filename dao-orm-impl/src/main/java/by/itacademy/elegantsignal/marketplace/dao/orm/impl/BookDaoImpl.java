@@ -142,10 +142,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 
 	@Override
 	public void insert(final IBook book) {
-		LOGGER.info("Will try to save file:" + book.getCover().toString());
-		final String fileName = book.getTitle().replaceAll(" ", "_").toLowerCase();
-		final File saveFile = Paths.get("/home/binbrayer/projects/elegantsignal/marketplace/media/" + fileName).toFile();
-		book.getCover().renameTo(saveFile);
+		saveCover(book);
 
 		final EntityManager entityManager = getEntityManager();
 		entityManager.persist(book);
@@ -153,6 +150,14 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 
 	@Override
 	public void update(final IBook book) {
+		saveCover(book);
+
+		final EntityManager entityManager = getEntityManager();
+		entityManager.merge(book);
+		entityManager.flush();
+	}
+
+	private void saveCover(final IBook book) {
 		LOGGER.info("Will try to save file:" + book.getCover().toString());
 
 		final String fileExtension = getImageExtension(book.getCover());
@@ -170,12 +175,8 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		book.setCover(new File(relativeDir.resolve(fileName).toString()));
 
-		final EntityManager entityManager = getEntityManager();
-		entityManager.merge(book);
-		entityManager.flush();
+		book.setCover(new File(relativeDir.resolve(fileName).toString()));
 	}
 
 	private String getImageExtension(final File image) throws IllegalArgumentException {

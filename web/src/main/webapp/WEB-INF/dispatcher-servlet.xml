@@ -6,12 +6,12 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="
-      http://www.springframework.org/schema/beans 
-      http://www.springframework.org/schema/beans/spring-beans.xsd
-      http://www.springframework.org/schema/mvc 
-      http://www.springframework.org/schema/mvc/spring-mvc.xsd
-      http://www.springframework.org/schema/context 
-      http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:property-placeholder
 		location="classpath:jdbc.properties"
@@ -50,4 +50,41 @@
 			</list>
 		</property>
 	</bean>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*" />
+			<ref bean="localeChangeInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<bean
+		id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/locales/messages</value>
+			</list>
+		</property>
+		<property
+			name="defaultEncoding"
+			value="UTF-8" />
+	</bean>
+
+	<bean
+		id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property
+			name="paramName"
+			value="lang" />
+	</bean>
+
+	<bean
+		id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property
+			name="defaultLocale"
+			value="ru_RU" />
+	</bean>
+
 </beans>
