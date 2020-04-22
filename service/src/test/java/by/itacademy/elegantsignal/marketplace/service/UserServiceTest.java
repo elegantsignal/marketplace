@@ -92,4 +92,20 @@ public class UserServiceTest extends AbstractTest {
 		assertEquals(role.getName(), firstRoleFromDb.getName());
 	}
 
+	@Test
+	public void testGetUserByEmail() {
+		final Set<IRole> roleSet = new HashSet<IRole>();
+		roleSet.add(saveNewRole());
+
+		final IUser userFromRam = saveNewUser(roleSet);
+
+		final IUser userFromDb = userService.getUserByEmail(userFromRam.getEmail());
+		final Set<IRole> roleSetFromDb = userFromDb.getRole();
+
+		for (final IRole roleFromRam : userFromRam.getRole()) {
+			final IRole firstRoleFromDb = roleSetFromDb.iterator().next();
+			assertEquals(roleFromRam.getName(), firstRoleFromDb.getName());
+		}
+	}
+
 }

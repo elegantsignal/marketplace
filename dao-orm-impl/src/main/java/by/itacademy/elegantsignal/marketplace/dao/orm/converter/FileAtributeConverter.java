@@ -16,6 +16,9 @@ public class FileAtributeConverter implements AttributeConverter<File, String> {
 
 	@Override
 	public File convertToEntityAttribute(final String dbData) {
+		if (dbData == null) {
+			return new File("");
+		}
 		return new File(dbData);
 	}
 

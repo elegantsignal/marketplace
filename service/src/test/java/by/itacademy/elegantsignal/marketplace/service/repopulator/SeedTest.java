@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.service.repopulator;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -73,14 +74,15 @@ class SeedTest extends AbstractTest {
 		user.setPassword((String) userData.get("password"));
 		final List<String> userRoles = (List<String>) userData.get("roles");
 
+		Set<IRole> roleSet = new HashSet<IRole>();
 		for (final String roleName : userRoles) {
-			final IRole role = saveRole(roleName);
-			System.err.println("");
+			roleSet.add(getOrCreateRole(roleName));
 		}
+		user.setRole(roleSet);
 		userService.save(user);
 	}
 
-	private IRole saveRole(final String roleName) {
+	private IRole getOrCreateRole(final String roleName) {
 		IRole role;
 		try {
 			role = roleService.getRoleByName(roleName);
