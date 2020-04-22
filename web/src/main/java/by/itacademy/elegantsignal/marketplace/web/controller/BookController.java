@@ -1,7 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.web.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,14 +104,13 @@ public class BookController extends AbstractController {
 			return VIEW_NAME;
 		}
 
-		InputStream inputStream;
-		if (!file.isEmpty()) {
-			inputStream = file.getInputStream();
-		} else {
-			inputStream = null;
-		}
 		final IBook book = fromDtoConverter.apply(formModel);
-		bookService.save(book, inputStream);
+
+		if (!file.isEmpty()) {
+			bookService.save(book, file.getInputStream());
+		} else {
+			bookService.save(book);
+		}
 
 		return "redirect:/book";
 

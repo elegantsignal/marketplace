@@ -46,18 +46,8 @@ public class BookServiceImpl implements IBookService {
 
 	@Override
 	public void save(final IBook book, final InputStream inputStream) throws IOException {
-		final Date modifiedOn = new Date();
-
-		book.setUpdated(modifiedOn);
 		book.setCover(fileService.saveTmpImage(inputStream));
-
-		if (book.getId() == null) {
-			book.setId(book.getProduct().getId());
-			book.setCreated(modifiedOn);
-			bookDao.insert(book);
-		} else {
-			bookDao.update(book);
-		}
+		save(book);
 	}
 
 	@Override
