@@ -6,5 +6,5 @@ public interface IRole extends IBaseEntity {
 
 	RoleName getName();
 
-	void setName(RoleName name);
+	void setName(String roleName);
 }

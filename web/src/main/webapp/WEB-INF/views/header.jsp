@@ -5,7 +5,7 @@
 		<div class="nav-wrapper container">
 			<div class="row">
 				<ul class=" col s6 hide-on-med-and-down">
-					<li><a href="${contextPath}">home</a></li>
+					<li><a href="/">home</a></li>
 					<li><a href="${pagesBook}">books</a></li>
 					<li><a href="${pagesUser}">users</a></li>
 					<li><a href="${pagesGenre}">genre</a></li>

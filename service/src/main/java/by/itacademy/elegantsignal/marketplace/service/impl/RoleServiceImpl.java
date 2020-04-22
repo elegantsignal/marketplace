@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IRoleDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.RoleFilter;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
 import by.itacademy.elegantsignal.marketplace.service.IRoleService;
 
 
@@ -70,5 +72,11 @@ public class RoleServiceImpl implements IRoleService {
 	public long getCount(final RoleFilter filter) {
 		return roleDao.getCount(filter);
 	}
+
+	@Override
+	public IRole getRoleByName(String name) {
+		return roleDao.getRoleByName(name);
+	}
+	
 
 }

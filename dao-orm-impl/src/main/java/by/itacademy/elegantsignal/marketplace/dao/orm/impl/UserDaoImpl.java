@@ -123,5 +123,23 @@ public class UserDaoImpl extends AbstractDaoImpl<IUser, Integer> implements IUse
 
 		return q.getSingleResult();
 	}
+	
+	@Override
+	public IUser getFullInfo(final UserFilter filter) {
+		final EntityManager em = getEntityManager();
+		final CriteriaBuilder cb = em.getCriteriaBuilder();
+		final CriteriaQuery<IUser> cq = cb.createQuery(IUser.class);
+		final Root<User> from = cq.from(User.class);
+
+		cq.select(from);
+
+		applyFilter(filter, cb, cq, from);
+
+		from.fetch(User_.role, JoinType.LEFT);
+
+		final TypedQuery<IUser> q = em.createQuery(cq);
+
+		return q.getSingleResult();
+	}
 
 }

@@ -12,4 +12,8 @@ public interface IRoleDao extends IDao<IRole, Integer> {
 
 	long getCount(RoleFilter filter);
 
+	IRole findOne(RoleFilter filter);
+
+	IRole getRoleByName(String name);
+
 }

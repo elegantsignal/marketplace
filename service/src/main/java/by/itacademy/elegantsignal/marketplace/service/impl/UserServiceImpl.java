@@ -58,14 +58,21 @@ public class UserServiceImpl implements IUserService {
 	public IUser get(final Integer id) {
 		return userDao.get(id);
 	}
-	
+
 	@Override
-	public IUser findOne(UserFilter filter) {
+	public IUser getUserByEmail(final String email) {
+		final UserFilter filter = new UserFilter();
+		filter.setEmail(email);
+		return  userDao.getFullInfo(filter);
+	}
+
+	@Override
+	public IUser findOne(final UserFilter filter) {
 		return userDao.findOne(filter);
 	}
-	
+
 	@Override
-	public IUser getFullInfo(Integer id) {
+	public IUser getFullInfo(final Integer id) {
 		return userDao.getFullInfo(id);
 	}
 
@@ -93,8 +100,5 @@ public class UserServiceImpl implements IUserService {
 	public long getCount(final UserFilter filter) {
 		return userDao.getCount(filter);
 	}
-
-
-
 
 }

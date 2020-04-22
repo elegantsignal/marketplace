@@ -22,7 +22,7 @@ public class Role extends BaseEntity implements IRole {
 	}
 
 	@Override
-	public void setName(final RoleName name) {
-		this.name = name;
+	public void setName(final String name) {
+		this.name = RoleName.valueOf(name.toUpperCase());
 	}
 }

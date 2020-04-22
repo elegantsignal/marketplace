@@ -12,6 +12,8 @@ public interface IUserService {
 
 	IUser get(Integer id);
 
+	IUser getUserByEmail(String username);
+
 	List<IUser> getAll();
 
 	@Transactional

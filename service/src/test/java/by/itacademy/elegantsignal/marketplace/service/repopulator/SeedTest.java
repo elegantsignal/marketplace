@@ -18,9 +18,11 @@ import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.RoleName;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.GenreFilter;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
@@ -52,7 +54,7 @@ class SeedTest extends AbstractTest {
 					for (final T bookData : modelData) {
 						try {
 							createBook((Map<String, T>) bookData);
-						} catch (IOException e) {
+						} catch (final IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -69,7 +71,27 @@ class SeedTest extends AbstractTest {
 		user.setName((String) userData.get("name"));
 		user.setEmail((String) userData.get("email"));
 		user.setPassword((String) userData.get("password"));
+		final List<String> userRoles = (List<String>) userData.get("roles");
+
+		for (final String roleName : userRoles) {
+			final IRole role = saveRole(roleName);
+			System.err.println("");
+		}
 		userService.save(user);
+	}
+
+	private IRole saveRole(final String roleName) {
+		IRole role;
+		try {
+			role = roleService.getRoleByName(roleName);
+
+		} catch (final NoResultException e) {
+			role = roleService.createEntity();
+			role.setName(roleName);
+			roleService.save(role);
+		}
+		return role;
+
 	}
 
 	private <T> void createBook(final Map<String, T> bookData) throws IOException {

@@ -33,4 +33,6 @@ public interface IRoleService {
 
 	long getCount(RoleFilter filter);
 
+	IRole getRoleByName(String name);
+
 }

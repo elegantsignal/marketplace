@@ -3,19 +3,28 @@ User:
   - email: asimov@exampl.com
     name: asimov
     password: "123456"
+    roles:
+      - consumer
+      - supplier
 
   - email: bloch@exampl.com
     name: bloch
     password: "123456"
+    roles:
+      - consumer
+      - supplier
 
   - email: alice@exampl.com
     name: alice
     password: "123456"
+    roles:
+      - consumer
 
   - email: bob@exampl.com
     name: bob
     password: "123456"
-
+    roles:
+      - consumer
 Book:
   - user_email: asimov@exampl.com
     product_price: 10

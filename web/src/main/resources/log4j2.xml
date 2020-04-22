@@ -29,7 +29,7 @@
 
 		<Logger
 			name="org.springframework.web"
-			level="debug"
+			level="info"
 			additivity="false">
 			<AppenderRef ref="Console" />
 		</Logger>

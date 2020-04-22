@@ -230,7 +230,7 @@ public abstract class AbstractTest {
 
 	protected IRole saveNewRole() {
 		final IRole role = roleService.createEntity();
-		role.setName(randomEnum(RoleName.class));
+		role.setName(randomEnum(RoleName.class).toString());
 		roleService.save(role);
 		return role;
 	}

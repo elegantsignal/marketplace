@@ -158,7 +158,10 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 	}
 
 	private void saveCover(final IBook book) {
-		LOGGER.info("Will try to save file:" + book.getCover().toString());
+		if (book.getCover() == null) {
+			return;
+		}
+		LOGGER.info("Will try to save file:" + book.getCover());
 
 		final String fileExtension = getImageExtension(book.getCover());
 		final String fileName = book.getTitle().replace(" ", "_").toLowerCase() + "." + fileExtension;

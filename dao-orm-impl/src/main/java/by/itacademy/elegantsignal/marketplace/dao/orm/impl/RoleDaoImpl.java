@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,6 +8,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 
@@ -17,6 +19,7 @@ import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.BaseEntity_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Role;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Role_;
 import by.itacademy.elegantsignal.marketplace.daoapi.IRoleDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.RoleName;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.RoleFilter;
 
@@ -65,12 +68,49 @@ public class RoleDaoImpl extends AbstractDaoImpl<IRole, Integer> implements IRol
 
 	private SingularAttribute<? super Role, ?> toMetamodelFormat(final String sortColumn) {
 		switch (sortColumn) {
-		case "id":
-			return BaseEntity_.id;
-		case "name":
-			return Role_.name;
-		default:
-			throw new UnsupportedOperationException("sorting is not supported by column:" + sortColumn);
+			case "id":
+				return BaseEntity_.id;
+			case "name":
+				return Role_.name;
+			default:
+				throw new UnsupportedOperationException("sorting is not supported by column:" + sortColumn);
 		}
 	}
+
+	@Override
+	public IRole findOne(final RoleFilter filter) {
+		final EntityManager em = getEntityManager();
+		final CriteriaBuilder cb = em.getCriteriaBuilder();
+		final CriteriaQuery<IRole> cq = cb.createQuery(IRole.class);
+		final Root<Role> from = cq.from(Role.class);
+		cq.select(from);
+
+		applyFilter(filter, cb, cq, from);
+
+		final TypedQuery<IRole> q = em.createQuery(cq);
+		return q.getSingleResult();
+	}
+
+	private void applyFilter(final RoleFilter filter, final CriteriaBuilder cb, final CriteriaQuery<?> cq,
+			final Root<Role> from) {
+		final List<Predicate> ands = new ArrayList<>();
+
+		final RoleName name = filter.getName();
+		if (name != null) {
+			ands.add(cb.equal(from.get(Role_.name), name));
+		}
+
+		if (!ands.isEmpty()) {
+			cq.where(cb.and(ands.toArray(new Predicate[0])));
+		}
+	}
+
+	@Override
+	public IRole getRoleByName(String name) {
+		RoleFilter filter = new RoleFilter();
+		filter.setName(name);
+		return findOne(filter);
+		
+	}
+
 }
