@@ -21,6 +21,10 @@
 		class="org.springframework.orm.jpa.JpaTransactionManager"
 		p:entityManagerFactory-ref="entityManagerFactory" />
 
+	<bean
+		id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
 	<context:component-scan base-package="by.itacademy.elegantsignal.marketplace.service.impl" />
 
 </beans>

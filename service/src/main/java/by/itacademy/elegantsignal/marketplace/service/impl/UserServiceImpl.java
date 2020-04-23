@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IUserDao;
@@ -16,6 +17,9 @@ import by.itacademy.elegantsignal.marketplace.service.IUserService;
 
 @Service
 public class UserServiceImpl implements IUserService {
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -32,16 +36,17 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void save(final IUser entity) {
+	public void save(final IUser user) {
 		final Date modifiedOn = new Date();
-		entity.setUpdated(modifiedOn);
-		if (entity.getId() == null) {
-			LOGGER.info("new user created: {}", entity);
-			entity.setCreated(modifiedOn);
-			userDao.insert(entity);
+		user.setUpdated(modifiedOn);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		if (user.getId() == null) {
+			LOGGER.info("new user created: {}", user);
+			user.setCreated(modifiedOn);
+			userDao.insert(user);
 		} else {
-			LOGGER.info("user updated: {}", entity);
-			userDao.update(entity);
+			LOGGER.info("user updated: {}", user);
+			userDao.update(user);
 		}
 	}
 
@@ -63,7 +68,7 @@ public class UserServiceImpl implements IUserService {
 	public IUser getUserByEmail(final String email) {
 		final UserFilter filter = new UserFilter();
 		filter.setEmail(email);
-		return  userDao.getFullInfo(filter);
+		return userDao.getFullInfo(filter);
 	}
 
 	@Override
@@ -101,4 +106,8 @@ public class UserServiceImpl implements IUserService {
 		return userDao.getCount(filter);
 	}
 
+	@Override
+	public boolean isPasswordMatch(final IUser user, final String password) {
+		return passwordEncoder.matches(password, user.getPassword());
+	}
 }

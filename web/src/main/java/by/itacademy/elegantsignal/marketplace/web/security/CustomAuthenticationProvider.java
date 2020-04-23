@@ -32,7 +32,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 		final IUser user = userService.getUserByEmail(username);
 
-		if (!user.getEmail().equals(username) || !user.getPassword().equals(password)) {
+		if (!userService.isPasswordMatch(user, password)) {
 			throw new BadCredentialsException("1000");
 		}
 

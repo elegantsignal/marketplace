@@ -39,5 +39,7 @@ public interface IUserService {
 	long getCount(UserFilter filter);
 
 	IUser getFullInfo(Integer id);
+	
+	boolean isPasswordMatch (final IUser user, final String password);
 
 }
