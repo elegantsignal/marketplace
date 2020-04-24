@@ -28,6 +28,10 @@ hs_err_pid*
 .settings
 .classpath
 
+# IntelliJ IDEA
+.idea
+*.iml
+
 # Other
 target
 *.out.xml
