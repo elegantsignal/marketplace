@@ -34,10 +34,9 @@ main {
 }
 
 .book-cover {
-  height: 600px;
+  height: auto;
 }
 
 .book-cover img {
-  height: 100%;
   object-fit: cover;
 }

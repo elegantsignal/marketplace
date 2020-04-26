@@ -2,21 +2,25 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<h1 class="header">Self publishing books marketplace</h1>
+<div class="container">
+	<div class="row">
+		<c:forEach var="item" items="${gridItems}" varStatus="loopCounter">
+			<div class="col-sm-4 d-flex align-items-stretch">
 
 
-<div class="row">
-	<c:forEach var="item" items="${gridItems}" varStatus="loopCounter">
-		<div class="col s4">
+				<div class="card border-primary mb-3" style="max-width: 18rem;">
+					<img class="card-img-top book-cover" src="${item.cover}" alt="Card image cap">
 
-			<div class="card">
-				<div class="card-image book-cover">
-					<img src="${item.cover}">
-					<h3>
-						<a href="${pagesBook}/${item.id}" class="card-title">${item.title}</a>
-					</h3>
+					<div class="card-header"><a href=" ${pagesBook}/${item.id}" class="card-title">${item.title}</a></div>
+
 				</div>
+
+
+
+
+
+
 			</div>
-		</div>
-	</c:forEach>
+		</c:forEach>
+	</div>
 </div>
