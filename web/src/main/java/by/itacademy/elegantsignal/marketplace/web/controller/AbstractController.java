@@ -8,6 +8,7 @@ import by.itacademy.elegantsignal.marketplace.web.dto.SortDTO;
 
 
 public abstract class AbstractController {
+	
 	protected GridStateDTO getListDTO(final HttpServletRequest req) {
 		final String sessionModelName = getClass().getSimpleName() + "_GRID_STATE";
 

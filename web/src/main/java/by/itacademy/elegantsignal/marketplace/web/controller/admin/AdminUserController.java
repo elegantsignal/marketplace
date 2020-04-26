@@ -1,4 +1,4 @@
-package by.itacademy.elegantsignal.marketplace.web.controller;
+package by.itacademy.elegantsignal.marketplace.web.controller.admin;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import by.itacademy.elegantsignal.marketplace.web.controller.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -29,8 +30,8 @@ import by.itacademy.elegantsignal.marketplace.web.dto.UserDTO;
 
 
 @Controller
-@RequestMapping(value = "/users")
-public class UserController extends AbstractController {
+@RequestMapping(value = "/admin/users")
+public class AdminUserController extends AbstractController {
 
 	private static final String FORM_MODEL = "formModel";
 	private static final String VIEW_NAME = "users.edit";

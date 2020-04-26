@@ -3,7 +3,7 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="request" />
 <c:set var="pagesBook" value="${contextPath}/book" scope="request" />
-<c:set var="pagesUser" value="${contextPath}/users" scope="request" />
+<c:set var="pagesUser" value="${contextPath}/admin/users" scope="request" />
 <c:set var="pagesGenre" value="${contextPath}/genre" scope="request" />
 <c:set var="pagesCar" value="${contextPath}/car" scope="request" />
 
@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/custom.css">
 
 <script src="${contextPath}/resources/js/init-materialize-forms.js"></script>
+	<script src="${contextPath}/resources/js/main.js"></script>
 
 
 </head>

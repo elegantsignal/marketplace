@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +37,6 @@ import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
 @Controller
 @RequestMapping(value = "/book")
 public class BookController extends AbstractController {
-
-	@Value("${jdbc.url}")
-	String testString;
 
 	public static final String FILE_FOLDER = "/home/binbrayer/projects/elegantsignal/marketplace/media/";
 
