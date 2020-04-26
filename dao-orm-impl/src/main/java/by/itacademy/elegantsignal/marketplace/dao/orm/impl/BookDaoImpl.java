@@ -1,10 +1,5 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +12,6 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.tika.Tika;
 import org.hibernate.jpa.criteria.OrderImpl;
 import org.springframework.stereotype.Repository;
 
@@ -142,7 +136,6 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 
 	@Override
 	public void insert(final IBook book) {
-		saveCover(book);
 
 		final EntityManager entityManager = getEntityManager();
 		entityManager.persist(book);
@@ -150,56 +143,10 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 
 	@Override
 	public void update(final IBook book) {
-		saveCover(book);
 
 		final EntityManager entityManager = getEntityManager();
 		entityManager.merge(book);
 		entityManager.flush();
 	}
 
-	private void saveCover(final IBook book) {
-		if (book.getCover() == null) {
-			return;
-		}
-		LOGGER.info("Will try to save file:" + book.getCover());
-
-		final String fileExtension = getImageExtension(book.getCover());
-		final String fileName = book.getTitle().replace(" ", "_").toLowerCase() + "." + fileExtension;
-		final java.nio.file.Path relativeDir = Paths.get("media");
-		final java.nio.file.Path rootDir = Paths.get("/home/binbrayer/projects/elegantsignal/marketplace/");
-		final java.nio.file.Path absoluteDir = rootDir.resolve(relativeDir);
-
-		try {
-			Files.move(
-					book.getCover().toPath(),
-					absoluteDir.resolve(fileName),
-					StandardCopyOption.REPLACE_EXISTING);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		book.setCover(new File(relativeDir.resolve(fileName).toString()));
-	}
-
-	private String getImageExtension(final File image) throws IllegalArgumentException {
-		final Tika tika = new Tika();
-
-		String mimeType = "";
-		try {
-			mimeType = tika.detect(image);
-		} catch (final IOException e) {
-			throw new IllegalArgumentException("Can't detect type of this file");
-		}
-
-		final String[] tmp = mimeType.split("/");
-		final String type = tmp[0];
-		final String extension = tmp[1];
-
-		if (!"image".equals(type)) {
-			throw new IllegalArgumentException("This is not image file");
-		}
-
-		return extension;
-	}
 }

@@ -14,6 +14,7 @@
 		http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<import resource="dao-context.xml" />
+	<import resource="filestorage-context.xml" />
 
 	<tx:annotation-driven />
 	<bean

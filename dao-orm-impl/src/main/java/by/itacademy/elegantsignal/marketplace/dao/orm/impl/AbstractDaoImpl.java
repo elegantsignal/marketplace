@@ -1,6 +1,5 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -49,7 +48,7 @@ public abstract class AbstractDaoImpl<T, ID> implements IDao<T, ID> {
 	}
 
 	@Override
-	public void update(T entity) {
+	public void update(final T entity) {
 		entityManager.merge(entity);
 		entityManager.flush();
 	}

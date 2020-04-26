@@ -15,6 +15,7 @@
 		<module>dao-api</module>
 		<module>dao-orm-impl</module>
 		<module>service</module>
+		<module>filestorage</module>
 		<module>web</module>
 	</modules>
 

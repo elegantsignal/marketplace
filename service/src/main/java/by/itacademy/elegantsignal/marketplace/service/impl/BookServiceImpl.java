@@ -11,18 +11,22 @@ import org.springframework.stereotype.Service;
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
+import by.itacademy.elegantsignal.marketplace.filestorage.IFileStorage;
+import by.itacademy.elegantsignal.marketplace.filestorage.IFileUtils;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
-import by.itacademy.elegantsignal.marketplace.service.IFileService;
 
 
 @Service
 public class BookServiceImpl implements IBookService {
 
 	@Autowired
-	private IFileService fileService;
+	private IBookDao bookDao;
 
 	@Autowired
-	private IBookDao bookDao;
+	private IFileStorage fileStorage;
+
+	@Autowired
+	private IFileUtils fileUtils;
 
 	@Override
 	public IBook createEntity() {
@@ -46,7 +50,10 @@ public class BookServiceImpl implements IBookService {
 
 	@Override
 	public void save(final IBook book, final InputStream inputStream) throws IOException {
-		book.setCover(fileService.saveTmpImage(inputStream));
+
+		book.setCover(fileUtils.saveTmpImage(inputStream));
+		fileStorage.saveCover(book);
+
 		save(book);
 	}
 
