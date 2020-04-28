@@ -46,6 +46,14 @@
 	</definition>
 
 	<definition
+			name="book.item"
+			extends="DefaultTemplate">
+		<put-attribute
+				name="body"
+				value="/WEB-INF/views/book/item.jsp" />
+	</definition>
+
+	<definition
 		name="genre.list"
 		extends="DefaultTemplate">
 		<put-attribute

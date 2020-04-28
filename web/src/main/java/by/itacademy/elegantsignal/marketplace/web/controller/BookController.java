@@ -127,7 +127,7 @@ public class BookController extends AbstractController {
 		hashMap.put("readonly", true);
 		loadCommonFormModels(hashMap);
 
-		return new ModelAndView(VIEW_NAME, hashMap);
+		return new ModelAndView("book.item", hashMap);
 	}
 
 	@GetMapping(value = "/{id}/edit")
