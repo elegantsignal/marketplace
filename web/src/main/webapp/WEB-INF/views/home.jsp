@@ -9,7 +9,7 @@
 
 
 				<div class="card border-primary mb-3" style="max-width: 18rem;">
-					<img class="card-img-top book-cover" src="/${item.cover}" alt="Card image cap">
+					<img class="card-img-top book-cover" src="${item.cover}" alt="Card image cap">
 
 					<div class="card-header"><a href="${pagesBook}/${item.id}" class="card-title">${item.title}</a></div>
 

@@ -17,16 +17,16 @@
 	</New>
 
 
-	<!-- <New
+	<New
 		id="jndiProperties"
 		class="org.eclipse.jetty.plus.jndi.Resource">
 		<Arg></Arg>
-		<Arg>customProperties</Arg>
+		<Arg>mycustom/customProperties</Arg>
 		<Arg>
 			<New class="by.itacademy.elegantsignal.marketplace.web.jndi.SMTPCredentials">
-				<Set name="email">email@gmail.com</Set>
+				<Set name="email">my-custo-memail@gmail.com</Set>
 			</New>
 		</Arg>
-	</New> -->
+</New>
 
 </Configure>

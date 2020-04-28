@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +24,23 @@ import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
 import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
+import by.itacademy.elegantsignal.marketplace.web.jndi.SMTPCredentials;
 
 
 @Controller
 @RequestMapping(value = "/")
 public class HomePageController extends AbstractController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(HomePageController.class);
+
+	@Autowired
+	private SMTPCredentials smtpCredentials;
+
+	@PostConstruct
+	private void init() {
+		Validate.notEmpty(smtpCredentials.getEmail());
+		LOGGER.info("email from custom JNDI resource:{}", smtpCredentials.getEmail());
+	}
 
 	private static final String VIEW_NAME = "home";
 
