@@ -9,11 +9,11 @@
 		<div class="col-md-4">
 			<img class="w-100" src="/${formModel.cover}" alt="Card image cap">
 		</div>
-		<div class="card-body d-flex flex-column align-items-start">
+		<div class="col-md-8 card-body d-flex flex-column align-items-start">
 			<h3 class="mb-0">
-				$${formModel.price} - ${formModel.title} by
+				$${formModel.price} - ${formModel.title} by ${formModel.author}
 			</h3>
-			<p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+			<p class="card-text mb-auto">${formModel.description}</p>
 		</div>
 	</div>
 </div>

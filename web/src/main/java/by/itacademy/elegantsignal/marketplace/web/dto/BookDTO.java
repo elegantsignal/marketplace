@@ -23,6 +23,7 @@ public class BookDTO {
 	private String description;
 	private Date created;
 	private Date updated;
+	private String author;
 
 	public String getTitle() {
 		return title;
@@ -102,6 +103,14 @@ public class BookDTO {
 
 	public void setGenreIds(final Set<Integer> genreIds) {
 		this.genreIds = genreIds;
+	}
+
+	public void setAuthor(final String author) {
+		this.author = author;
+	}
+
+	public String getAuthor() {
+		return author;
 	}
 
 }

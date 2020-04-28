@@ -15,7 +15,7 @@
 
 	<http>
 		<intercept-url
-			pattern="/book/**"
+			pattern="/user/**"
 			access="!isAnonymous()" />
 
 		<form-login
