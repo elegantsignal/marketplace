@@ -11,25 +11,10 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-	<context:property-placeholder
-		location="classpath:jdbc.properties"
-		ignore-unresolvable="false" />
-
-	<bean
+	<jee:jndi-lookup
 		id="dataSource"
-		class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property
-			name="url"
-			value="${jdbc.url}" />
-		<property
-			name="username"
-			value="${jdbc.user}" />
-		<property
-			name="password"
-			value="${jdbc.password}" />
-	</bean>
+		jndi-name="jdbc/postgres" />
+
 	<import resource="service-context.xml" />
 
 	<context:component-scan base-package="by.itacademy.elegantsignal.marketplace.web.converter" />
