@@ -190,10 +190,11 @@ public abstract class AbstractTest {
 	}
 
 	protected IOrder saveNewOrder() {
-		final IOrder entity = orderService.createEntity();
-		entity.setUser(saveNewUser());
-		orderService.save(entity);
-		return entity;
+		final IOrder order = orderService.createEntity();
+		order.setUser(saveNewUser());
+		order.setStatus("CART");
+		orderService.save(order);
+		return order;
 	}
 
 	protected IProduct saveNewProduct() {
@@ -217,6 +218,15 @@ public abstract class AbstractTest {
 		entity.setAmount(BigDecimal.valueOf(getRandomFromRange(100)).movePointLeft(2));
 		orderItemService.save(entity);
 		return entity;
+	}
+
+	IOrderItem saveNewOrderItem(IOrder order) {
+		final IOrderItem orderItem = orderItemService.createEntity();
+		orderItem.setOrder(order);
+		orderItem.setProduct(saveNewProduct());
+		orderItem.setAmount(BigDecimal.valueOf(getRandomFromRange(100)).movePointLeft(2));
+		orderItemService.save(orderItem);
+		return orderItem;
 	}
 
 	protected IReview saveNewReview() {

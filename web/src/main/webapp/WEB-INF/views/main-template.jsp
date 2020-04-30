@@ -3,6 +3,7 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="request" />
 <c:set var="pagesBook" value="${contextPath}/book" scope="request" />
+<c:set var="pagesCart" value="${contextPath}/cart" scope="request" />
 <c:set var="pagesUser" value="${contextPath}/admin/users" scope="request" />
 <c:set var="pagesGenre" value="${contextPath}/genre" scope="request" />
 <c:set var="pagesCar" value="${contextPath}/car" scope="request" />
@@ -14,6 +15,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 	<title>
 		<tiles:insertAttribute name="title" />

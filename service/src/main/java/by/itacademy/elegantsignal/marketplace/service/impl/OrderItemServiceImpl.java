@@ -1,7 +1,10 @@
 package by.itacademy.elegantsignal.marketplace.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderItemFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,5 +61,11 @@ public class OrderItemServiceImpl implements IOrderItemService {
 	@Deprecated
 	public void saveWithId(final IOrderItem orderItem) {
 		orderItemDao.insert(orderItem);
+	}
+
+	@Override public List<IOrderItem> getOrderItems(IOrder order) {
+		OrderItemFilter filter = new OrderItemFilter();
+		filter.setOrder(order);
+		return  orderItemDao.find(filter);
 	}
 }

@@ -3,6 +3,11 @@ package by.itacademy.elegantsignal.marketplace.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.IOrderItemDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderFilter;
+import by.itacademy.elegantsignal.marketplace.service.IOrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +19,11 @@ import by.itacademy.elegantsignal.marketplace.service.IOrderService;
 @Service
 public class OrderServiceImpl implements IOrderService {
 
-	private final IOrderDao orderDao;
+	@Autowired
+	private IOrderDao orderDao;
 
 	@Autowired
-	public OrderServiceImpl(final IOrderDao orderDao) {
-		this.orderDao = orderDao;
-	}
+	private IOrderItemService orderItemService;
 
 	@Override
 	public IOrder createEntity() {
@@ -65,5 +69,15 @@ public class OrderServiceImpl implements IOrderService {
 		order.setUpdated(modifiedOn);
 		order.setCreated(modifiedOn);
 		orderDao.insert(order);
+	}
+
+	@Override
+	public IOrder getCartByUser(IUser user) {
+		OrderFilter filter = new OrderFilter();
+		filter.setUserId(user.getId());
+		filter.setOrderStatus("CART");
+		IOrder order = orderDao.findOne(filter);
+		order.setOrderItem(orderItemService.getOrderItems(order));
+		return order;
 	}
 }

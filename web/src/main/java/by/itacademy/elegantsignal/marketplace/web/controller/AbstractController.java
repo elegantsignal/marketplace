@@ -2,13 +2,18 @@ package by.itacademy.elegantsignal.marketplace.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.AbstractDaoImpl;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.AbstractFilter;
 import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
 import by.itacademy.elegantsignal.marketplace.web.dto.SortDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public abstract class AbstractController {
-	
+
+	final Logger LOGGER = LoggerFactory.getLogger(AbstractController.class);
+
 	protected GridStateDTO getListDTO(final HttpServletRequest req) {
 		final String sessionModelName = getClass().getSimpleName() + "_GRID_STATE";
 

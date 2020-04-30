@@ -16,28 +16,27 @@ import java.util.Set;
 
 import javax.persistence.NoResultException;
 
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.OrderItem;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.GenreFilter;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
 import by.itacademy.elegantsignal.marketplace.service.AbstractTest;
 
 
-class SeedTest extends AbstractTest {
+public class SeedTest extends AbstractTest {
 
 	private static final Path SEED_DIR = Paths.get("../docs/seed/");
 	private static final Path SEED_YML = SEED_DIR.resolve("seed.yml");
 
 	@BeforeAll
-	static void setUpBeforeClass() throws Exception {}
+	static void setUpBeforeClass() throws Exception {
+	}
 
 	@Test
 	public <T> void SeedDataTest() throws IOException {
@@ -50,21 +49,29 @@ class SeedTest extends AbstractTest {
 	private <T> void populate(final Map<String, List<T>> document) {
 		document.forEach((modelName, modelData) -> {
 			switch (modelName) {
+
 				case "User":
 					for (final T userData : modelData) {
 						createUser((Map<String, T>) userData);
 					}
 					break;
+
 				case "Book":
 					for (final T bookData : modelData) {
 						try {
 							createBook((Map<String, T>) bookData);
 						} catch (final IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 					break;
+
+				case "Order":
+					for (final T orderData : modelData) {
+						createOrder((Map<String, T>) orderData);
+					}
+					break;
+
 				default:
 					break;
 			}
@@ -139,14 +146,38 @@ class SeedTest extends AbstractTest {
 		book.setGenre(genreSet);
 
 		book.setTitle((String) bookData.get("title"));
-		
+
 		final Date date = (Date) bookData.get("published");
 		book.setPublished(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-		
+
 		book.setDescription((String) bookData.get("description"));
 
 		final File coverFile = SEED_DIR.resolve((String) bookData.get("cover")).toFile();
 		bookService.save(book, new FileInputStream(coverFile));
+	}
+
+	private <T> void createOrder(Map<String, T> orderData) {
+
+		// get user associated to order
+		final UserFilter userFilter = new UserFilter();
+		userFilter.setEmail(orderData.get("user_email").toString());
+		final IUser user = userService.findOne(userFilter);
+
+		// create order
+		final IOrder order = orderService.createEntity();
+		order.setUser(user);
+		order.setStatus((String) orderData.get("status"));
+		orderService.save(order);
+
+		// handel order items
+		List<Map<String, T>> orderItems = (List<Map<String, T>>) orderData.get("items");
+		for (Map<String, T> orderItemData : orderItems) {
+			IOrderItem orderItem = orderItemService.createEntity();
+			orderItem.setAmount(BigDecimal.valueOf((Integer) orderItemData.get("price")));
+			orderItem.setOrder(order);
+			orderItem.setProduct(productService.get((Integer) orderItemData.get("product_id")));
+			orderItemService.save(orderItem);
+		}
 	}
 
 }

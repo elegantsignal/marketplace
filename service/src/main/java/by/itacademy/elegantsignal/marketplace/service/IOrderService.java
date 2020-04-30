@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
 public interface IOrderService {
@@ -29,4 +30,5 @@ public interface IOrderService {
 	@Transactional
 	void saveWithId(IOrder product);
 
+	IOrder getCartByUser(IUser user);
 }

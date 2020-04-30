@@ -10,10 +10,17 @@
 			<img class="w-100" src="/${formModel.cover}" alt="Card image cap">
 		</div>
 		<div class="col-md-8 card-body d-flex flex-column align-items-start">
-			<h3 class="mb-0">
-				$${formModel.price} - ${formModel.title} by ${formModel.author}
-			</h3>
+			<h3 class="mb-0">$${formModel.price} - ${formModel.title} by ${formModel.author}</h3>
 			<p class="card-text mb-auto">${formModel.description}</p>
+			<div class="">
+				<h3>
+					<a href="${pagesCart}/add?id=${formModel.id}">
+						<i class="fas fa-cart-plus"></i>
+					</a>
+				</h3>
+
+			</div>
 		</div>
+
 	</div>
 </div>

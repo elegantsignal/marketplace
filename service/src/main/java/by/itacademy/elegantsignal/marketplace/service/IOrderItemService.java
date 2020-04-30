@@ -1,9 +1,11 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 
 
@@ -29,4 +31,5 @@ public interface IOrderItemService {
 	@Transactional
 	void saveWithId(IOrderItem orderItem);
 
+	List<IOrderItem> getOrderItems(IOrder order);
 }

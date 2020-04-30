@@ -8,6 +8,8 @@ import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderFilter;
 
 public interface IOrderDao extends IDao<IOrder, Integer> {
 
+	IOrder findOne(OrderFilter filter);
+
 	List<IOrder> find(OrderFilter filter);
 
 	long getCount(OrderFilter filter);

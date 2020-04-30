@@ -1,6 +1,9 @@
 package by.itacademy.elegantsignal.marketplace.daoapi.entity.table;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
+
 import java.util.Date;
+import java.util.List;
 
 
 public interface IOrder extends IBaseEntity {
@@ -9,6 +12,10 @@ public interface IOrder extends IBaseEntity {
 
 	void setUser(IUser user);
 
+	List<IOrderItem> getOrderItem();
+
+	void setOrderItem(List<IOrderItem> orderItem);
+
 	Date getCreated();
 
 	void setCreated(Date created);
@@ -16,4 +23,8 @@ public interface IOrder extends IBaseEntity {
 	Date getUpdated();
 
 	void setUpdated(Date update);
+
+	void setStatus(String status);
+
+	OrderStatus getStatus();
 }

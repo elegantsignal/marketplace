@@ -25,6 +25,7 @@ User:
     password: "123456"
     roles:
       - consumer
+
 Book:
   - user_email: asimov@exampl.com
     product_price: 10
@@ -52,3 +53,12 @@ Book:
     published: 1983-01-01
     cover: "The Robots of Dawn.jpg"
     description: "A millennium into the future two advances have altered the course of human history: the colonization of the Galaxy and the creation of the positronic brain. Isaac Asimov's Robot novels chronicle the unlikely partnership between a New York City detective and a humanoid robot who must learn to work together."
+
+Order:
+  - user_email: asimov@exampl.com
+    status: CART
+    items:
+      - product_id: 1
+        price: 10
+      - product_id: 2
+        price: 20
