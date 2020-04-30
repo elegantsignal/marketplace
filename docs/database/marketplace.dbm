@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,144" last-zoom="0.95"
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,0" last-zoom="0.95"
 	 default-owner="postgres">
 <database name="marketplace" encoding="UTF8" lc-collate="en_US.utf8" lc-ctype="en_US.utf8">
 	<role name="postgres"/>
@@ -23,7 +23,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="user">
 	<schema name="public"/>
-	<position x="600" y="64"/>
+	<position x="600" y="60"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -64,9 +64,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="order">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="260" y="344"/>
+	<position x="260" y="340"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
+	</column>
+	<column name="status" not-null="true">
+		<type name="varchar" length="32"/>
 	</column>
 	<column name="created" not-null="true">
 		<type name="timestamp" length="0"/>
@@ -77,6 +80,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="order_pk" type="pk-constr" table="public.&quot;order&quot;">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+
+	<customidxs object-type="column">
+		<object name="user_id" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="user_fk" index="1"/>
+	</customidxs>
 </table>
 
 <sequence name="goods_id_seq"
@@ -124,6 +135,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="updated" not-null="true">
 		<type name="timestamp" length="0"/>
 	</column>
+
+	<customidxs object-type="column">
+		<object name="id" index="0"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="book_pk" index="0"/>
+		<object name="book_uq" index="2"/>
+		<object name="product_fk" index="1"/>
+	</customidxs>
 </table>
 
 <sequence name="order_item_id_seq"
@@ -136,7 +157,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="role">
 	<schema name="public"/>
-	<position x="1140" y="104"/>
+	<position x="1140" y="100"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -166,10 +187,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 	<customidxs object-type="column">
 		<object name="order_id" index="1"/>
+		<object name="product_id" index="2"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
 		<object name="order_fk" index="1"/>
+		<object name="product_fk" index="2"/>
 	</customidxs>
 </table>
 
@@ -199,9 +222,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
-	<column name="created" not-null="true">
-		<type name="timestamp" length="0"/>
-	</column>
 	<column name="token">
 		<type name="varchar" length="64"/>
 	</column>
@@ -211,16 +231,21 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="use_count" not-null="true">
 		<type name="integer" length="0"/>
 	</column>
+	<column name="created" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
 	<constraint name="download_pk" type="pk-constr" table="public.download_links">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 
 	<customidxs object-type="column">
 		<object name="order_item_id" index="1"/>
+		<object name="restricted_file_id" index="2"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
 		<object name="order_item_fk" index="1"/>
+		<object name="restricted_file_fk" index="2"/>
 	</customidxs>
 </table>
 
@@ -278,7 +303,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="product">
 	<schema name="public"/>
-	<position x="660" y="344"/>
+	<position x="660" y="340"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -297,6 +322,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="product_pk" type="pk-constr" table="public.product">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+
+	<customidxs object-type="column">
+		<object name="user_id" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="user_fk" index="1"/>
+	</customidxs>
 </table>
 
 <relationship name="product_has_one_book" type="rel11"
@@ -358,7 +391,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="payment">
 	<schema name="public"/>
-	<position x="260" y="104"/>
+	<position x="260" y="100"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -430,6 +463,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="reviews_pk" type="pk-constr" table="public.review">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+
+	<customidxs object-type="column">
+		<object name="order_item_id" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="order_item_fk" index="1"/>
+		<object name="review_uq" index="2"/>
+	</customidxs>
 </table>
 
 <table name="like">
@@ -446,10 +488,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="user_id" index="2"/>
+		<object name="product_id" index="2"/>
+		<object name="user_id" index="1"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
+		<object name="product_fk" index="2"/>
 		<object name="user_fk" index="1"/>
 	</customidxs>
 </table>

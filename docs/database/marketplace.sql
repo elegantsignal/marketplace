@@ -67,9 +67,10 @@ ALTER SEQUENCE public.order_id_seq OWNER TO postgres;
 -- DROP TABLE IF EXISTS public."order" CASCADE;
 CREATE TABLE public."order"(
 	id serial NOT NULL,
+	user_id integer NOT NULL,
+	status varchar(32) NOT NULL,
 	created timestamp NOT NULL,
 	updated timestamp NOT NULL,
-	user_id integer NOT NULL,
 	CONSTRAINT order_pk PRIMARY KEY (id)
 
 );
@@ -122,13 +123,13 @@ ALTER SEQUENCE public.song_id_seq OWNER TO postgres;
 -- object: public.book | type: TABLE --
 -- DROP TABLE IF EXISTS public.book CASCADE;
 CREATE TABLE public.book(
+	id integer NOT NULL,
 	title varchar(32) NOT NULL,
 	cover varchar(128),
 	published date NOT NULL,
 	description text NOT NULL,
 	created timestamp NOT NULL,
 	updated timestamp NOT NULL,
-	id integer NOT NULL,
 	CONSTRAINT book_pk PRIMARY KEY (id)
 
 );
@@ -164,8 +165,8 @@ CREATE TABLE public.role(
 CREATE TABLE public.order_item(
 	id serial NOT NULL,
 	order_id integer NOT NULL,
-	amount numeric(12,2) NOT NULL,
 	product_id integer,
+	amount numeric(12,2) NOT NULL,
 	CONSTRAINT order_item_pk PRIMARY KEY (id)
 
 );
@@ -193,11 +194,11 @@ CREATE TABLE public.restricted_file(
 CREATE TABLE public.download_links(
 	id serial NOT NULL,
 	order_item_id integer NOT NULL,
-	created timestamp NOT NULL,
+	restricted_file_id integer NOT NULL,
 	token varchar(64),
 	valid interval HOUR  NOT NULL,
 	use_count integer NOT NULL,
-	restricted_file_id integer NOT NULL,
+	created timestamp NOT NULL,
 	CONSTRAINT download_pk PRIMARY KEY (id)
 
 );
@@ -239,11 +240,11 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public.product CASCADE;
 CREATE TABLE public.product(
 	id serial NOT NULL,
+	user_id integer NOT NULL,
 	type varchar(16) NOT NULL,
 	price numeric(6,2) NOT NULL,
 	created timestamp NOT NULL,
 	updated timestamp NOT NULL,
-	user_id integer NOT NULL,
 	CONSTRAINT product_pk PRIMARY KEY (id)
 
 );
@@ -346,11 +347,11 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public.review CASCADE;
 CREATE TABLE public.review(
 	id serial NOT NULL,
+	order_item_id integer NOT NULL,
 	grade smallint NOT NULL,
 	comment text,
 	created timestamp NOT NULL,
 	updated timestamp NOT NULL,
-	order_item_id integer NOT NULL,
 	CONSTRAINT reviews_pk PRIMARY KEY (id)
 
 );
@@ -360,9 +361,9 @@ CREATE TABLE public.review(
 -- DROP TABLE IF EXISTS public."like" CASCADE;
 CREATE TABLE public."like"(
 	id serial NOT NULL,
-	created timestamp NOT NULL,
 	user_id integer NOT NULL,
 	product_id integer NOT NULL,
+	created timestamp NOT NULL,
 	CONSTRAINT like_pk PRIMARY KEY (id)
 
 );
