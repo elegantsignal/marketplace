@@ -27,5 +27,7 @@
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<context:component-scan base-package="by.itacademy.elegantsignal.marketplace.service.impl" />
+	<import resource="spring-aop.xml" />
+
 
 </beans>

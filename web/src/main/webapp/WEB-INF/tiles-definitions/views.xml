@@ -86,6 +86,14 @@
 	</definition>
 
 	<definition
+			name="cart.item"
+			extends="DefaultTemplate">
+		<put-attribute
+				name="body"
+				value="/WEB-INF/views/cart/item.jsp" />
+	</definition>
+
+	<definition
 		name="login"
 		extends="DefaultTemplate">
 		<put-attribute

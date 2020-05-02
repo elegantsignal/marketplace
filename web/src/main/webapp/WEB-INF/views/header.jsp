@@ -21,7 +21,7 @@
 							<sec:authentication property="name" />
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="#">Action</a>
+							<a class="dropdown-item" href="${pagesCart}">Shopping cart</a>
 							<a class="dropdown-item" href="#">Another action</a>
 							<a class="dropdown-item" href="${contextPath}/execute_logout">logout</a>
 						</div>

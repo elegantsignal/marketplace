@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IOrderItemDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.IUserDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderFilter;
@@ -22,6 +23,8 @@ public class OrderServiceImpl implements IOrderService {
 	@Autowired
 	private IOrderDao orderDao;
 
+	@Autowired
+	private IUserDao userDao;
 	@Autowired
 	private IOrderItemService orderItemService;
 
@@ -72,12 +75,18 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public IOrder getCartByUser(IUser user) {
+	public IOrder getCartByUserId(Integer userId) {
 		OrderFilter filter = new OrderFilter();
-		filter.setUserId(user.getId());
+		filter.setUserId(userId);
 		filter.setOrderStatus("CART");
 		IOrder order = orderDao.findOne(filter);
-		order.setOrderItem(orderItemService.getOrderItems(order));
+
+		if (order == null) {
+			order = orderDao.createEntity();
+			order.setUser(userDao.get(userId));
+			order.setStatus("CART");
+		}
+
 		return order;
 	}
 }

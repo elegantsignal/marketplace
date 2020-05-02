@@ -91,7 +91,7 @@ public class OrderServiceTest extends AbstractTest {
 
 		orderService.save(order);
 
-		IOrder orderFromDb = orderService.getCartByUser(order.getUser());
+		IOrder orderFromDb = orderService.getCartByUserId(order.getUser().getId());
 		assertEquals(order.getUser().getEmail(), orderFromDb.getUser().getEmail());
 		assertEquals(orderItems.size(), orderFromDb.getOrderItem().size());
 		assertEquals(order.getOrderItem().get(0).getAmount(), orderFromDb.getOrderItem().get(0).getAmount());

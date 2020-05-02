@@ -14,10 +14,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderItemFilter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 
 @Repository
@@ -39,6 +36,9 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 		final CriteriaQuery<IOrderItem> criteriaQuery = criteriaBuilder.createQuery(IOrderItem.class);
 		final Root<OrderItem> from = criteriaQuery.from(OrderItem.class);
 		criteriaQuery.select(from);
+
+		from.fetch(OrderItem_.product, JoinType.LEFT);
+
 
 		applyFilter(filter, criteriaBuilder, criteriaQuery, from);
 

@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<h2>Login with Username and Password</h2>
+<h1>Please sign in</h1>
 
 <div class="row">
 
@@ -44,7 +44,7 @@
 				</div>
 			</div>
 
-			<button class="btn btn-primary" type="submit">Submit</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 		</form>
 	</div>
 

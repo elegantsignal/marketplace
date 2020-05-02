@@ -30,5 +30,5 @@ public interface IOrderService {
 	@Transactional
 	void saveWithId(IOrder product);
 
-	IOrder getCartByUser(IUser user);
+	IOrder getCartByUserId(Integer userId);
 }
