@@ -83,7 +83,11 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 		if (userId != null) {
 			ands.add(criteriaBuilder.equal(from.get(Order_.user), userId));
 		}
+
 		OrderStatus orderStatus = filter.getOrderStatus();
+		if (orderStatus != null) {
+			ands.add(criteriaBuilder.equal(from.get(Order_.status), orderStatus));
+		}
 
 		if (!ands.isEmpty()) {
 			criteriaQuery.where(criteriaBuilder.and(ands.toArray(new Predicate[0])));

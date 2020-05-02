@@ -8,13 +8,17 @@
 	<c:forEach var="item" items="${cartItems}" varStatus="loopCounter">
 		<div class="row">
 			<div class="col-sm">${item.productTitle}</div>
-			<div class="col-sm">$${item.amount}</div>
-			<div class="col-sm">
+			<div class="col-sm-2">$${item.amount}</div>
+			<div class="col-sm-1">
 				<a href="${pagesCart}/${item.id}/delete">
 					<i class="fas fa-trash"></i>
 				</a>
 			</div>
-
 		</div>
 	</c:forEach>
+
+	<div class="row float-right">
+		<a href="${pagesCart}/checkout" class="btn btn-info" role="button">Checkout</a>
+	</div>
+
 </div>

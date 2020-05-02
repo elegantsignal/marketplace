@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 
 
 public interface IOrderItemService {
@@ -27,9 +28,13 @@ public interface IOrderItemService {
 	@Transactional
 	IOrderItem createEntity();
 
+	@Transactional
+	IOrderItem createEntity(IOrder order, IProduct product);
+
 	@Deprecated
 	@Transactional
 	void saveWithId(IOrderItem orderItem);
 
 	List<IOrderItem> getOrderItems(IOrder order);
+
 }

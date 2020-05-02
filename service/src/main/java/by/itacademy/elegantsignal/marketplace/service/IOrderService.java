@@ -30,5 +30,9 @@ public interface IOrderService {
 	@Transactional
 	void saveWithId(IOrder product);
 
+	@Transactional
 	IOrder getCartByUserId(Integer userId);
+
+	@Transactional
+	void setStatus(IOrder order, String status);
 }

@@ -16,6 +16,8 @@ import by.itacademy.elegantsignal.marketplace.daoapi.IOrderDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.service.IOrderService;
 
+import javax.persistence.NoResultException;
+
 
 @Service
 public class OrderServiceImpl implements IOrderService {
@@ -79,14 +81,22 @@ public class OrderServiceImpl implements IOrderService {
 		OrderFilter filter = new OrderFilter();
 		filter.setUserId(userId);
 		filter.setOrderStatus("CART");
-		IOrder order = orderDao.findOne(filter);
-
-		if (order == null) {
+		IOrder order;
+		try {
+			order = orderDao.findOne(filter);
+		} catch (NoResultException e) {
 			order = orderDao.createEntity();
 			order.setUser(userDao.get(userId));
 			order.setStatus("CART");
+			save(order);
 		}
 
+		order.setOrderItem(orderItemService.getOrderItems(order));
 		return order;
+	}
+
+	@Override public void setStatus(IOrder order, String status) {
+		order.setStatus(status);
+		orderDao.update(order);
 	}
 }
