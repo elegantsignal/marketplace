@@ -1,18 +1,29 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
-import java.util.List;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderFilter;
 
 import javax.transaction.Transactional;
-
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import java.util.List;
 
 
 public interface IOrderService {
 
 	IOrder get(Integer id);
 
+	@Transactional
+	IOrder getCartByUserId(Integer userId);
+
+	@Transactional
+	List<IOrder> getOrdersByUserId(Integer userId);
+
+	List<IOrder> find(OrderFilter orderFilter);
+
 	List<IOrder> getAll();
+
+	@Transactional
+	IOrder createEntity();
 
 	@Transactional
 	void save(IOrder entity);
@@ -24,15 +35,9 @@ public interface IOrderService {
 	void deleteAll();
 
 	@Transactional
-	IOrder createEntity();
+	void setStatus(IOrder order, OrderStatus status);
 
 	@Deprecated
 	@Transactional
 	void saveWithId(IOrder product);
-
-	@Transactional
-	IOrder getCartByUserId(Integer userId);
-
-	@Transactional
-	void setStatus(IOrder order, String status);
 }

@@ -16,6 +16,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -192,7 +193,7 @@ public abstract class AbstractTest {
 	protected IOrder saveNewOrder() {
 		final IOrder order = orderService.createEntity();
 		order.setUser(saveNewUser());
-		order.setStatus("CART");
+		order.setStatus(OrderStatus.CART);
 		orderService.save(order);
 		return order;
 	}

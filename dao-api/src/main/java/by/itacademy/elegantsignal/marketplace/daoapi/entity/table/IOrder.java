@@ -24,7 +24,7 @@ public interface IOrder extends IBaseEntity {
 
 	void setUpdated(Date update);
 
-	void setStatus(String status);
+	void setStatus(OrderStatus status);
 
 	OrderStatus getStatus();
 }

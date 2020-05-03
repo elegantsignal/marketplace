@@ -5,8 +5,10 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
-import java.util.*;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 @Entity(name = "Order")
@@ -70,8 +72,8 @@ public class Order extends BaseEntity implements IOrder {
 	}
 
 	@Override
-	public void setStatus(String status) {
-		this.status = OrderStatus.valueOf(status.toUpperCase());
+	public void setStatus(OrderStatus status) {
+		this.status = status;
 	}
 
 	@Override

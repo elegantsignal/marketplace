@@ -1,5 +1,16 @@
 package by.itacademy.elegantsignal.marketplace.service.repopulator;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.*;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.GenreFilter;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
+import by.itacademy.elegantsignal.marketplace.service.AbstractTest;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.yaml.snakeyaml.Yaml;
+
+import javax.persistence.NoResultException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,25 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.persistence.NoResultException;
-
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.OrderItem;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.yaml.snakeyaml.Yaml;
-
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.GenreFilter;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
-import by.itacademy.elegantsignal.marketplace.service.AbstractTest;
+import java.util.*;
 
 
 public class SeedTest extends AbstractTest {
@@ -166,7 +159,7 @@ public class SeedTest extends AbstractTest {
 		// create order
 		final IOrder order = orderService.createEntity();
 		order.setUser(user);
-		order.setStatus((String) orderData.get("status"));
+		order.setStatus(OrderStatus.valueOf((String) orderData.get("status")));
 		orderService.save(order);
 
 		// handel order items

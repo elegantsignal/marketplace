@@ -1,27 +1,27 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.*;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Order;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
-import com.sun.org.apache.xpath.internal.operations.Or;
-import org.springframework.stereotype.Repository;
-
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Order_;
 import by.itacademy.elegantsignal.marketplace.daoapi.IOrderDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderFilter;
+import org.hibernate.jpa.criteria.OrderImpl;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Repository
 public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IOrderDao {
+
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	protected OrderDaoImpl() {
 		super(Order.class);
@@ -33,14 +33,12 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 	}
 
 	@Override public IOrder findOne(OrderFilter filter) {
-		EntityManager entityManager = getEntityManager();
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<IOrder> criteriaQuery = criteriaBuilder.createQuery(IOrder.class);
 		Root<Order> from = criteriaQuery.from(Order.class);
 		criteriaQuery.select(from);
 
 		from.fetch(Order_.user, JoinType.LEFT);
-
 
 		applyFilter(filter, criteriaBuilder, criteriaQuery, from);
 
@@ -50,10 +48,37 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 
 	@Override
 	public List<IOrder> find(final OrderFilter filter) {
-		// TODO Auto-generated method stub
-		System.err.println("UNIMPLEMENTED: find(); Timestamp: 3:33:22 PM");
-		throw new UnsupportedOperationException("UNIMPLEMENTED: find(); Timestamp: 3:33:22 PM");
-		// return null;
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<IOrder> cq = criteriaBuilder.createQuery(IOrder.class);
+		final Root<Order> from = cq.from(Order.class);
+		cq.select(from);
+
+		from.fetch(Order_.user, JoinType.LEFT);
+
+		applyFilter(filter, criteriaBuilder, cq, from);
+
+		// set sort params
+		if (filter.getSortColumn() != null) {
+			final Path<?> expression = getSortPath(from, filter.getSortColumn());
+			cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
+		}
+
+		final TypedQuery<IOrder> q = entityManager.createQuery(cq);
+		setPaging(filter, q);
+		return q.getResultList();
+	}
+
+	private Path<?> getSortPath(final Root<Order> from, final String sortColumn) {
+		switch (sortColumn) {
+			case "id":
+				return from.get(Order_.id);
+			case "created":
+				return from.get(Order_.created);
+			case "updated":
+				return from.get(Order_.updated);
+			default:
+				throw new UnsupportedOperationException("sorting is not supported by column:" + sortColumn);
+		}
 	}
 
 	@Override
@@ -73,9 +98,9 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 	}
 
 	private void applyFilter(final OrderFilter filter,
-			final CriteriaBuilder criteriaBuilder,
-			final CriteriaQuery<?> criteriaQuery,
-			final Root<Order> from) {
+		final CriteriaBuilder criteriaBuilder,
+		final CriteriaQuery<?> criteriaQuery,
+		final Root<Order> from) {
 
 		final List<Predicate> ands = new ArrayList<>();
 
@@ -84,9 +109,11 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 			ands.add(criteriaBuilder.equal(from.get(Order_.user), userId));
 		}
 
-		OrderStatus orderStatus = filter.getOrderStatus();
-		if (orderStatus != null) {
-			ands.add(criteriaBuilder.equal(from.get(Order_.status), orderStatus));
+		List<OrderStatus> orderStatusList = filter.getOrderStatus();
+		if (!orderStatusList.isEmpty()) {
+			List<Predicate> predicates = new ArrayList<>();
+			orderStatusList.forEach(orderStatus -> predicates.add(criteriaBuilder.equal(from.get(Order_.status), orderStatus)));
+			ands.add(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 		}
 
 		if (!ands.isEmpty()) {
