@@ -23,8 +23,15 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+
 
 @Entity
+@Indexed
 public class Book implements IBook {
 
 	@Id
@@ -51,6 +58,7 @@ public class Book implements IBook {
 	private LocalDate published;
 
 	@Column
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	private String description;
 
 	@Column(updatable = false)

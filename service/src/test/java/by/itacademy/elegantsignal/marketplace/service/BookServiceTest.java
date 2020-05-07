@@ -1,28 +1,27 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.junit.jupiter.api.Test;
-
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class BookServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() throws IOException {
-		final IBook book = saveNewBook();
+		final IBook book = saveNewBook(bookService.createEntity());
 		final IBook bookFromDb = bookService.getFullInfo(book.getId());
 
 		assertEquals(book.getId(), bookFromDb.getId());
@@ -44,7 +43,7 @@ public class BookServiceTest extends AbstractTest {
 
 		final int randomObjectsCount = getRandomObjectsCount();
 		for (int i = 0; i < randomObjectsCount; i++) {
-			saveNewBook();
+			saveNewBook(bookService.createEntity());
 		}
 
 		final List<IBook> allEntities = bookService.getAll();
@@ -64,7 +63,7 @@ public class BookServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete() throws IOException {
-		final IBook book = saveNewBook();
+		final IBook book = saveNewBook(bookService.createEntity());
 
 		bookService.delete(book.getId());
 		assertNull(bookService.get(book.getId()));
@@ -74,15 +73,15 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testDeleteAll() throws IOException {
-		saveNewBook();
+	public void testDeleteAll() {
+		saveNewBook(bookService.createEntity());
 		bookService.deleteAll();
 		assertEquals(0, bookService.getAll().size());
 	}
 
 	@Test
 	public void testBook2Genre() throws IOException {
-		final IBook book = saveNewBook();
+		final IBook book = saveNewBook(bookService.createEntity());
 
 		final Set<IGenre> genreSet = new HashSet<IGenre>();
 		final int genreCount = getRandomObjectsCount();
@@ -105,19 +104,36 @@ public class BookServiceTest extends AbstractTest {
 		final int bookCount = getRandomObjectsCount();
 		for (int i = 0; i < bookCount; i++) {
 			final IProduct product = saveNewProduct(user);
-			saveNewBook(product);
+			saveNewBook(product, bookService.createEntity());
 		}
 
 		// Generate several addition books
 		for (int i = 0; i < bookCount; i++) {
-			saveNewBook();
+			saveNewBook(bookService.createEntity());
 		}
 
 		final BookFilter bookFilter = new BookFilter(user);
 		final List<IBook> booksList = bookService.find(bookFilter);
 
 		assertEquals(bookCount, booksList.size());
+	}
 
+	@Test
+	public void testSearch() {
+		List<IBook> result = bookService.search("test");
+		assertTrue(result.isEmpty());
+
+		List<String> testDescriptions = Stream.of("foo", "bar", "foo bar")
+			.collect(Collectors.toList());
+
+		testDescriptions.forEach(description -> {
+			IBook book = bookService.createEntity();
+			book.setDescription(description);
+			saveNewBook(book);
+		});
+
+		List<IBook> foundBooks = bookService.search("foo");
+		assertEquals(2, foundBooks.size());
 	}
 
 }

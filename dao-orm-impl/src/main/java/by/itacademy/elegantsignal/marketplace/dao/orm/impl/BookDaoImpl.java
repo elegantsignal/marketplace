@@ -1,30 +1,20 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
-import org.hibernate.jpa.criteria.OrderImpl;
-import org.springframework.stereotype.Repository;
-
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Book;
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Book_;
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Product;
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Product_;
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User;
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User_;
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.*;
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
+import org.hibernate.jpa.criteria.OrderImpl;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.query.dsl.QueryBuilder;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Repository
@@ -76,7 +66,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 	public void delete(final Integer id) {
 		final EntityManager entityManager = getEntityManager();
 		entityManager.createQuery(String.format("delete from %s e where e.id = :id", Product.class.getSimpleName()))
-				.setParameter("id", id).executeUpdate();
+			.setParameter("id", id).executeUpdate();
 	}
 
 	@Override
@@ -103,7 +93,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 	}
 
 	private void applyFilter(final BookFilter filter, final CriteriaBuilder cb, final CriteriaQuery<?> cq,
-			final Root<Book> from) {
+		final Root<Book> from) {
 		final List<Predicate> ands = new ArrayList<>();
 
 		final IUser user = filter.getUser();
@@ -149,6 +139,27 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		final EntityManager entityManager = getEntityManager();
 		entityManager.merge(book);
 		entityManager.flush();
+	}
+
+	@Override
+	public List<IBook> search(String text) {
+
+		EntityManager em = getEntityManager();
+		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+
+		// create native Lucene query unsing the query DSL
+		// alternatively you can write the Lucene query using the Lucene query
+		// parser
+		// or the Lucene programmatic API. The Hibernate Search DSL is
+		// recommended though
+		QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
+		org.apache.lucene.search.Query luceneQuery = qb.keyword().onFields("description").matching(text).createQuery();
+
+		// wrap Lucene query in a javax.persistence.Query
+		javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Book.class);
+
+		return jpaQuery.getResultList();
+
 	}
 
 }

@@ -13,4 +13,6 @@ public interface IBookDao extends IDao<IBook, Integer> {
 	long getCount(BookFilter filter);
 
 	IBook getFullInfo(Integer id);
+
+	List<IBook> search(String text);
 }

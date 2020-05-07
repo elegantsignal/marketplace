@@ -1,5 +1,16 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.RoleName;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -15,26 +26,6 @@ import java.util.Date;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
-
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
-import org.junit.jupiter.api.BeforeEach;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.RoleName;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILike;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 
 @SpringJUnitConfig(locations = "classpath:service-context-test.xml")
@@ -100,7 +91,7 @@ public abstract class AbstractTest {
 		}
 
 		LOGGER.info("Database recreated in {} seconds.",
-				Double.valueOf((System.currentTimeMillis() - stampBefore) / 1000));
+			Double.valueOf((System.currentTimeMillis() - stampBefore) / 1000));
 	}
 
 	private String getScript() {
@@ -108,8 +99,8 @@ public abstract class AbstractTest {
 		final StringBuilder contentBuilder = new StringBuilder();
 
 		try (Stream<String> stream = Files.lines(
-				Paths.get("../docs/database/marketplace.sql"),
-				StandardCharsets.UTF_8)) {
+			Paths.get("../docs/database/marketplace.sql"),
+			StandardCharsets.UTF_8)) {
 			stream.forEach(s -> contentBuilder.append(s).append("\n"));
 		} catch (final IOException e) {
 			e.printStackTrace();
@@ -158,23 +149,42 @@ public abstract class AbstractTest {
 		return user;
 	}
 
-	protected IBook saveNewBook() throws IOException {
-		return saveNewBook(saveNewProduct());
+	protected IBook saveNewBook(final IBook book) {
+		return saveNewBook(saveNewProduct(), book);
 	}
 
-	protected IBook saveNewBook(final IProduct product) throws IOException {
-		final IBook book = bookService.createEntity();
-		book.setProduct(product);
+	protected IBook saveNewBook(final IProduct product, final IBook book) {
 
-		book.setTitle("The title#" + getRandomPrefix());
-		book.setCover(new File("/tmp/" + getRandomPrefix()));
-		book.setPublished(LocalDate.now());
-		book.setDescription("Description-" + getRandomPrefix());
-		bookService.save(book);
+		if (book.getProduct() == null) {
+			book.setProduct(product);
+		}
+
+		if (book.getTitle() == null) {
+			book.setTitle("The title#" + getRandomPrefix());
+		}
+
+		if (book.getCover() == null) {
+			book.setCover(new File("/tmp/" + getRandomPrefix()));
+		}
+
+		if (book.getPublished() == null) {
+			book.setPublished(LocalDate.now());
+		}
+
+		if (book.getDescription() == null) {
+			book.setDescription("Description-" + getRandomPrefix());
+		}
+
+		try {
+			bookService.save(book);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		return book;
 	}
 
-	protected IGenre saveNewGenre()  {
+	protected IGenre saveNewGenre() {
 		final IGenre entity = genreService.createEntity();
 		entity.setName("Genre-" + getRandomPrefix());
 		genreService.save(entity);

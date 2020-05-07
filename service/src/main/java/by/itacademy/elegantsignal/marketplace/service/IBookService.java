@@ -42,4 +42,6 @@ public interface IBookService {
 
 	IBook getFullInfo(Integer id);
 
+	@Transactional
+	List<IBook> search(String string);
 }

@@ -1,28 +1,22 @@
 package by.itacademy.elegantsignal.marketplace.service.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.filestorage.IFileStorage;
 import by.itacademy.elegantsignal.marketplace.filestorage.IFileUtils;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
 
 
 @Service
@@ -55,8 +49,8 @@ public class BookServiceImpl implements IBookService {
 		} else {
 			bookDao.update(book);
 		}
-		
-//		sendMail(book.getTitle(), book.getDescription());
+
+		//		sendMail(book.getTitle(), book.getDescription());
 	}
 
 	@Override
@@ -146,6 +140,11 @@ public class BookServiceImpl implements IBookService {
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public List<IBook> search(String string) {
+		return bookDao.search(string);
 	}
 
 }
