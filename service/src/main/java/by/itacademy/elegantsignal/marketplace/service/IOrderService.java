@@ -13,9 +13,6 @@ public interface IOrderService {
 	IOrder get(Integer id);
 
 	@Transactional
-	IOrder getCartByUserId(Integer userId);
-
-	@Transactional
 	List<IOrder> getOrdersByUserId(Integer userId);
 
 	List<IOrder> find(OrderFilter orderFilter);

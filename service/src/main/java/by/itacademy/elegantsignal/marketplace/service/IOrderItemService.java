@@ -1,13 +1,10 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.transaction.Transactional;
-
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 
 public interface IOrderItemService {
@@ -27,9 +24,6 @@ public interface IOrderItemService {
 
 	@Transactional
 	IOrderItem createEntity();
-
-	@Transactional
-	IOrderItem createEntity(IOrder order, IProduct product);
 
 	@Deprecated
 	@Transactional

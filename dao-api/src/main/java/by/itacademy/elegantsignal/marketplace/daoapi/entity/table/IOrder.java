@@ -12,7 +12,7 @@ public interface IOrder extends IBaseEntity {
 
 	void setUser(IUser user);
 
-	List<IOrderItem> getOrderItem();
+	List<IOrderItem> getOrderItems();
 
 	void setOrderItem(List<IOrderItem> orderItem);
 

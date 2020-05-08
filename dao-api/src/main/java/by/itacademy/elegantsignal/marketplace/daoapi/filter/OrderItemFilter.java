@@ -1,17 +1,26 @@
 package by.itacademy.elegantsignal.marketplace.daoapi.filter;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
-
-
 public class OrderItemFilter extends AbstractFilter {
 
-	private IOrder order;
+	private Integer id;
+	private Integer orderId;
 
-	public IOrder getOrder() {
-		return order;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setOrder(IOrder order) {
-		this.order = order;
+	public OrderItemFilter setId(Integer id) {
+		this.id = id;
+		return this;
 	}
+
+	public Integer getOrderId() {
+		return orderId;
+	}
+
+	public OrderItemFilter setOrderId(Integer orderId) {
+		this.orderId = orderId;
+		return this;
+	}
+
 }

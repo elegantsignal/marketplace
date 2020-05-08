@@ -16,16 +16,18 @@ public class OrderFilter extends AbstractFilter {
 		return this.userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public OrderFilter setUserId(Integer userId) {
 		this.userId = userId;
+		return this;
 	}
 
 	public List<OrderStatus> getOrderStatus() {
 		return this.orderStatus;
 	}
 
-	public void setOrderStatus(OrderStatus... orderStatus) {
+	public OrderFilter setOrderStatus(OrderStatus... orderStatus) {
 		this.orderStatus.clear();
 		this.orderStatus.addAll(Arrays.asList(orderStatus));
+		return this;
 	}
 }

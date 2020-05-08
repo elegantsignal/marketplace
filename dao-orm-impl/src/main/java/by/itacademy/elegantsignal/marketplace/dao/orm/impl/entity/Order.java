@@ -42,7 +42,7 @@ public class Order extends BaseEntity implements IOrder {
 	}
 
 	@Override
-	public List<IOrderItem> getOrderItem() {
+	public List<IOrderItem> getOrderItems() {
 		return orderItem;
 	}
 
