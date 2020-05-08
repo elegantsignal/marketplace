@@ -10,7 +10,7 @@
 
 	<context:property-placeholder
 		ignore-unresolvable="false"
-		location="classpath:jdbc-test.properties" />
+		location="classpath:db.properties" />
 
 	<bean
 		id="dataSource"

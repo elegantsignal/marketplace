@@ -8,6 +8,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
 import by.itacademy.elegantsignal.marketplace.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
 import javax.persistence.NoResultException;
@@ -28,12 +29,14 @@ import java.util.*;
 import java.util.stream.Stream;
 
 
+@Service
 public class Seed {
 
-	private static final Path SEED_DIR = Paths.get("docs/seed/");
-	private static final Path SEED_YML = SEED_DIR.resolve("seed.yml");
+	private final String dbSchema = "docs/database/marketplace.sql";
+	private final Path SEED_DIR = Paths.get("docs/seed/");
+	private final Path SEED_YML = SEED_DIR.resolve("seed.yml");
 
-	ApplicationContext context = new ClassPathXmlApplicationContext("service-context-test.xml");
+	ApplicationContext context = new ClassPathXmlApplicationContext("seed-context.xml");
 
 	IUserService userService = context.getBean(IUserService.class);
 	IRoleService roleService = context.getBean(IRoleService.class);
@@ -42,6 +45,11 @@ public class Seed {
 	IOrderItemService orderItemService = context.getBean(IOrderItemService.class);
 	IBookService bookService = context.getBean(IBookService.class);
 	IGenreService genreService = context.getBean(IGenreService.class);
+
+	public static void main(String[] args) throws IOException, SQLException {
+		Seed seed = new Seed();
+		seed.seedData();
+	}
 
 	public <T> void seedData() throws IOException, SQLException {
 		recreateTestDB();
@@ -53,26 +61,20 @@ public class Seed {
 
 	public final void recreateTestDB() throws SQLException {
 
-		final Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/marketplace", "postgres", "1");
-
-		try {
-			final Statement stmt = conn.createStatement();
-			try {
+		// TODO: Why we need credetials here and in db.properties file - ???
+		try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/marketplace", "postgres", "1")) {
+			try (Statement stmt = conn.createStatement()) {
 				stmt.execute("DROP SCHEMA IF EXISTS \"public\" CASCADE;");
 				stmt.execute("CREATE SCHEMA \"public\";");
 				stmt.execute(getScript());
-			} finally {
-				stmt.close();
 			}
-		} finally {
-			conn.close();
 		}
 	}
 
 	private String getScript() {
 		final StringBuilder contentBuilder = new StringBuilder();
 		try (Stream<String> stream = Files.lines(
-			Paths.get("docs/database/marketplace.sql"),
+			Paths.get(dbSchema),
 			StandardCharsets.UTF_8)) {
 			stream.forEach(s -> contentBuilder.append(s).append("\n"));
 		} catch (final IOException e) {
