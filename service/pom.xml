@@ -63,6 +63,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-crypto</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>by.itacademy.elegantsignal.marketplace</groupId>
 			<artifactId>filestorage</artifactId>

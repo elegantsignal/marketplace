@@ -17,6 +17,7 @@
 		<module>service</module>
 		<module>filestorage</module>
 		<module>web</module>
+		<module>seed</module>
 	</modules>
 
 	<properties>
