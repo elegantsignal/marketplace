@@ -27,7 +27,9 @@
 
 	<mvc:resources
 		mapping="/media/**"
-		location="file:/home/binbrayer/projects/elegantsignal/marketplace/media/" />
+		location="file:#{systemEnvironment['ASSETS_ROOT']}/media/"
+
+	/>
 
 	<bean
 		id="viewResolver"

@@ -42,3 +42,15 @@ or
 ```sql
 \c DBNAME
 ```
+
+## Tomcat deploy
+
+### `.env` file
+
+```env
+ASSETS_ROOT=/home/user/path/to/project/assets/on/the/host/machine/
+```
+
+## TODO
+
+1. Build **war** inside container

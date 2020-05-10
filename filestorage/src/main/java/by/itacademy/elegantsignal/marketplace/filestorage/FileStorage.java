@@ -39,7 +39,7 @@ public class FileStorage implements IFileStorage {
 
 		final String fileName = book.getTitle().replace(" ", "_").toLowerCase() + "." + fileExtension;
 		final Path relativeDir = Paths.get("media");
-		final Path rootDir = Paths.get("/home/binbrayer/projects/elegantsignal/marketplace/");
+		final Path rootDir = Paths.get(System.getenv("ASSETS_ROOT"));
 		final Path absoluteDir = rootDir.resolve(relativeDir);
 
 		try {

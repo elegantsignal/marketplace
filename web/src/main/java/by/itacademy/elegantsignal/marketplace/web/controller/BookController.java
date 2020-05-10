@@ -1,26 +1,5 @@
 package by.itacademy.elegantsignal.marketplace.web.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
@@ -32,13 +11,25 @@ import by.itacademy.elegantsignal.marketplace.web.converter.BookFromDTOConverter
 import by.itacademy.elegantsignal.marketplace.web.converter.BookToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
 import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Controller
 @RequestMapping(value = "/book")
 public class BookController extends AbstractController {
-
-	public static final String FILE_FOLDER = "/home/binbrayer/projects/elegantsignal/marketplace/media/";
 
 	private static final String FORM_MODEL = "formModel";
 	private static final String VIEW_NAME = "book.edit";
@@ -60,8 +51,8 @@ public class BookController extends AbstractController {
 
 	@GetMapping()
 	public ModelAndView index(final HttpServletRequest req,
-			@RequestParam(name = "page", required = false) final Integer pageNumber,
-			@RequestParam(name = "sort", required = false) final String sortColumn) {
+		@RequestParam(name = "page", required = false) final Integer pageNumber,
+		@RequestParam(name = "sort", required = false) final String sortColumn) {
 
 		final GridStateDTO gridState = getListDTO(req);
 		gridState.setPage(pageNumber);
@@ -92,9 +83,9 @@ public class BookController extends AbstractController {
 
 	@PostMapping()
 	public String save(
-			@Valid @ModelAttribute(FORM_MODEL) final BookDTO formModel,
-			@RequestParam("cover") final MultipartFile file,
-			final BindingResult result) throws IOException {
+		@Valid @ModelAttribute(FORM_MODEL) final BookDTO formModel,
+		@RequestParam("cover") final MultipartFile file,
+		final BindingResult result) throws IOException {
 
 		if (result.hasErrors()) {
 			return VIEW_NAME;
@@ -143,8 +134,8 @@ public class BookController extends AbstractController {
 
 	private void loadCommonFormModels(final Map<String, Object> hashMap) {
 		final Map<Integer, String> genreMap = genreService.getAll()
-				.stream()
-				.collect(Collectors.toMap(IGenre::getId, IGenre::getName));
+			.stream()
+			.collect(Collectors.toMap(IGenre::getId, IGenre::getName));
 		hashMap.put("genreChoices", genreMap);
 	}
 }
