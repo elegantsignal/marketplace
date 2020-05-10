@@ -2,7 +2,6 @@ package by.itacademy.elegantsignal.marketplace.service;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderFilter;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -14,8 +13,6 @@ public interface IOrderService {
 
 	@Transactional
 	List<IOrder> getOrdersByUserId(Integer userId);
-
-	List<IOrder> find(OrderFilter orderFilter);
 
 	List<IOrder> getAll();
 
@@ -34,7 +31,4 @@ public interface IOrderService {
 	@Transactional
 	void setStatus(IOrder order, OrderStatus status);
 
-	@Deprecated
-	@Transactional
-	void saveWithId(IOrder product);
 }

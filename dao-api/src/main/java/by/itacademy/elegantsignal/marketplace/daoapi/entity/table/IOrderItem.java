@@ -7,11 +7,11 @@ public interface IOrderItem extends IBaseEntity {
 
 	IOrder getOrder();
 
-	void setOrder(IOrder order);
+	IOrderItem setOrder(IOrder order);
 
 	IProduct getProduct();
 
-	void setProduct(IProduct product);
+	IOrderItem setProduct(IProduct product);
 
 	BigDecimal getAmount();
 

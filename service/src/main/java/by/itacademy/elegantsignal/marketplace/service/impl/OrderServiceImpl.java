@@ -1,26 +1,21 @@
 package by.itacademy.elegantsignal.marketplace.service.impl;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IOrderDao;
-import by.itacademy.elegantsignal.marketplace.daoapi.IUserDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderFilter;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.service.IOrderItemService;
 import by.itacademy.elegantsignal.marketplace.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 @Service
 public class OrderServiceImpl implements IOrderService {
 
 	@Autowired private IOrderDao orderDao;
-	@Autowired private IUserDao userDao;
 	@Autowired private IOrderItemService orderItemService;
 
 	@Override
@@ -60,29 +55,29 @@ public class OrderServiceImpl implements IOrderService {
 		return orderDao.selectAll();
 	}
 
-	@Override
-	@Deprecated
-	public void saveWithId(final IOrder order) {
-		final Date modifiedOn = new Date();
-		order.setUpdated(modifiedOn);
-		order.setCreated(modifiedOn);
-		orderDao.insert(order);
+	//	@Override
+	//	public List<IOrder> getOrdersByUserId(final Integer userId) {
+	//		final OrderFilter orderFilter = new OrderFilter().setUserId(userId).setNotOrderStatus(OrderStatus.CART);
+	//		return orderDao.find(orderFilter);
+	//	}
+
+	// TODO: This is crutch(костыль), replace this with something normal
+	@Override public List<IOrder> getOrdersByUserId(final Integer userId) {
+		final List<IOrderItem> orderItemList = orderItemService.getOderItemsByUserId(userId);
+		Set<IOrder> orderMap = new HashSet<>();
+		orderItemList.forEach(orderItem -> {
+			IOrder order = orderItem.getOrder();
+			orderMap.add(order);
+			order.addOrderItem(orderItem);
+		});
+		List<IOrder> orderList = new ArrayList<>(orderMap);
+		orderList
+			.stream()
+			.sorted((object1, object2) -> object1.getCreated().compareTo(object2.getCreated()));
+		return orderList;
 	}
 
-	@Override public List<IOrder> getOrdersByUserId(Integer userId) {
-		OrderFilter orderFilter = new OrderFilter();
-		orderFilter.setUserId(userId);
-		List<OrderStatus> orderStatusList = new LinkedList<>(Arrays.asList(OrderStatus.values()));
-		orderStatusList.removeIf(order -> order.equals(OrderStatus.CART));
-		orderFilter.setOrderStatus(orderStatusList.toArray(new OrderStatus[0]));
-		return orderDao.find(orderFilter);
-	}
-
-	@Override public List<IOrder> find(OrderFilter orderFilter) {
-		return null;
-	}
-
-	@Override public void setStatus(IOrder order, OrderStatus status) {
+	@Override public void setStatus(final IOrder order, final OrderStatus status) {
 		order.setStatus(status);
 		orderDao.update(order);
 	}

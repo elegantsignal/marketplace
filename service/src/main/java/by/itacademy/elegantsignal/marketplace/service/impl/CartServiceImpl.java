@@ -29,10 +29,9 @@ public class CartServiceImpl implements ICartService {
 	@Autowired private IOrderDao orderDao;
 	@Autowired private IOrderItemDao orderItemDao;
 
-
 	@Override
-	public IOrder getCartByUserId(Integer userId) {
-		OrderFilter filter = new OrderFilter();
+	public IOrder getCartByUserId(final Integer userId) {
+		final OrderFilter filter = new OrderFilter();
 		filter.setUserId(userId).setOrderStatus(OrderStatus.CART);
 		IOrder order;
 		try {
@@ -44,13 +43,13 @@ public class CartServiceImpl implements ICartService {
 			orderService.save(order);
 		}
 
-		order.setOrderItem(orderItemService.getOrderItems(order));
+		order.setOrderItemList(orderItemService.getOrderItems(order));
 		return order;
 	}
 
 	@Override
-	public void addToCart(Integer userId, IProduct product) {
-		IOrderItem orderItem = orderItemService.createEntity();
+	public void addToCart(final Integer userId, final IProduct product) {
+		final IOrderItem orderItem = orderItemService.createEntity();
 		orderItem.setOrder(cartService.getCartByUserId(userId));
 		orderItem.setProduct(product);
 		orderItem.setAmount(product.getPrice());
@@ -58,13 +57,12 @@ public class CartServiceImpl implements ICartService {
 	}
 
 	@Override
-	public void removeFromCart(Integer userId, IOrderItem orderItem) {
-		IOrder userCart = cartService.getCartByUserId(userId);
-		OrderItemFilter orderItemFilter = new OrderItemFilter();
-		orderItemFilter.setId(orderItem.getId()).setOrderId(userCart.getId());
-		IOrderItem orderItemFromDb = orderItemDao.findOne(orderItemFilter);
+	public void removeFromCart(final Integer userId, final IOrderItem orderItem) {
+		final IOrder userCart = cartService.getCartByUserId(userId);
+		final OrderItemFilter orderItemFilter = new OrderItemFilter();
+		orderItemFilter.setId(orderItem.getId()).setOrderIds(userCart);
+		final IOrderItem orderItemFromDb = orderItemDao.findOne(orderItemFilter);
 		orderItemDao.delete(orderItemFromDb.getId());
 	}
-
 
 }

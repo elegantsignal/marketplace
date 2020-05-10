@@ -19,7 +19,7 @@ public class Order extends BaseEntity implements IOrder {
 	private IUser user;
 
 	@Transient
-	List<IOrderItem> orderItem = new ArrayList<>();
+	List<IOrderItem> orderItemList = new ArrayList<>();
 
 	@Column
 	@Enumerated(EnumType.STRING)
@@ -37,18 +37,19 @@ public class Order extends BaseEntity implements IOrder {
 	}
 
 	@Override
-	public void setUser(final IUser user) {
+	public IOrder setUser(final IUser user) {
 		this.user = user;
+		return this;
 	}
 
 	@Override
 	public List<IOrderItem> getOrderItems() {
-		return orderItem;
+		return orderItemList;
 	}
 
 	@Override
-	public void setOrderItem(List<IOrderItem> orderItem) {
-		this.orderItem = orderItem;
+	public void setOrderItemList(final List<IOrderItem> orderItemList) {
+		this.orderItemList = orderItemList;
 	}
 
 	@Override
@@ -72,12 +73,17 @@ public class Order extends BaseEntity implements IOrder {
 	}
 
 	@Override
-	public void setStatus(OrderStatus status) {
+	public IOrder setStatus(final OrderStatus status) {
 		this.status = status;
+		return this;
 	}
 
 	@Override
 	public OrderStatus getStatus() {
 		return this.status;
+	}
+
+	@Override public void addOrderItem(final IOrderItem orderItem) {
+		orderItemList.add(orderItem);
 	}
 }

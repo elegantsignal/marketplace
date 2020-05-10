@@ -32,17 +32,17 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 		return new Order();
 	}
 
-	@Override public IOrder findOne(OrderFilter filter) {
-		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<IOrder> criteriaQuery = criteriaBuilder.createQuery(IOrder.class);
-		Root<Order> from = criteriaQuery.from(Order.class);
+	@Override public IOrder findOne(final OrderFilter filter) {
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<IOrder> criteriaQuery = criteriaBuilder.createQuery(IOrder.class);
+		final Root<Order> from = criteriaQuery.from(Order.class);
 		criteriaQuery.select(from);
 
 		from.fetch(Order_.user, JoinType.LEFT);
 
 		applyFilter(filter, criteriaBuilder, criteriaQuery, from);
 
-		TypedQuery<IOrder> query = entityManager.createQuery(criteriaQuery);
+		final TypedQuery<IOrder> query = entityManager.createQuery(criteriaQuery);
 		return query.getSingleResult();
 	}
 
@@ -109,11 +109,18 @@ public class OrderDaoImpl extends AbstractDaoImpl<IOrder, Integer> implements IO
 			ands.add(criteriaBuilder.equal(from.get(Order_.user), userId));
 		}
 
-		List<OrderStatus> orderStatusList = filter.getOrderStatus();
+		final List<OrderStatus> orderStatusList = filter.getOrderStatus();
 		if (!orderStatusList.isEmpty()) {
 			List<Predicate> predicates = new ArrayList<>();
 			orderStatusList.forEach(orderStatus -> predicates.add(criteriaBuilder.equal(from.get(Order_.status), orderStatus)));
 			ands.add(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
+		}
+
+		final List<OrderStatus> notOrderStatusList = filter.getNotOrderStatus();
+		if (!notOrderStatusList.isEmpty()) {
+			List<Predicate> predicates = new ArrayList<>();
+			notOrderStatusList.forEach(orderStatus -> predicates.add(criteriaBuilder.notEqual(from.get(Order_.status), orderStatus)));
+			ands.add(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
 		}
 
 		if (!ands.isEmpty()) {

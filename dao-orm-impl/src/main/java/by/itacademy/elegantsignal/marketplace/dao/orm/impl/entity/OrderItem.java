@@ -30,8 +30,9 @@ public class OrderItem extends BaseEntity implements IOrderItem {
 	}
 
 	@Override
-	public void setOrder(final IOrder order) {
+	public OrderItem setOrder(final IOrder order) {
 		this.order = order;
+		return this;
 	}
 
 	@Override
@@ -40,8 +41,9 @@ public class OrderItem extends BaseEntity implements IOrderItem {
 	}
 
 	@Override
-	public void setProduct(final IProduct product) {
+	public IOrderItem setProduct(final IProduct product) {
 		this.product = product;
+		return this;
 	}
 
 	@Override

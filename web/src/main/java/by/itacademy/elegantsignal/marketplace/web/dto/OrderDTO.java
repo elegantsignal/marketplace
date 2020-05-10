@@ -1,12 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.web.dto;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.File;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 
 public class OrderDTO {
@@ -15,12 +10,13 @@ public class OrderDTO {
 	private String status;
 	private Date created;
 	private Date updated;
+	private List<OrderItemDTO> orderItems;
 
 	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(final Integer id) {
 		this.id = id;
 	}
 
@@ -28,7 +24,7 @@ public class OrderDTO {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(final String status) {
 		this.status = status;
 	}
 
@@ -36,7 +32,7 @@ public class OrderDTO {
 		return created;
 	}
 
-	public void setCreated(Date created) {
+	public void setCreated(final Date created) {
 		this.created = created;
 	}
 
@@ -44,7 +40,15 @@ public class OrderDTO {
 		return updated;
 	}
 
-	public void setUpdated(Date updated) {
+	public void setUpdated(final Date updated) {
 		this.updated = updated;
+	}
+
+	public List<OrderItemDTO> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(final List<OrderItemDTO> orderItems) {
+		this.orderItems = orderItems;
 	}
 }

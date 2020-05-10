@@ -1,6 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.service.impl;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IOrderItemDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderItemFilter;
@@ -8,18 +9,15 @@ import by.itacademy.elegantsignal.marketplace.service.IOrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 
 @Service
 public class OrderItemServiceImpl implements IOrderItemService {
 
-	private final IOrderItemDao orderItemDao;
-
 	@Autowired
-	public OrderItemServiceImpl(final IOrderItemDao orderItemDao) {
-		this.orderItemDao = orderItemDao;
-	}
+	private IOrderItemDao orderItemDao;
 
 	@Override
 	public IOrderItem createEntity() {
@@ -55,16 +53,22 @@ public class OrderItemServiceImpl implements IOrderItemService {
 		return orderItemDao.selectAll();
 	}
 
-	@Override
-	@Deprecated
-	public void saveWithId(final IOrderItem orderItem) {
-		orderItemDao.insert(orderItem);
+	@Override public List<IOrderItem> getOrderItems(final IOrder order) {
+		return getOrderItems(Collections.singletonList(order));
 	}
 
 	@Override
-	public List<IOrderItem> getOrderItems(IOrder order) {
-		OrderItemFilter filter = new OrderItemFilter();
-		filter.setOrderId(order.getId());
+	public List<IOrderItem> getOrderItems(final List<IOrder> orders) {
+		final OrderItemFilter filter = new OrderItemFilter();
+		filter.setOrderIds(orders);
 		return orderItemDao.find(filter);
 	}
+
+	@Override
+	public List<IOrderItem> getOderItemsByUserId(final Integer userId) {
+		final OrderItemFilter filter = new OrderItemFilter().setUserId(userId).setExcludeOrderStatusList(OrderStatus.CART);
+		return orderItemDao.find(filter);
+
+	}
+
 }

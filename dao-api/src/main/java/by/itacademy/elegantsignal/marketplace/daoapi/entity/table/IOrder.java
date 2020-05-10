@@ -10,11 +10,11 @@ public interface IOrder extends IBaseEntity {
 
 	IUser getUser();
 
-	void setUser(IUser user);
+	IOrder setUser(IUser user);
 
 	List<IOrderItem> getOrderItems();
 
-	void setOrderItem(List<IOrderItem> orderItem);
+	void setOrderItemList(List<IOrderItem> orderItemList);
 
 	Date getCreated();
 
@@ -24,7 +24,9 @@ public interface IOrder extends IBaseEntity {
 
 	void setUpdated(Date update);
 
-	void setStatus(OrderStatus status);
+	IOrder setStatus(OrderStatus status);
 
 	OrderStatus getStatus();
+
+	void addOrderItem(IOrderItem orderItem);
 }

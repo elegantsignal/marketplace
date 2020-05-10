@@ -9,9 +9,16 @@ import java.util.List;
 
 public interface IOrderItemService {
 
+	@Transactional
+	IOrderItem createEntity();
+
 	IOrderItem get(Integer id);
 
 	List<IOrderItem> getAll();
+
+	List<IOrderItem> getOrderItems(IOrder order);
+
+	List<IOrderItem> getOrderItems(List<IOrder> orders);
 
 	@Transactional
 	void save(IOrderItem entity);
@@ -22,13 +29,5 @@ public interface IOrderItemService {
 	@Transactional
 	void deleteAll();
 
-	@Transactional
-	IOrderItem createEntity();
-
-	@Deprecated
-	@Transactional
-	void saveWithId(IOrderItem orderItem);
-
-	List<IOrderItem> getOrderItems(IOrder order);
-
+	List<IOrderItem> getOderItemsByUserId(Integer userId);
 }

@@ -1,25 +1,60 @@
 package by.itacademy.elegantsignal.marketplace.daoapi.filter;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+
 public class OrderItemFilter extends AbstractFilter {
 
 	private Integer id;
-	private Integer orderId;
+	private Integer userId;
+	private final List<Integer> orderIds = new ArrayList<>();
+
+	private List<OrderStatus> excludeOrderStatusList = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
 	}
 
-	public OrderItemFilter setId(Integer id) {
+	public OrderItemFilter setId(final Integer id) {
 		this.id = id;
 		return this;
 	}
 
-	public Integer getOrderId() {
-		return orderId;
+	public List<Integer> getOrderIds() {
+		return orderIds;
 	}
 
-	public OrderItemFilter setOrderId(Integer orderId) {
-		this.orderId = orderId;
+	public OrderItemFilter setOrderIds(final IOrder... orders) {
+		for (final IOrder order : orders) {
+			orderIds.add(order.getId());
+		}
+		return this;
+	}
+
+	public OrderItemFilter setOrderIds(final List<IOrder> orders) {
+		return setOrderIds(orders.toArray(new IOrder[0]));
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public OrderItemFilter setUserId(final Integer userId) {
+		this.userId = userId;
+		return this;
+	}
+
+	public List<OrderStatus> getExcludeOrderStatusList() {
+		return excludeOrderStatusList;
+	}
+
+	public OrderItemFilter setExcludeOrderStatusList(final OrderStatus... excludeOrderStatus) {
+		excludeOrderStatusList.addAll(Arrays.asList(excludeOrderStatus));
 		return this;
 	}
 

@@ -2,7 +2,6 @@ package by.itacademy.elegantsignal.marketplace.web.controller;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.service.ICartService;
 import by.itacademy.elegantsignal.marketplace.service.IOrderItemService;
@@ -22,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,23 +31,19 @@ import java.util.stream.Collectors;
 public class CartController extends AbstractController {
 
 	@Autowired private ICartService cartService;
-
 	@Autowired private IOrderService orderService;
-
 	@Autowired private IOrderItemService orderItemService;
-
 	@Autowired private IProductService productService;
-
 	@Autowired private OrderToDTOConverter orderToDTOConverter;
-
 	@Autowired private OrderItemToDTOConverter orderItemToDTOConverter;
 
 	@GetMapping()
 	public ModelAndView index(final HttpServletRequest req, final ExtendedToken token) {
 		final Map<String, Object> hashMap = new HashMap<>();
+		final Integer userId = token.getId();
 
 		// Cart
-		final IOrder cart = cartService.getCartByUserId(token.getId());
+		final IOrder cart = cartService.getCartByUserId(userId);
 		final OrderDTO cartDTO = orderToDTOConverter.apply(cart);
 		final List<OrderItemDTO> cartItemDTOs = cart
 			.getOrderItems()
@@ -61,30 +55,31 @@ public class CartController extends AbstractController {
 		hashMap.put("cartItems", cartItemDTOs);
 
 		// Orders
-		final List<IOrder> orders = orderService.getOrdersByUserId(token.getId());
-		final List<IOrderItem> orderItems = new LinkedList<>();
-		// TODO: replace with single query
-		orders.forEach(order -> orderItems.addAll(orderItemService.getOrderItems(order)));
-		final List<OrderItemDTO> orderItemsDTOs = orderItems.stream().map(orderItemToDTOConverter).collect(Collectors.toList());
-		hashMap.put("ordersItems", orderItemsDTOs);
+		final List<IOrder> orderList = orderService.getOrdersByUserId(userId);
+		final List<OrderDTO> orderDTOList = orderList
+			.stream()
+			.map(orderToDTOConverter)
+			.collect(Collectors.toList());
+
+		hashMap.put("user_orders", orderDTOList);
 
 		return new ModelAndView("cart.item", hashMap);
 	}
 
-	@GetMapping(value = "/{id}/delete")
+	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable(name = "id", required = true) final Integer id, final ExtendedToken token) {
 		cartService.removeFromCart(token.getId(), orderItemService.get(id));
 		return "redirect:/cart";
 	}
 
-	@GetMapping(value = "/{id}/add")
+	@GetMapping("/{id}/add")
 	public String add(@PathVariable(name = "id", required = true) final Integer id, final ExtendedToken token) {
-		IProduct product = productService.get(id);
+		final IProduct product = productService.get(id);
 		cartService.addToCart(token.getId(), product);
 		return "redirect:/cart";
 	}
 
-	@GetMapping(value = "/checkout")
+	@GetMapping("/checkout")
 	public String checkout(final ExtendedToken token) {
 		final IOrder userCart = cartService.getCartByUserId(token.getId());
 		orderService.setStatus(userCart, OrderStatus.PAYED);

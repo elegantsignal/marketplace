@@ -90,15 +90,14 @@ public abstract class AbstractTest {
 			conn.close();
 		}
 
-		LOGGER.info("Database recreated in {} seconds.",
-			Double.valueOf((System.currentTimeMillis() - stampBefore) / 1000));
+		LOGGER.info("Database recreated in {} seconds.", (double) ((System.currentTimeMillis() - stampBefore) / 1000));
 	}
 
 	private String getScript() {
 
 		final StringBuilder contentBuilder = new StringBuilder();
 
-		try (Stream<String> stream = Files.lines(
+		try (final Stream<String> stream = Files.lines(
 			Paths.get("../docs/database/marketplace.sql"),
 			StandardCharsets.UTF_8)) {
 			stream.forEach(s -> contentBuilder.append(s).append("\n"));
@@ -200,10 +199,13 @@ public abstract class AbstractTest {
 		return entity;
 	}
 
-	protected IOrder saveNewOrder() {
-		final IOrder order = orderService.createEntity();
-		order.setUser(saveNewUser());
-		order.setStatus(OrderStatus.CART);
+	protected IOrder saveNewOrder(final IOrder order) {
+		if (order.getUser() == null) {
+			order.setUser(this.saveNewUser());
+		}
+		if (order.getStatus() == null) {
+			order.setStatus(OrderStatus.CART);
+		}
 		orderService.save(order);
 		return order;
 	}
@@ -222,27 +224,26 @@ public abstract class AbstractTest {
 		return product;
 	}
 
-	protected IOrderItem saveNewOrderItem() {
-		final IOrderItem entity = orderItemService.createEntity();
-		entity.setOrder(saveNewOrder());
-		entity.setProduct(saveNewProduct());
-		entity.setAmount(BigDecimal.valueOf(getRandomFromRange(100)).movePointLeft(2));
-		orderItemService.save(entity);
-		return entity;
-	}
+	protected IOrderItem saveNewOrderItem(final IOrderItem orderItem) {
+		if (orderItem.getOrder() == null) {
+			orderItem.setOrder(saveNewOrder(orderService.createEntity()));
+		}
 
-	IOrderItem saveNewOrderItem(IOrder order) {
-		final IOrderItem orderItem = orderItemService.createEntity();
-		orderItem.setOrder(order);
-		orderItem.setProduct(saveNewProduct());
-		orderItem.setAmount(BigDecimal.valueOf(getRandomFromRange(100)).movePointLeft(2));
+		if (orderItem.getProduct() == null) {
+			orderItem.setProduct(saveNewProduct());
+		}
+
+		if (orderItem.getAmount() == null) {
+			orderItem.setAmount(BigDecimal.valueOf(getRandomFromRange(100)).movePointLeft(2));
+		}
+
 		orderItemService.save(orderItem);
 		return orderItem;
 	}
 
 	protected IReview saveNewReview() {
 		final IReview entity = reviewService.createEntity();
-		entity.setOrderItem(saveNewOrderItem());
+		entity.setOrderItem(saveNewOrderItem(orderItemService.createEntity()));
 		entity.setGrade(getRandomFromRange(5));
 		entity.setComment("Comment-" + getRandomPrefix());
 		reviewService.save(entity);
