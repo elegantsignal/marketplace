@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,0" last-zoom="0.95"
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,276" last-zoom="0.95"
 	 default-owner="postgres">
 <database name="marketplace" encoding="UTF8" lc-collate="en_US.utf8" lc-ctype="en_US.utf8">
 	<role name="postgres"/>
@@ -118,7 +118,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<schema name="public"/>
 	<position x="920" y="620"/>
 	<column name="title" not-null="true">
-		<type name="varchar" length="32"/>
+		<type name="varchar" length="128"/>
 	</column>
 	<column name="cover">
 		<type name="varchar" length="128"/>

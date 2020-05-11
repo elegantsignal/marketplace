@@ -124,7 +124,7 @@ ALTER SEQUENCE public.song_id_seq OWNER TO postgres;
 -- DROP TABLE IF EXISTS public.book CASCADE;
 CREATE TABLE public.book(
 	id integer NOT NULL,
-	title varchar(32) NOT NULL,
+	title varchar(128) NOT NULL,
 	cover varchar(128),
 	published date NOT NULL,
 	description text NOT NULL,
