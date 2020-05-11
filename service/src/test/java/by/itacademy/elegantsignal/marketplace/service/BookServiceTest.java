@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BookServiceTest extends AbstractTest {
 
 	@Test
-	public void testCreate() throws IOException {
+	public void testCreate() {
 		final IBook book = saveNewBook(bookService.createEntity());
 		final IBook bookFromDb = bookService.getFullInfo(book.getId());
 
@@ -35,10 +35,11 @@ public class BookServiceTest extends AbstractTest {
 		assertEquals(book.getDescription(), bookFromDb.getDescription());
 		assertEquals(book.getCover(), bookFromDb.getCover());
 		assertEquals(book.getPublished(), bookFromDb.getPublished());
+		assertEquals(book.getPdf(), bookFromDb.getPdf());
 	}
 
 	@Test
-	public void testGetAll() throws IOException {
+	public void testGetAll() {
 		final int initialCount = bookService.getAll().size();
 
 		final int randomObjectsCount = getRandomObjectsCount();

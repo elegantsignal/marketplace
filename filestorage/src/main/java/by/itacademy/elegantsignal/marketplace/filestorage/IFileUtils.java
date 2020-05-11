@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 public interface IFileUtils {
 
-	File saveTmpImage(InputStream inputStream);
+	File saveTmpFile(InputStream inputStream);
 
 	String getFileExtension(File image) throws IllegalArgumentException;
 

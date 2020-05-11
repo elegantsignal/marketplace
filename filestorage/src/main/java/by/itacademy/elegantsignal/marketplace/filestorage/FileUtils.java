@@ -19,7 +19,7 @@ public class FileUtils implements IFileUtils {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
 	@Override
-	public File saveTmpImage(final InputStream inputStream) {
+	public File saveTmpFile(final InputStream inputStream) {
 		final String uuid = UUID.randomUUID().toString();
 
 		File tempFile = null;

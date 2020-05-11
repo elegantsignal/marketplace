@@ -174,9 +174,13 @@ public abstract class AbstractTest {
 			book.setDescription("Description-" + getRandomPrefix());
 		}
 
+		if (book.getPdf() == null) {
+			book.setPdf(new File("/testpdf/" + getRandomPrefix()));
+		}
+
 		try {
 			bookService.save(book);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 

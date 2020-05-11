@@ -34,17 +34,16 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		final EntityManager em = getEntityManager();
 		final CriteriaBuilder cb = em.getCriteriaBuilder();
 
-		final CriteriaQuery<IBook> cq = cb.createQuery(IBook.class); // define returning result
-		final Root<Book> from = cq.from(Book.class); // define table for select
+		final CriteriaQuery<IBook> cq = cb.createQuery(IBook.class);
+		final Root<Book> from = cq.from(Book.class);
 
-		cq.select(from); // define what need to be selected
+		cq.select(from);
 
 		from.fetch(Book_.product, JoinType.LEFT).fetch(Product_.user, JoinType.LEFT);
 		from.fetch(Book_.genre, JoinType.LEFT);
-		// .. where id=...
-		// TODO: check distinct=false
-		cq.distinct(true);
-		cq.where(cb.equal(from.get(Book_.id), id)); // where id=?
+
+		cq.distinct(true); // TODO: check distinct=false
+		cq.where(cb.equal(from.get(Book_.id), id));
 
 		final TypedQuery<IBook> q = em.createQuery(cq);
 

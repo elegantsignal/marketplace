@@ -40,4 +40,8 @@ public interface IBook extends IBaseEntity {
 
 	void setGenre(Set<IGenre> genre);
 
+	File getPdf();
+
+	void setPdf(File file);
+
 }

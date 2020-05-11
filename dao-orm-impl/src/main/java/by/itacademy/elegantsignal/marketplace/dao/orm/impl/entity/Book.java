@@ -1,33 +1,19 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
 
-import java.io.File;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-
 import by.itacademy.elegantsignal.marketplace.dao.orm.converter.FileAtributeConverter;
 import by.itacademy.elegantsignal.marketplace.dao.orm.converter.LocalDateAttributeConverter;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.*;
+
+import javax.persistence.*;
+import java.io.File;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -41,8 +27,7 @@ public class Book implements IBook {
 	@PrimaryKeyJoinColumn
 	private IProduct product;
 
-	@JoinTable(name = "book_2_genre", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "genre_id") })
+	@JoinTable(name = "book_2_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	@ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY)
 	private Set<IGenre> genre = new HashSet<>();
 
@@ -67,93 +52,87 @@ public class Book implements IBook {
 	@Column
 	private Date updated;
 
-	@Override
-	public Integer getId() {
-		return this.id;
+	@Column
+	@Convert(converter = FileAtributeConverter.class)
+	private File pdf;
+
+	@Override public Integer getId() {
+		return id;
 	}
 
-	@Override
-	public void setId(final Integer id) {
+	@Override public void setId(final Integer id) {
 		this.id = id;
 	}
 
-	@Override
-	public Set<IGenre> getGenre() {
+	@Override public Set<IGenre> getGenre() {
 		return genre;
 	}
 
-	@Override
-	public void setGenre(final Set<IGenre> genre) {
+	@Override public void setGenre(final Set<IGenre> genre) {
 		this.genre = genre;
 	}
 
-	@Override
-	public IProduct getProduct() {
+	@Override public File getPdf() {
+		return pdf;
+	}
+
+	@Override public void setPdf(final File pdf) {
+		this.pdf = pdf;
+	}
+
+	@Override public IProduct getProduct() {
 		return product;
 	}
 
-	@Override
-	public void setProduct(final IProduct product) {
+	@Override public void setProduct(final IProduct product) {
 		this.product = product;
 	}
 
-	@Override
-	public String getTitle() {
+	@Override public String getTitle() {
 		return title;
 	}
 
-	@Override
-	public void setTitle(final String title) {
+	@Override public void setTitle(final String title) {
 		this.title = title;
 	}
 
-	@Override
-	public File getCover() {
+	@Override public File getCover() {
 		return cover;
 	}
 
-	@Override
-	public void setCover(final File cover) {
+	@Override public void setCover(final File cover) {
 		this.cover = cover;
 	}
 
-	@Override
-	public LocalDate getPublished() {
+	@Override public LocalDate getPublished() {
 		return published;
 	}
 
-	@Override
-	public void setPublished(final LocalDate published) {
+	@Override public void setPublished(final LocalDate published) {
 		this.published = published;
 	}
 
-	@Override
-	public String getDescription() {
+	@Override public String getDescription() {
 		return description;
 	}
 
-	@Override
-	public void setDescription(final String description) {
+	@Override public void setDescription(final String description) {
 		this.description = description;
 	}
 
-	@Override
-	public Date getCreated() {
+	@Override public Date getCreated() {
 		return created;
 	}
 
-	@Override
-	public void setCreated(final Date created) {
+	@Override public void setCreated(final Date created) {
 		this.created = created;
 	}
 
-	@Override
-	public Date getUpdated() {
+	@Override public Date getUpdated() {
 		return updated;
 	}
 
-	@Override
-	public void setUpdated(final Date updated) {
+	@Override public void setUpdated(final Date updated) {
 		this.updated = updated;
 	}
 
