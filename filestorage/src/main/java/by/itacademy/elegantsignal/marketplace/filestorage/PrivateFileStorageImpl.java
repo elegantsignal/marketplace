@@ -24,7 +24,7 @@ public class PrivateFileStorageImpl implements IPrivateFileStorage {
 			return;
 		}
 
-		log.info(String.format("Will try to save file: %s", book.getPdf()));
+//		log.info(String.format("Will try to save file: %s", book.getPdf()));
 
 		final String fileExtension = fileUtils.getFileExtension(book.getPdf());
 
@@ -43,7 +43,7 @@ public class PrivateFileStorageImpl implements IPrivateFileStorage {
 				absoluteDir.resolve(fileName),
 				StandardCopyOption.REPLACE_EXISTING);
 		} catch (final IOException e) {
-			log.warn(String.format("Can't copy file from tmp %s", absoluteDir.resolve(fileName)));
+//			log.warn(String.format("Can't copy file from tmp %s", absoluteDir.resolve(fileName)));
 		}
 
 		book.setPdf(new File(relativeDir.resolve(fileName).toString()));

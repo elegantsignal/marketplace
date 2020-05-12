@@ -64,16 +64,14 @@ public class OrderServiceImpl implements IOrderService {
 	// TODO: This is crutch(костыль), replace this with something normal
 	@Override public List<IOrder> getOrdersByUserId(final Integer userId) {
 		final List<IOrderItem> orderItemList = orderItemService.getOderItemsByUserId(userId);
-		Set<IOrder> orderMap = new HashSet<>();
+		final Set<IOrder> orderMap = new HashSet<>();
 		orderItemList.forEach(orderItem -> {
-			IOrder order = orderItem.getOrder();
+			final IOrder order = orderItem.getOrder();
 			orderMap.add(order);
 			order.addOrderItem(orderItem);
 		});
-		List<IOrder> orderList = new ArrayList<>(orderMap);
-		orderList
-			.stream()
-			.sorted((object1, object2) -> object1.getCreated().compareTo(object2.getCreated()));
+		final List<IOrder> orderList = new ArrayList<>(orderMap);
+		orderList.stream().sorted((object1, object2) -> object1.getCreated().compareTo(object2.getCreated()));
 		return orderList;
 	}
 
