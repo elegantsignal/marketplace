@@ -13,7 +13,9 @@
 	<context:component-scan base-package="by.itacademy.elegantsignal.marketplace.web.security"/>
 
 	<http>
+		<intercept-url pattern="/**/add" access="!isAnonymous()"/>
 		<intercept-url pattern="/cart/**" access="!isAnonymous()"/>
+
 		<intercept-url pattern="/rest/api/v1/**" access="!isAnonymous()"/>
 
 		<form-login login-page="/login" default-target-url="/" authentication-failure-url="/login?error" username-parameter="username" password-parameter="password"/>

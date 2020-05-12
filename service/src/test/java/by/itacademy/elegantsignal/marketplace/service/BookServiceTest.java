@@ -99,7 +99,7 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testUserBooks() throws IOException {
+	public void testUserBooks() {
 		final IUser user = saveNewUser();
 
 		final int bookCount = getRandomObjectsCount();
@@ -121,19 +121,19 @@ public class BookServiceTest extends AbstractTest {
 
 	@Test
 	public void testSearch() {
-		List<IBook> result = bookService.search("test");
+		final List<IBook> result = bookService.search("test");
 		assertTrue(result.isEmpty());
 
-		List<String> testDescriptions = Stream.of("foo", "bar", "foo bar")
+		final List<String> testDescriptions = Stream.of("foo", "bar", "foo bar")
 			.collect(Collectors.toList());
 
 		testDescriptions.forEach(description -> {
-			IBook book = bookService.createEntity();
+			final IBook book = bookService.createEntity();
 			book.setDescription(description);
 			saveNewBook(book);
 		});
 
-		List<IBook> foundBooks = bookService.search("foo");
+		final List<IBook> foundBooks = bookService.search("foo");
 		assertEquals(2, foundBooks.size());
 	}
 

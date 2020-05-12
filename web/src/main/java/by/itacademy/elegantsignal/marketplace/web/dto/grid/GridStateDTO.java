@@ -1,4 +1,7 @@
-package by.itacademy.elegantsignal.marketplace.web.dto;
+package by.itacademy.elegantsignal.marketplace.web.dto.grid;
+
+import by.itacademy.elegantsignal.marketplace.web.dto.SortDTO;
+
 
 public class GridStateDTO {
 
@@ -20,7 +23,7 @@ public class GridStateDTO {
 	}
 
 	public GridStateDTO() {
-		this(7);
+		this(3);
 	}
 
 	public SortDTO getSort() {

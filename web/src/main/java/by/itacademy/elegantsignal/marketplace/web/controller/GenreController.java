@@ -25,7 +25,7 @@ import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 import by.itacademy.elegantsignal.marketplace.web.converter.GenreFromDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.converter.GenreToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.GenreDTO;
-import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
+import by.itacademy.elegantsignal.marketplace.web.dto.grid.GridStateDTO;
 
 
 @Controller

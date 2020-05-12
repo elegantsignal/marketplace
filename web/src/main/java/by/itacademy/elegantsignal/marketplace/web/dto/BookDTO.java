@@ -21,10 +21,15 @@ public class BookDTO {
 	private Set<Integer> genreIds;
 	private String description;
 	private String cover;
+	private String pdf;
 	private BigDecimal price;
 	@DateTimeFormat(pattern = "yyyy-MM-dd") private LocalDate published;
 	private Date created;
 	private Date updated;
+
+	public void setPublished(final LocalDate localDate) {
+		this.published = localDate;
+	}
 
 	public void setCover(final String cover) {
 		this.cover = cover;
@@ -38,8 +43,15 @@ public class BookDTO {
 		setCover("");
 	}
 
-	public void setPublished(final LocalDate localDate) {
-		this.published = localDate;
+	public void setPdf(final String pdf) {
+		this.pdf = pdf;
 	}
 
+	public void setPdf(final File pdf) {
+		if (pdf != null) {
+			setPdf(pdf.toString());
+			return;
+		}
+		setPdf("");
+	}
 }

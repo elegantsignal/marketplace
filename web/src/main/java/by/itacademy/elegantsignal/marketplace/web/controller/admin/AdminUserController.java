@@ -25,7 +25,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
 import by.itacademy.elegantsignal.marketplace.service.IUserService;
 import by.itacademy.elegantsignal.marketplace.web.converter.UserFromDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.converter.UserToDTOConverter;
-import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
+import by.itacademy.elegantsignal.marketplace.web.dto.grid.GridStateDTO;
 import by.itacademy.elegantsignal.marketplace.web.dto.UserDTO;
 
 

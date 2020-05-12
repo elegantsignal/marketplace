@@ -23,7 +23,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
-import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
+import by.itacademy.elegantsignal.marketplace.web.dto.grid.GridStateDTO;
 import by.itacademy.elegantsignal.marketplace.web.jndi.SMTPCredentials;
 
 

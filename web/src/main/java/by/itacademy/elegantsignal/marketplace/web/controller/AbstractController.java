@@ -2,9 +2,8 @@ package by.itacademy.elegantsignal.marketplace.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.AbstractDaoImpl;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.AbstractFilter;
-import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
+import by.itacademy.elegantsignal.marketplace.web.dto.grid.GridStateDTO;
 import by.itacademy.elegantsignal.marketplace.web.dto.SortDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

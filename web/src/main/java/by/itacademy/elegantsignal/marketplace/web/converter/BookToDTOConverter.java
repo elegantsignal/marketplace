@@ -21,6 +21,7 @@ public class BookToDTOConverter implements Function<IBook, BookDTO> {
 		bookDto.setId(book.getId());
 		bookDto.setTitle(book.getTitle());
 		bookDto.setCover(book.getCover());
+		bookDto.setPdf(book.getPdf());
 		bookDto.setDescription(book.getDescription());
 		bookDto.setPublished(book.getPublished());
 		bookDto.setPrice(book.getProduct().getPrice());
@@ -29,12 +30,11 @@ public class BookToDTOConverter implements Function<IBook, BookDTO> {
 
 		try {
 			bookDto.setAuthor(book.getProduct().getUser().getName());
-
 		} catch (final LazyInitializationException e) {}
 
 		try {
 			final Set<IGenre> genreSet = book.getGenre();
-			if (genreSet.size() > 0) {
+			if (!genreSet.isEmpty()) {
 				bookDto.setGenreIds(genreSet.stream().map(IGenre::getId).collect(Collectors.toSet()));
 			}
 		} catch (final LazyInitializationException e) {

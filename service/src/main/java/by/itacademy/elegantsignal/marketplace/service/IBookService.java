@@ -32,4 +32,6 @@ public interface IBookService {
 	@Transactional List<IBook> find(BookFilter filter);
 
 	@Transactional List<IBook> search(String string);
+
+	IBook createBook(Integer userId);
 }

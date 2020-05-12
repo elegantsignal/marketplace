@@ -2,11 +2,15 @@ package by.itacademy.elegantsignal.marketplace.service.impl;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.filestorage.IFileStorage;
 import by.itacademy.elegantsignal.marketplace.filestorage.IFileUtils;
 import by.itacademy.elegantsignal.marketplace.filestorage.IPrivateFileStorage;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
+import by.itacademy.elegantsignal.marketplace.service.IProductService;
+import by.itacademy.elegantsignal.marketplace.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +26,11 @@ import java.util.Properties;
 @Service
 public class BookServiceImpl implements IBookService {
 
+	@Autowired private IUserService userService;
+	@Autowired private IProductService productService;
 	@Autowired private IBookDao bookDao;
-
 	@Autowired private IFileStorage fileStorage;
-
 	@Autowired private IPrivateFileStorage privateFileStorage;
-
 	@Autowired private IFileUtils fileUtils;
 
 	@Override public IBook createEntity() {
@@ -54,6 +57,7 @@ public class BookServiceImpl implements IBookService {
 		book.setCover(fileUtils.saveTmpFile(inputStream));
 		book.setPdf(fileUtils.saveTmpFile(inputStream));
 		fileStorage.saveCover(book);
+		// TODO: fix me
 //		privateFileStorage.savePdf(book);
 		save(book);
 	}
@@ -86,10 +90,10 @@ public class BookServiceImpl implements IBookService {
 		return bookDao.getCount(filter);
 	}
 
-	private void sendMail(String body, String subject) {
+	private void sendMail(final String body, final String subject) {
 
 		final String username = "elegantsignal@gmail.com";
-		final String password = "jiuqjpxfhtbkukgg";
+		final String password = "changeme";
 
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -108,7 +112,7 @@ public class BookServiceImpl implements IBookService {
 
 		try {
 
-			Message message = new MimeMessage(session);
+			final Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("elegantsignal@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("dmitri.zhyvushko@gmail.com"));
 			message.setSubject(subject);
@@ -121,8 +125,16 @@ public class BookServiceImpl implements IBookService {
 		}
 	}
 
-	@Override public List<IBook> search(String string) {
+	@Override public List<IBook> search(final String string) {
 		return bookDao.search(string);
+	}
+
+	@Override public IBook createBook(final Integer userId) {
+		final IProduct product = productService.createEntity();
+		product.setUser(userService.get(userId));
+		final IBook book = createEntity();
+		book.setProduct(product);
+		return book;
 	}
 
 }

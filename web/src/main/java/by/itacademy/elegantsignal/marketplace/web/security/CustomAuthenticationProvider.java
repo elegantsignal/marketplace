@@ -1,9 +1,8 @@
 package by.itacademy.elegantsignal.marketplace.web.security;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import by.itacademy.elegantsignal.marketplace.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,20 +12,18 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
-import by.itacademy.elegantsignal.marketplace.service.IUserService;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 
 @Component("customAuthenticationProvider")
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-	@Autowired
-	IUserService userService;
+	@Autowired IUserService userService;
 
 	@Override
-	public Authentication authenticate(final Authentication authentication)
-			throws AuthenticationException {
+	public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
 		final String username = authentication.getPrincipal() + "";
 		final String password = authentication.getCredentials() + "";
 

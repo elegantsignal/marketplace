@@ -2,15 +2,14 @@ package by.itacademy.elegantsignal.marketplace.web.controller;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
-import by.itacademy.elegantsignal.marketplace.service.IProductService;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookFromDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
-import by.itacademy.elegantsignal.marketplace.web.dto.GridStateDTO;
+import by.itacademy.elegantsignal.marketplace.web.dto.grid.GridStateDTO;
+import by.itacademy.elegantsignal.marketplace.web.security.ExtendedToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -34,20 +33,10 @@ public class BookController extends AbstractController {
 	private static final String FORM_MODEL = "formModel";
 	private static final String VIEW_NAME = "book.edit";
 
-	@Autowired
-	private IBookService bookService;
-
-	@Autowired
-	private IProductService productService;
-
-	@Autowired
-	private IGenreService genreService;
-
-	@Autowired
-	private BookToDTOConverter toDtoConverter;
-
-	@Autowired
-	private BookFromDTOConverter fromDtoConverter;
+	@Autowired private IBookService bookService;
+	@Autowired private IGenreService genreService;
+	@Autowired private BookToDTOConverter toDtoConverter;
+	@Autowired private BookFromDTOConverter fromDtoConverter;
 
 	@GetMapping()
 	public ModelAndView index(final HttpServletRequest req,
@@ -71,11 +60,9 @@ public class BookController extends AbstractController {
 	}
 
 	@GetMapping(value = "/add")
-	public ModelAndView showForm() {
+	public ModelAndView showForm(final ExtendedToken token) {
 		final Map<String, Object> hashMap = new HashMap<>();
-		final IProduct product = productService.createEntity();
-		final IBook book = bookService.createEntity();
-		book.setProduct(product);
+		final IBook book = bookService.createBook(token.getId());
 		hashMap.put(FORM_MODEL, toDtoConverter.apply(book));
 
 		return new ModelAndView(VIEW_NAME, hashMap);
