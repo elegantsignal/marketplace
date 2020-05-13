@@ -180,11 +180,10 @@ REFERENCES public."order" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: public.download_links | type: TABLE --
--- DROP TABLE IF EXISTS public.download_links CASCADE;
-CREATE TABLE public.download_links(
+-- object: public.download | type: TABLE --
+-- DROP TABLE IF EXISTS public.download CASCADE;
+CREATE TABLE public.download(
 	id serial NOT NULL,
-	book_id integer NOT NULL,
 	order_item_id integer NOT NULL,
 	token varchar(64),
 	valid interval HOUR  NOT NULL,
@@ -196,8 +195,8 @@ CREATE TABLE public.download_links(
 -- ddl-end --
 
 -- object: order_item_fk | type: CONSTRAINT --
--- ALTER TABLE public.download_links DROP CONSTRAINT IF EXISTS order_item_fk CASCADE;
-ALTER TABLE public.download_links ADD CONSTRAINT order_item_fk FOREIGN KEY (order_item_id)
+-- ALTER TABLE public.download DROP CONSTRAINT IF EXISTS order_item_fk CASCADE;
+ALTER TABLE public.download ADD CONSTRAINT order_item_fk FOREIGN KEY (order_item_id)
 REFERENCES public.order_item (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
@@ -377,13 +376,6 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- object: review_uq | type: CONSTRAINT --
 -- ALTER TABLE public.review DROP CONSTRAINT IF EXISTS review_uq CASCADE;
 ALTER TABLE public.review ADD CONSTRAINT review_uq UNIQUE (order_item_id);
--- ddl-end --
-
--- object: book_fk | type: CONSTRAINT --
--- ALTER TABLE public.download_links DROP CONSTRAINT IF EXISTS book_fk CASCADE;
-ALTER TABLE public.download_links ADD CONSTRAINT book_fk FOREIGN KEY (book_id)
-REFERENCES public.book (id) MATCH FULL
-ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 

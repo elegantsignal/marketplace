@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,0" last-zoom="0.95"
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="134,79" last-zoom="1"
 	 default-owner="postgres">
 <database name="marketplace" encoding="UTF8" lc-collate="en_US.utf8" lc-ctype="en_US.utf8">
 	<role name="postgres"/>
@@ -23,7 +23,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="user">
 	<schema name="public"/>
-	<position x="580" y="40"/>
+	<position x="580" y="24"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -64,7 +64,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="order">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="240" y="320"/>
+	<position x="340" y="300"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -116,7 +116,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="book">
 	<schema name="public"/>
-	<position x="1220" y="600"/>
+	<position x="800" y="584"/>
 	<column name="title" not-null="true">
 		<type name="varchar" length="128"/>
 	</column>
@@ -126,7 +126,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="published" not-null="true">
 		<type name="date" length="0"/>
 	</column>
-	<column name="pdf" not-null="true">
+	<column name="pdf">
 		<type name="varchar" length="128"/>
 	</column>
 	<column name="description" not-null="true">
@@ -160,7 +160,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="role">
 	<schema name="public"/>
-	<position x="1120" y="80"/>
+	<position x="1120" y="64"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -177,7 +177,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="order_item">
 	<schema name="public"/>
-	<position x="380" y="600"/>
+	<position x="380" y="584"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -208,9 +208,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.order_item"
 	 src-required="true" dst-required="false"/>
 
-<table name="download_links">
+<table name="download">
 	<schema name="public"/>
-	<position x="620" y="880"/>
+	<position x="620" y="860"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -226,17 +226,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="created" not-null="true">
 		<type name="timestamp" length="0"/>
 	</column>
-	<constraint name="download_pk" type="pk-constr" table="public.download_links">
+	<constraint name="download_pk" type="pk-constr" table="public.download">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="book_id" index="1"/>
-		<object name="order_item_id" index="2"/>
+		<object name="order_item_id" index="1"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="book_fk" index="2"/>
 		<object name="order_item_fk" index="1"/>
 	</customidxs>
 </table>
@@ -247,7 +245,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-fk-pattern="{st}_fk"
 	 custom-color="#be95ab"
 	 src-table="public.order_item"
-	 dst-table="public.download_links"
+	 dst-table="public.download"
 	 src-required="true" dst-required="false">
 	<label ref-type="name-label">
 		<position x="26.6689" y="-25.6857"/>
@@ -256,7 +254,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="genre">
 	<schema name="public"/>
-	<position x="1380" y="380"/>
+	<position x="1280" y="484"/>
 	<column name="id" not-null="true">
 		<type name="smallserial" length="0"/>
 	</column>
@@ -286,7 +284,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="product">
 	<schema name="public"/>
-	<position x="640" y="320"/>
+	<position x="660" y="300"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -374,7 +372,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="payment">
 	<schema name="public"/>
-	<position x="240" y="80"/>
+	<position x="240" y="64"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -427,7 +425,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="review">
 	<schema name="public"/>
-	<position x="220" y="880"/>
+	<position x="220" y="860"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -459,7 +457,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="like">
 	<schema name="public"/>
-	<position x="1080" y="320"/>
+	<position x="1140" y="300"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -515,14 +513,5 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<position x="-9.93848" y="-25.6857"/>
 	</label>
 </relationship>
-
-<relationship name="book_has_many_download_links" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
-	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
-	 src-fk-pattern="{st}_fk"
-	 custom-color="#f943ea"
-	 src-table="public.book"
-	 dst-table="public.download_links"
-	 src-required="true" dst-required="false"/>
 
 </dbmodel>
