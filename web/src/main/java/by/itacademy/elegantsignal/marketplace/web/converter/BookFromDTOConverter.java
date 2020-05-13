@@ -4,13 +4,10 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
 import by.itacademy.elegantsignal.marketplace.filestorage.FileUtils;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
-import by.itacademy.elegantsignal.marketplace.service.IUserService;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +26,6 @@ public class BookFromDTOConverter implements Function<BookDTO, IBook> {
 	@Autowired private IBookService bookService;
 	@Autowired private IProductService productService;
 	@Autowired private IGenreService genreService;
-	@Autowired private IUserService userService;
 
 	@Override
 	public IBook apply(final BookDTO dto) {
@@ -42,6 +38,7 @@ public class BookFromDTOConverter implements Function<BookDTO, IBook> {
 
 		book.setTitle(dto.getTitle());
 		book.setCover(fileUtils.getAbsolutePath(dto.getCover()));
+		book.setPdf(fileUtils.getAbsolutePath(dto.getPdf()));
 		book.setPublished(dto.getPublished());
 		book.setDescription(dto.getDescription());
 
@@ -50,7 +47,6 @@ public class BookFromDTOConverter implements Function<BookDTO, IBook> {
 		if (product == null) {
 			product = productService.createEntity();
 		}
-		product.setUser(getHardcodedUser());
 		product.setType(ProductType.BOOK);
 		product.setPrice(dto.getPrice());
 		productService.save(product);
@@ -67,12 +63,5 @@ public class BookFromDTOConverter implements Function<BookDTO, IBook> {
 		}
 
 		return book;
-	}
-
-	@Deprecated
-	private IUser getHardcodedUser() {
-		final UserFilter userFilter = new UserFilter();
-		userFilter.setEmail("asimov@exampl.com");
-		return userService.findOne(userFilter);
 	}
 }

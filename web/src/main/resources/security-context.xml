@@ -14,6 +14,9 @@
 
 	<http>
 		<intercept-url pattern="/**/add" access="!isAnonymous()"/>
+		<intercept-url pattern="/**/edit" access="!isAnonymous()"/>
+		<intercept-url pattern="/**/delete" access="!isAnonymous()"/>
+
 		<intercept-url pattern="/cart/**" access="!isAnonymous()"/>
 
 		<intercept-url pattern="/rest/api/v1/**" access="!isAnonymous()"/>
