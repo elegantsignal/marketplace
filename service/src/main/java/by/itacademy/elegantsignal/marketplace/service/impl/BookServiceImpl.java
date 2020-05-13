@@ -3,7 +3,6 @@ package by.itacademy.elegantsignal.marketplace.service.impl;
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.filestorage.IFileStorage;
 import by.itacademy.elegantsignal.marketplace.filestorage.IFileUtils;
@@ -14,12 +13,18 @@ import by.itacademy.elegantsignal.marketplace.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.mail.*;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 
@@ -42,6 +47,8 @@ public class BookServiceImpl implements IBookService {
 
 		book.setUpdated(modifiedOn);
 
+		fileStorage.autoMoveAllFiles(book);
+
 		if (book.getId() == null) {
 			book.setId(book.getProduct().getId());
 			book.setCreated(modifiedOn);
@@ -53,12 +60,25 @@ public class BookServiceImpl implements IBookService {
 		//		sendMail(book.getTitle(), book.getDescription());
 	}
 
-	@Override public void save(final IBook book, final InputStream inputStream) {
-		book.setCover(fileUtils.saveTmpFile(inputStream));
-		book.setPdf(fileUtils.saveTmpFile(inputStream));
-		fileStorage.saveCover(book);
-		// TODO: fix me
-//		privateFileStorage.savePdf(book);
+	@Override public void save(final IBook book, final Map<String, InputStream> inputStreamMap) {
+		inputStreamMap.forEach((fileField, inputStream) -> {
+			if (inputStream == null) {
+				return;
+			}
+
+			final File tmp = fileUtils.saveTmpFile(inputStream);
+			switch (fileField) {
+				case ("cover"):
+					book.setCover(tmp);
+					break;
+				case ("pdf"):
+					book.setPdf(tmp);
+					break;
+				default:
+					break;
+			}
+		});
+
 		save(book);
 	}
 

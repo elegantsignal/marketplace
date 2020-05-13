@@ -1,42 +1,35 @@
 package by.itacademy.elegantsignal.marketplace.web.converter;
 
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import javax.persistence.NoResultException;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
+import by.itacademy.elegantsignal.marketplace.filestorage.FileUtils;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
 import by.itacademy.elegantsignal.marketplace.service.IUserService;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.NoResultException;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @Component
 public class BookFromDTOConverter implements Function<BookDTO, IBook> {
 
-	@Autowired
-	private IBookService bookService;
-
-	@Autowired
-	private IProductService productService;
-
-	@Autowired
-	private IGenreService genreService;
-
-	@Autowired
-	private IUserService userService;
+	@Autowired private FileUtils fileUtils;
+	@Autowired private IBookService bookService;
+	@Autowired private IProductService productService;
+	@Autowired private IGenreService genreService;
+	@Autowired private IUserService userService;
 
 	@Override
 	public IBook apply(final BookDTO dto) {
@@ -48,8 +41,7 @@ public class BookFromDTOConverter implements Function<BookDTO, IBook> {
 		}
 
 		book.setTitle(dto.getTitle());
-		// TODO make decision what to do with cover field
-//		book.setCover(dto.getCover());
+		book.setCover(fileUtils.getAbsolutePath(dto.getCover()));
 		book.setPublished(dto.getPublished());
 		book.setDescription(dto.getDescription());
 

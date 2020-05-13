@@ -15,6 +15,7 @@ import javax.persistence.NoResultException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -159,7 +160,7 @@ public class Seed {
 		productService.save(product);
 
 		// handle genres
-		final Set<IGenre> genreSet = new HashSet<IGenre>();
+		final Set<IGenre> genreSet = new HashSet<>();
 
 		for (final String genreName : (List<String>) bookData.get("genre")) {
 			final GenreFilter genreFilter = new GenreFilter();
@@ -190,7 +191,11 @@ public class Seed {
 		book.setDescription((String) bookData.get("description"));
 
 		final File coverFile = SEED_DIR.resolve((String) bookData.get("cover")).toFile();
-		bookService.save(book, new FileInputStream(coverFile));
+		final File pdfFile = SEED_DIR.resolve((String) bookData.get("pdf")).toFile();
+		final Map<String, InputStream> bookFiles  = new HashMap<>();
+		bookFiles.put("cover", new FileInputStream(coverFile));
+		bookFiles.put("pdf", new FileInputStream(pdfFile));
+		bookService.save(book, bookFiles);
 	}
 
 	private <T> void createOrder(Map<String, T> orderData) {

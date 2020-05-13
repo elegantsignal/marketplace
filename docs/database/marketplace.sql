@@ -127,8 +127,8 @@ CREATE TABLE public.book(
 	title varchar(128) NOT NULL,
 	cover varchar(128),
 	published date NOT NULL,
+	pdf varchar(128),
 	description text NOT NULL,
-	pdf varchar(128) NOT NULL,
 	created timestamp NOT NULL,
 	updated timestamp NOT NULL,
 	CONSTRAINT book_pk PRIMARY KEY (id)

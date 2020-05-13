@@ -24,6 +24,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 				<div class="btn waves-effect waves-light">
 					<span>Browse</span>
 					<form:input path="cover" type="file" disabled="${readonly}" />
+					<form:input path="cover" type="hidden" />
 					<form:errors path="cover" cssClass="red-text" />
 				</div>
 				<div class="file-path-wrapper">

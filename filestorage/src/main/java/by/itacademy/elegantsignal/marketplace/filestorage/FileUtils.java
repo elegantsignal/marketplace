@@ -1,16 +1,18 @@
 package by.itacademy.elegantsignal.marketplace.filestorage;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.UUID;
-
 import org.apache.tika.Tika;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 
 @Repository
@@ -41,7 +43,7 @@ public class FileUtils implements IFileUtils {
 
 		return tempFile;
 	}
-	
+
 	@Override
 	public String getFileExtension(final File image) throws IllegalArgumentException {
 		final Tika tika = new Tika();
@@ -57,11 +59,22 @@ public class FileUtils implements IFileUtils {
 		final String type = tmp[0];
 		final String extension = tmp[1];
 
-		if (!"image".equals(type)) {
-			throw new IllegalArgumentException("This is not image file");
-		}
-
 		return extension;
 	}
 
+	@Override
+	public File getAbsolutePath(final Path path) {
+		final Path rootDir = Paths.get(System.getenv("ASSETS_ROOT"));
+		return rootDir.resolve(path).toFile();
+	}
+
+	@Override
+	public File getAbsolutePath(final String path) {
+		return getAbsolutePath(Paths.get(path));
+	}
+
+	@Override
+	public File getAbsolutePath(final File path) {
+		return getAbsolutePath(Paths.get(path.getPath()));
+	}
 }

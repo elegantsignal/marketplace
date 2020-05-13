@@ -14,7 +14,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class BookServiceTest extends AbstractTest {
@@ -63,7 +66,7 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testDelete() throws IOException {
+	public void testDelete() {
 		final IBook book = saveNewBook(bookService.createEntity());
 
 		bookService.delete(book.getId());

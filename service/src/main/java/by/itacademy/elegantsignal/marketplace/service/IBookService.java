@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 
 public interface IBookService {
@@ -23,7 +24,7 @@ public interface IBookService {
 
 	@Transactional void save(IBook entity) throws IOException;
 
-	@Transactional void save(IBook book, InputStream inputStream) throws IOException;
+	@Transactional void save(IBook book, Map<String, InputStream> inputStreamMap) throws IOException;
 
 	@Transactional void delete(Integer id);
 
