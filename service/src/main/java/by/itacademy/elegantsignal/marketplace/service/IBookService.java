@@ -22,9 +22,9 @@ public interface IBookService {
 
 	@Transactional IBook createEntity();
 
-	@Transactional void save(IBook entity) throws IOException;
+	@Transactional IBook save(IBook entity);
 
-	@Transactional void save(IBook book, Map<String, InputStream> inputStreamMap) throws IOException;
+	@Transactional void save(IBook book, Map<String, InputStream> inputStreamMap);
 
 	@Transactional void delete(Integer id);
 

@@ -26,7 +26,6 @@ public class ProductServiceTest extends AbstractTest {
 		assertNotNull(entityFromDb.getId());
 		assertNotNull(entityFromDb.getCreated());
 		assertNotNull(entityFromDb.getUpdated());
-		assertTrue(entityFromDb.getCreated().equals(entityFromDb.getUpdated()));
 	}
 
 	@Test

@@ -42,7 +42,7 @@ public class BookServiceImpl implements IBookService {
 		return bookDao.createEntity();
 	}
 
-	@Override public void save(final IBook book) {
+	@Override public IBook save(final IBook book) {
 		final Date modifiedOn = new Date();
 
 		book.setUpdated(modifiedOn);
@@ -58,6 +58,7 @@ public class BookServiceImpl implements IBookService {
 		}
 
 		//		sendMail(book.getTitle(), book.getDescription());
+		return book;
 	}
 
 	@Override public void save(final IBook book, final Map<String, InputStream> inputStreamMap) {

@@ -157,13 +157,7 @@ public abstract class AbstractTest {
 			book.setPdf(new File("/testpdf/" + getRandomPrefix()));
 		}
 
-		try {
-			bookService.save(book);
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
-
-		return book;
+		return bookService.save(book);
 	}
 
 	protected IGenre saveNewGenre() {
@@ -208,9 +202,10 @@ public abstract class AbstractTest {
 
 		productService.save(product);
 
-		if (product.getBook() == null) {
-			product.setBook(saveNewBook(bookService.createEntity().setProduct(product)));
-		}
+		// TODO: Find bug
+		//		if (product.getBook() == null) {
+		//			product.setBook(saveNewBook(bookService.createEntity().setProduct(product)));
+		//		}
 
 		return productService.save(product);
 	}

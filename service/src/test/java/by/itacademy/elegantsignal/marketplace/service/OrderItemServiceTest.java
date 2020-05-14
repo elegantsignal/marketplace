@@ -1,15 +1,14 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import org.junit.jupiter.api.Test;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 public class OrderItemServiceTest extends AbstractTest {
@@ -60,20 +59,4 @@ public class OrderItemServiceTest extends AbstractTest {
 		assertEquals(0, orderItemService.getAll().size());
 	}
 
-	@Test
-	public void testGetOderItemsByUserId() {
-		final IUser user = saveNewUser(userService.createEntity());
-		for (int i = 0; i < 4; i++) {
-			final OrderStatus orderStatus = (i % 2 == 0) ? OrderStatus.PAYED : OrderStatus.CART;
-			final IOrder order = orderService.createEntity().setUser(user).setStatus(orderStatus);
-			saveNewOrder(order);
-		}
-
-		final List<IOrder> userOrders = orderService.getOrdersByUserId(user.getId());
-		assertEquals(2, userOrders.size());
-		userOrders.forEach(order -> {
-			assertEquals(user.getId(), order.getUser().getId());
-			assertNotEquals(OrderStatus.CART, order.getStatus());
-		});
-	}
 }

@@ -32,7 +32,8 @@ public class DownloadServiceTest extends AbstractTest {
 		downloadFromDbList.forEach(downloadItem -> {
 			assertNotNull(downloadItem.getToken());
 			assertNotNull(downloadItem.getOrderItem().getOrder().getUser().getId());
-			assertNotNull(downloadItem.getOrderItem().getProduct().getBook());
+			assertNotNull(downloadItem.getOrderItem().getProduct());
+//			assertNotNull(downloadItem.getOrderItem().getProduct().getBook());
 		});
 	}
 

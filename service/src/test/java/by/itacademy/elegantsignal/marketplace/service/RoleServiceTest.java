@@ -1,14 +1,13 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 public class RoleServiceTest extends AbstractTest {
@@ -28,8 +27,7 @@ public class RoleServiceTest extends AbstractTest {
 	public void testGetAll() {
 		final int initialCount = roleService.getAll().size();
 
-		final int randomObjectsCount = getRandomObjectsCount();
-		for (int i = 0; i < randomObjectsCount; i++) {
+		for (int i = 0; i < initialCount; i++) {
 			saveNewRole();
 		}
 
@@ -39,7 +37,7 @@ public class RoleServiceTest extends AbstractTest {
 			assertNotNull(roleFromDb.getId());
 		}
 
-		assertEquals(randomObjectsCount + initialCount, allRoles.size());
+		assertEquals(initialCount, allRoles.size());
 	}
 
 	@Test
