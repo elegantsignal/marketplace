@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1-beta" last-position="134,79" last-zoom="1"
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,203" last-zoom="1"
 	 default-owner="postgres">
 <database name="marketplace" encoding="UTF8" lc-collate="en_US.utf8" lc-ctype="en_US.utf8">
 	<role name="postgres"/>
@@ -23,7 +23,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="user">
 	<schema name="public"/>
-	<position x="580" y="24"/>
+	<position x="800" y="104"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -64,7 +64,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="order">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="340" y="300"/>
+	<position x="220" y="380"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -116,7 +116,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="book">
 	<schema name="public"/>
-	<position x="800" y="584"/>
+	<position x="1260" y="780"/>
 	<column name="title" not-null="true">
 		<type name="varchar" length="128"/>
 	</column>
@@ -160,7 +160,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="role">
 	<schema name="public"/>
-	<position x="1120" y="64"/>
+	<position x="1340" y="144"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -177,7 +177,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="order_item">
 	<schema name="public"/>
-	<position x="380" y="584"/>
+	<position x="440" y="680"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -210,18 +210,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="download">
 	<schema name="public"/>
-	<position x="620" y="860"/>
+	<position x="880" y="860"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
 	<column name="token">
 		<type name="varchar" length="64"/>
-	</column>
-	<column name="valid" not-null="true">
-		<type name="interval" length="0" interval-type="HOUR"/>
-	</column>
-	<column name="use_count" not-null="true">
-		<type name="integer" length="0"/>
 	</column>
 	<column name="created" not-null="true">
 		<type name="timestamp" length="0"/>
@@ -254,7 +248,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="genre">
 	<schema name="public"/>
-	<position x="1280" y="484"/>
+	<position x="1500" y="560"/>
 	<column name="id" not-null="true">
 		<type name="smallserial" length="0"/>
 	</column>
@@ -284,7 +278,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="product">
 	<schema name="public"/>
-	<position x="660" y="300"/>
+	<position x="880" y="384"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -340,7 +334,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-required="false" dst-required="false"
 	 table-name="book_2_genre">
 	<label ref-type="name-label">
-		<position x="0" y="0"/>
+		<position x="-10.9724" y="-16.6857"/>
 	</label>
 </relationship>
 
@@ -370,9 +364,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</label>
 </relationship>
 
-<table name="payment">
+<table name="payment" faded-out="true">
 	<schema name="public"/>
-	<position x="240" y="64"/>
+	<position x="140" y="160"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -399,7 +393,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-col-pattern="{st}_{sc}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
-	 custom-color="#49b62d"
+	 custom-color="#49b62d" faded-out="true"
 	 src-table="public.&quot;order&quot;"
 	 dst-table="public.payment"
 	 src-required="true" dst-required="false">
@@ -423,9 +417,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</label>
 </relationship>
 
-<table name="review">
+<table name="review" faded-out="true">
 	<schema name="public"/>
-	<position x="220" y="860"/>
+	<position x="0" y="880"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -455,9 +449,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</customidxs>
 </table>
 
-<table name="like">
+<table name="like" faded-out="true">
 	<schema name="public"/>
-	<position x="1140" y="300"/>
+	<position x="1500" y="380"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -483,7 +477,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-col-pattern="{st}_{sc}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
-	 custom-color="#f80c3e"
+	 custom-color="#f80c3e" faded-out="true"
 	 src-table="public.&quot;user&quot;"
 	 dst-table="public.&quot;like&quot;"
 	 src-required="true" dst-required="false">
@@ -496,7 +490,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-col-pattern="{st}_{sc}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
-	 custom-color="#62ebf6"
+	 custom-color="#62ebf6" faded-out="true"
 	 src-table="public.product"
 	 dst-table="public.&quot;like&quot;"
 	 src-required="true" dst-required="false"/>
@@ -505,7 +499,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-col-pattern="{st}_{sc}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
-	 custom-color="#082162"
+	 custom-color="#082162" faded-out="true"
 	 src-table="public.review"
 	 dst-table="public.order_item"
 	 src-required="false" dst-required="true">

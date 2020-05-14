@@ -11,25 +11,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CartServiceTest extends AbstractTest {
 
-	@Autowired private IOrderService orderService;
 	@Autowired private IProductService productService;
 	@Autowired private ICartService cartService;
 
 	@Test
 	public void testGetNewCart() {
-		IUser user = saveNewUser();
-		IOrder cart = cartService.getCartByUserId(user.getId());
+		final IUser user = saveNewUser(userService.createEntity());
+		final IOrder cart = cartService.getCartByUserId(user.getId());
 		assertNotNull(cart);
 	}
 
 	@Test
 	public void testAddToCart() {
-		IUser user = saveNewUser();
+		final IUser user = saveNewUser(userService.createEntity());
 		for (int i = 0; i < 3; i++) {
-			cartService.addToCart(user.getId(), saveNewProduct());
-			saveNewProduct();
+			cartService.addToCart(user.getId(), saveNewProduct(productService.createEntity()));
+			saveNewProduct(productService.createEntity());
 		}
-		IOrder cartFromDb = cartService.getCartByUserId(user.getId());
+		final IOrder cartFromDb = cartService.getCartByUserId(user.getId());
 
 		assertEquals(3, cartFromDb.getOrderItems().size());
 		assertEquals(6, productService.getAll().size());
@@ -37,10 +36,10 @@ public class CartServiceTest extends AbstractTest {
 
 	@Test
 	public void testRemoveFromCart() {
-		IUser user = saveNewUser();
+		final IUser user = saveNewUser(userService.createEntity());
 
 		for (int i = 0; i < 3; i++) {
-			cartService.addToCart(user.getId(), saveNewProduct());
+			cartService.addToCart(user.getId(), saveNewProduct(productService.createEntity()));
 		}
 
 		IOrder cartFromDb = cartService.getCartByUserId(user.getId());

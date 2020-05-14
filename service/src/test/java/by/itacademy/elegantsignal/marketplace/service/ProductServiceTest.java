@@ -1,25 +1,24 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 
 
 public class ProductServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		final IProduct entity = saveNewProduct();
+		final IProduct entity = saveNewProduct(productService.createEntity());
 
 		// TODO: fix me full load
-//		final IProduct entityFromDb = productService.get(entity.getId());
+		//		final IProduct entityFromDb = productService.get(entity.getId());
 		final IProduct entityFromDb = productService.getFullInfo(entity.getId());
 
 		assertNotNull(entityFromDb);
@@ -36,7 +35,7 @@ public class ProductServiceTest extends AbstractTest {
 
 		final int randomObjectsCount = getRandomObjectsCount();
 		for (int i = 0; i < randomObjectsCount; i++) {
-			saveNewProduct();
+			saveNewProduct(productService.createEntity());
 		}
 
 		final List<IProduct> allEntities = productService.getAll();
@@ -54,14 +53,14 @@ public class ProductServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete() {
-		final IProduct entity = saveNewProduct();
+		final IProduct entity = saveNewProduct(productService.createEntity());
 		productService.delete(entity.getId());
 		assertNull(productService.get(entity.getId()));
 	}
 
 	@Test
 	public void testDeleteAll() {
-		saveNewProduct();
+		saveNewProduct(productService.createEntity());
 		productService.deleteAll();
 		assertEquals(0, productService.getAll().size());
 	}

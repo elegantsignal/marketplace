@@ -19,6 +19,12 @@
 			<groupId>by.itacademy.elegantsignal.marketplace</groupId>
 			<artifactId>dao-api</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework</groupId>

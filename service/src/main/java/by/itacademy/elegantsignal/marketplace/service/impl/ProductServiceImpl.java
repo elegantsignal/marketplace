@@ -1,14 +1,13 @@
 package by.itacademy.elegantsignal.marketplace.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import by.itacademy.elegantsignal.marketplace.daoapi.IProductDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -27,15 +26,16 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public void save(final IProduct entity) {
+	public IProduct save(final IProduct product) {
 		final Date modifiedOn = new Date();
-		entity.setUpdated(modifiedOn);
-		if (entity.getId() == null) {
-			entity.setCreated(modifiedOn);
-			productDao.insert(entity);
+		product.setUpdated(modifiedOn);
+		if (product.getId() == null) {
+			product.setCreated(modifiedOn);
+			productDao.insert(product);
 		} else {
-			productDao.update(entity);
+			productDao.update(product);
 		}
+		return product;
 	}
 
 	@Override

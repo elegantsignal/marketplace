@@ -5,10 +5,18 @@ import by.itacademy.elegantsignal.marketplace.dao.orm.converter.LocalDateAttribu
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Indexed;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.Date;
@@ -43,7 +51,8 @@ public class Book implements IBook {
 	private LocalDate published;
 
 	@Column
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	// TODO: Enable search
+	//	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	private String description;
 
 	@Column(updatable = false)
@@ -68,72 +77,81 @@ public class Book implements IBook {
 		return genre;
 	}
 
-	@Override public void setGenre(final Set<IGenre> genre) {
+	@Override public IBook setGenre(final Set<IGenre> genre) {
 		this.genre = genre;
+		return this;
 	}
 
 	@Override public File getPdf() {
 		return pdf;
 	}
 
-	@Override public void setPdf(final File pdf) {
+	@Override public IBook setPdf(final File pdf) {
 		this.pdf = pdf;
+		return this;
 	}
 
 	@Override public IProduct getProduct() {
 		return product;
 	}
 
-	@Override public void setProduct(final IProduct product) {
+	@Override public IBook setProduct(final IProduct product) {
 		this.product = product;
+		return this;
 	}
 
 	@Override public String getTitle() {
 		return title;
 	}
 
-	@Override public void setTitle(final String title) {
+	@Override public IBook setTitle(final String title) {
 		this.title = title;
+		return this;
 	}
 
 	@Override public File getCover() {
 		return cover;
 	}
 
-	@Override public void setCover(final File cover) {
+	@Override public IBook setCover(final File cover) {
 		this.cover = cover;
+		return this;
 	}
 
 	@Override public LocalDate getPublished() {
 		return published;
 	}
 
-	@Override public void setPublished(final LocalDate published) {
+	@Override public IBook setPublished(final LocalDate published) {
 		this.published = published;
+		return this;
 	}
 
 	@Override public String getDescription() {
 		return description;
 	}
 
-	@Override public void setDescription(final String description) {
+	@Override public IBook setDescription(final String description) {
 		this.description = description;
+		return this;
 	}
 
 	@Override public Date getCreated() {
 		return created;
 	}
 
-	@Override public void setCreated(final Date created) {
+	@Override public IBook setCreated(final Date created) {
 		this.created = created;
+		return this;
 	}
 
 	@Override public Date getUpdated() {
 		return updated;
 	}
 
-	@Override public void setUpdated(final Date updated) {
+	@Override public IBook setUpdated(final Date updated) {
 		this.updated = updated;
+		return this;
 	}
 
 }

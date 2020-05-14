@@ -103,12 +103,12 @@ public class BookServiceTest extends AbstractTest {
 
 	@Test
 	public void testUserBooks() {
-		final IUser user = saveNewUser();
+		final IUser user = saveNewUser(userService.createEntity());
 
 		final int bookCount = getRandomObjectsCount();
 		for (int i = 0; i < bookCount; i++) {
-			final IProduct product = saveNewProduct(user);
-			saveNewBook(product, bookService.createEntity());
+			final IProduct product = saveNewProduct(productService.createEntity().setUser(user));
+			saveNewBook(bookService.createEntity().setProduct(product));
 		}
 
 		// Generate several addition books

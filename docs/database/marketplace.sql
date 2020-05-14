@@ -186,8 +186,6 @@ CREATE TABLE public.download(
 	id serial NOT NULL,
 	order_item_id integer NOT NULL,
 	token varchar(64),
-	valid interval HOUR  NOT NULL,
-	use_count integer NOT NULL,
 	created timestamp NOT NULL,
 	CONSTRAINT download_pk PRIMARY KEY (id)
 

@@ -15,7 +15,7 @@ public interface IRoleService {
 	List<IRole> getAll();
 
 	@Transactional
-	void save(IRole entity);
+	IRole save(IRole entity);
 
 	@Transactional
 	void delete(Integer id);

@@ -10,38 +10,38 @@ public interface IBook extends IBaseEntity {
 
 	IProduct getProduct();
 
-	void setProduct(IProduct product);
+	IBook setProduct(IProduct product);
 
 	String getTitle();
 
-	void setTitle(String title);
+	IBook setTitle(String title);
 
 	File getCover();
 
-	void setCover(File file);
+	IBook setCover(File file);
 
 	LocalDate getPublished();
 
-	void setPublished(LocalDate published);
+	IBook setPublished(LocalDate published);
 
 	String getDescription();
 
-	void setDescription(String description);
+	IBook setDescription(String description);
 
 	Date getCreated();
 
-	void setCreated(Date created);
+	IBook setCreated(Date created);
 
 	Date getUpdated();
 
-	void setUpdated(Date update);
+	IBook setUpdated(Date update);
 
 	Set<IGenre> getGenre();
 
-	void setGenre(Set<IGenre> genre);
+	IBook setGenre(Set<IGenre> genre);
 
 	File getPdf();
 
-	void setPdf(File file);
+	IBook setPdf(File file);
 
 }

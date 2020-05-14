@@ -8,10 +8,11 @@ public class RoleFilter extends AbstractFilter {
 	private RoleName name;
 
 	public RoleName getName() {
-		return this.name;
+		return name;
 	}
 
-	public void setName(final String roleName) {
-		this.name = RoleName.valueOf(roleName.toUpperCase());
+	public RoleFilter setName(final String roleName) {
+		name = RoleName.valueOf(roleName.toUpperCase());
+		return this;
 	}
 }

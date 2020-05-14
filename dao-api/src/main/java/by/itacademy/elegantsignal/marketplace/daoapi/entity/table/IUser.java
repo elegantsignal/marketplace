@@ -8,26 +8,26 @@ public interface IUser extends IBaseEntity {
 
 	String getName();
 
-	void setName(String name);
+	IUser setName(String name);
 
 	String getEmail();
 
-	void setEmail(String email);
+	IUser setEmail(String email);
 
 	String getPassword();
 
-	void setPassword(String passwod);
+	IUser setPassword(String passwod);
 
 	Date getCreated();
 
-	void setCreated(Date created);
+	IUser setCreated(Date created);
 
 	Date getUpdated();
 
-	void setUpdated(Date update);
+	IUser setUpdated(Date update);
 
 	Set<IRole> getRole();
 
-	void setRole(Set<IRole> roleList);
+	IUser setRole(Set<IRole> roleList);
 
 }

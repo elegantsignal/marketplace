@@ -1,16 +1,13 @@
 package by.itacademy.elegantsignal.marketplace.service.impl;
 
-import java.util.List;
-
+import by.itacademy.elegantsignal.marketplace.daoapi.IRoleDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.RoleFilter;
+import by.itacademy.elegantsignal.marketplace.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.IRoleDao;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.RoleFilter;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
-import by.itacademy.elegantsignal.marketplace.service.IRoleService;
+import java.util.List;
 
 
 @Service
@@ -29,12 +26,13 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public void save(final IRole entity) {
-		if (entity.getId() == null) {
-			roleDao.insert(entity);
+	public IRole save(final IRole role) {
+		if (role.getId() == null) {
+			roleDao.insert(role);
 		} else {
-			roleDao.update(entity);
+			roleDao.update(role);
 		}
+		return role;
 	}
 
 	@Override
@@ -77,6 +75,5 @@ public class RoleServiceImpl implements IRoleService {
 	public IRole getRoleByName(String name) {
 		return roleDao.getRoleByName(name);
 	}
-	
 
 }

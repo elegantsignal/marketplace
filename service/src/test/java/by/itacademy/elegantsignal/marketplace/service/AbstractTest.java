@@ -3,7 +3,16 @@ package by.itacademy.elegantsignal.marketplace.service;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.RoleName;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.*;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IDownload;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ILike;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import javax.persistence.NoResultException;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -23,6 +33,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -33,61 +44,33 @@ public abstract class AbstractTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractTest.class);
 
-	@Autowired
-	protected IUserService userService;
-
-	@Autowired
-	protected IProductService productService;
-
-	@Autowired
-	protected IBookService bookService;
-
-	@Autowired
-	protected IGenreService genreService;
-
-	@Autowired
-	protected ILikeService likeService;
-
-	@Autowired
-	protected IOrderService orderService;
-
-	@Autowired
-	protected IOrderItemService orderItemService;
-
-	@Autowired
-	protected IReviewService reviewService;
-
-	@Autowired
-	protected IRoleService roleService;
+	@Autowired protected IUserService userService;
+	@Autowired protected IProductService productService;
+	@Autowired protected IBookService bookService;
+	@Autowired protected IGenreService genreService;
+	@Autowired protected ILikeService likeService;
+	@Autowired protected IOrderService orderService;
+	@Autowired protected IOrderItemService orderItemService;
+	@Autowired protected IReviewService reviewService;
+	@Autowired protected IRoleService roleService;
+	@Autowired protected IDownloadService downloadService;
 
 	private static final Random RANDOM = new Random();
 
-	@Value("${jdbc.url}")
-	private String url;
-
-	@Value("${jdbc.user}")
-	private String user;
-
-	@Value("${jdbc.password}")
-	private String password;
+	@Value("${jdbc.url}") private String url;
+	@Value("${jdbc.user}") private String user;
+	@Value("${jdbc.password}") private String password;
 
 	@BeforeEach
-	public final void recreateTestDB() throws SQLException, IOException {
+	public final void recreateTestDB() throws SQLException {
 		final long stampBefore = System.currentTimeMillis();
 
-		final Connection conn = DriverManager.getConnection(url, user, password);
-
-		try {
-			final Statement stmt = conn.createStatement();
-			try {
+		try (final Connection conn = DriverManager.getConnection(url, user, password)) {
+			try (final Statement stmt = conn.createStatement()) {
 				stmt.execute("DROP SCHEMA IF EXISTS \"public\" CASCADE;");
 				stmt.execute("CREATE SCHEMA \"public\";");
 				stmt.execute(getScript());
-			} finally {
-				stmt.close();
 			}
-		} finally {
-			conn.close();
 		}
 
 		LOGGER.info("Database recreated in {} seconds.", (double) ((System.currentTimeMillis() - stampBefore) / 1000));
@@ -120,42 +103,38 @@ public abstract class AbstractTest {
 		return RANDOM.nextInt(max);
 	}
 
-	public Random getRANDOM() {
-		return RANDOM;
-	}
-
 	public static <T extends Enum<?>> T randomEnum(final Class<T> clazz) {
 		final int x = RANDOM.nextInt(clazz.getEnumConstants().length);
 		return clazz.getEnumConstants()[x];
 	}
 
-	protected IUser saveNewUser() {
-		final IUser user = userService.createEntity();
-		user.setName("User-" + getRandomPrefix());
-		user.setEmail("email-" + getRandomPrefix());
-		user.setPassword("password-" + getRandomPrefix());
-		userService.save(user);
-		return user;
-	}
+	protected IUser saveNewUser(final IUser user) {
+		if (user.getName() == null) {
+			user.setName("User-" + getRandomPrefix());
+		}
 
-	protected IUser saveNewUser(final Set<IRole> roleSet) {
-		final IUser user = userService.createEntity();
-		user.setName("User-" + getRandomPrefix());
-		user.setEmail("email-" + getRandomPrefix());
-		user.setPassword("password-" + getRandomPrefix());
-		user.setRole(roleSet);
+		if (user.getEmail() == null) {
+			user.setEmail("email-" + getRandomPrefix());
+		}
+
+		if (user.getPassword() == null) {
+			user.setPassword("password-" + getRandomPrefix());
+		}
+
+		if (user.getRole() == null || user.getRole().isEmpty()) {
+			final Set<IRole> roles = new HashSet<>();
+			roles.add(saveNewRole());
+			user.setRole(roles);
+		}
+
 		userService.save(user);
 		return user;
 	}
 
 	protected IBook saveNewBook(final IBook book) {
-		return saveNewBook(saveNewProduct(), book);
-	}
-
-	protected IBook saveNewBook(final IProduct product, final IBook book) {
 
 		if (book.getProduct() == null) {
-			book.setProduct(product);
+			book.setProduct(saveNewProduct(productService.createEntity()));
 		}
 
 		if (book.getTitle() == null) {
@@ -196,8 +175,8 @@ public abstract class AbstractTest {
 
 	protected ILike saveNewLike() {
 		final ILike entity = likeService.createEntity();
-		entity.setUser(saveNewUser());
-		entity.setProduct(saveNewProduct());
+		entity.setUser(saveNewUser(userService.createEntity()));
+		entity.setProduct(saveNewProduct(productService.createEntity()));
 		entity.setCreated(new Date());
 		likeService.save(entity);
 		return entity;
@@ -205,7 +184,7 @@ public abstract class AbstractTest {
 
 	protected IOrder saveNewOrder(final IOrder order) {
 		if (order.getUser() == null) {
-			order.setUser(this.saveNewUser());
+			order.setUser(saveNewUser(userService.createEntity()));
 		}
 		if (order.getStatus() == null) {
 			order.setStatus(OrderStatus.CART);
@@ -214,18 +193,26 @@ public abstract class AbstractTest {
 		return order;
 	}
 
-	protected IProduct saveNewProduct() {
-		final IUser user = saveNewUser();
-		return saveNewProduct(user);
-	}
+	protected IProduct saveNewProduct(final IProduct product) {
+		if (product.getUser() == null) {
+			product.setUser(saveNewUser(userService.createEntity()));
+		}
 
-	protected IProduct saveNewProduct(final IUser user) {
-		final IProduct product = productService.createEntity();
-		product.setUser(user);
-		product.setType(randomEnum(ProductType.class));
-		product.setPrice((BigDecimal.valueOf(getRandomObjectsCount())));
+		if (product.getType() == null) {
+			product.setType(randomEnum(ProductType.class));
+		}
+
+		if (product.getPrice() == null) {
+			product.setPrice((BigDecimal.valueOf(getRandomObjectsCount())));
+		}
+
 		productService.save(product);
-		return product;
+
+		if (product.getBook() == null) {
+			product.setBook(saveNewBook(bookService.createEntity().setProduct(product)));
+		}
+
+		return productService.save(product);
 	}
 
 	protected IOrderItem saveNewOrderItem(final IOrderItem orderItem) {
@@ -234,7 +221,7 @@ public abstract class AbstractTest {
 		}
 
 		if (orderItem.getProduct() == null) {
-			orderItem.setProduct(saveNewProduct());
+			orderItem.setProduct(saveNewProduct(productService.createEntity()));
 		}
 
 		if (orderItem.getAmount() == null) {
@@ -257,7 +244,17 @@ public abstract class AbstractTest {
 	protected IRole saveNewRole() {
 		final IRole role = roleService.createEntity();
 		role.setName(randomEnum(RoleName.class).toString());
-		roleService.save(role);
-		return role;
+		try {
+			return roleService.getRoleByName(role.getName().toString());
+		} catch (final NoResultException e) {
+			return roleService.save(role);
+		}
+	}
+
+	protected IDownload saveNewDownload(final IDownload download) {
+		if (download.getOrderItem() == null) {
+			download.setOrderItem(saveNewOrderItem(orderItemService.createEntity()));
+		}
+		return downloadService.save(download);
 	}
 }

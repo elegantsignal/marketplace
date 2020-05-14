@@ -62,7 +62,7 @@ public class OrderItemServiceTest extends AbstractTest {
 
 	@Test
 	public void testGetOderItemsByUserId() {
-		final IUser user = saveNewUser();
+		final IUser user = saveNewUser(userService.createEntity());
 		for (int i = 0; i < 4; i++) {
 			final OrderStatus orderStatus = (i % 2 == 0) ? OrderStatus.PAYED : OrderStatus.CART;
 			final IOrder order = orderService.createEntity().setUser(user).setStatus(orderStatus);

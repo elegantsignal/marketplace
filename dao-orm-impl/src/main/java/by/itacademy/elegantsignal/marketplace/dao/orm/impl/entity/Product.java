@@ -1,7 +1,9 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,11 +12,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import java.math.BigDecimal;
+import java.util.Date;
 
 
 @Entity
@@ -45,8 +44,9 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setUser(final IUser user) {
+	public IProduct setUser(final IUser user) {
 		this.user = user;
+		return this;
 	}
 
 	@Override
@@ -55,8 +55,9 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setType(final ProductType type) {
+	public IProduct setType(final ProductType type) {
 		this.type = type;
+		return this;
 	}
 
 	@Override
@@ -65,8 +66,9 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setPrice(final BigDecimal price) {
+	public IProduct setPrice(final BigDecimal price) {
 		this.price = price;
+		return this;
 	}
 
 	@Override
@@ -75,8 +77,9 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setCreated(final Date created) {
+	public IProduct setCreated(final Date created) {
 		this.created = created;
+		return this;
 	}
 
 	@Override
@@ -85,8 +88,9 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setUpdated(final Date updated) {
+	public IProduct setUpdated(final Date updated) {
 		this.updated = updated;
+		return this;
 	}
 
 	@Override
@@ -95,8 +99,9 @@ public class Product extends BaseEntity implements IProduct {
 	}
 
 	@Override
-	public void setBook(final IBook book) {
+	public IProduct setBook(final IBook book) {
 		this.book = book;
+		return this;
 	}
 
 }
