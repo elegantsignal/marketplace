@@ -7,13 +7,13 @@ public interface IDownload extends IBaseEntity {
 
 	IOrderItem getOrderItem();
 
-	void setOrderItem(IOrderItem orderItem);
+	IDownload setOrderItem(IOrderItem orderItem);
 
 	String getToken();
 
-	void setToken(String token);
+	IDownload setToken(String token);
 
-	void setCreated(Date created);
+	IDownload setCreated(Date created);
 
 	Date getCreated();
 }

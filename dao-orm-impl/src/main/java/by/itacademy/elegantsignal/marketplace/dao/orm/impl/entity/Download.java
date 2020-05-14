@@ -26,23 +26,26 @@ public class Download extends BaseEntity implements IDownload {
 		return orderItem;
 	}
 
-	@Override public void setOrderItem(final IOrderItem orderItem) {
+	@Override public IDownload setOrderItem(final IOrderItem orderItem) {
 		this.orderItem = orderItem;
+		return this;
 	}
 
 	@Override public String getToken() {
 		return token;
 	}
 
-	@Override public void setToken(final String token) {
+	@Override public IDownload setToken(final String token) {
 		this.token = token;
+		return this;
 	}
 
 	@Override public Date getCreated() {
 		return created;
 	}
 
-	@Override public void setCreated(final Date created) {
+	@Override public IDownload setCreated(final Date created) {
 		this.created = created;
+		return this;
 	}
 }
