@@ -15,4 +15,6 @@ public interface IDownloadService {
 	@Transactional IDownload save(IDownload download);
 
 	@Transactional List<IDownload> getDownloadsByUserId(Integer userId);
+
+	IDownload getDownloadByToken(String token);
 }

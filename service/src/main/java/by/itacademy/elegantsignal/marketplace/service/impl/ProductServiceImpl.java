@@ -71,4 +71,8 @@ public class ProductServiceImpl implements IProductService {
 	public IProduct getFullInfo(Integer id) {
 		return productDao.getFullInfo(id);
 	}
+
+	public static class RestrictedAssetsServiceImpl {
+
+	}
 }

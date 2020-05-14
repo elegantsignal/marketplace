@@ -9,5 +9,8 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class DownloadFilter extends AbstractFilter {
+
 	private Integer userId;
+	private String token;
+
 }

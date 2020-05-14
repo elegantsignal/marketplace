@@ -38,9 +38,15 @@ public class DownloadServiceImpl implements IDownloadService {
 		return download;
 	}
 
+	// TODO: We don't need all this data in list. Change to simple download objects with empty attributes
 	@Override public List<IDownload> getDownloadsByUserId(final Integer userId) {
 		final DownloadFilter downloadFilter = new DownloadFilter().setUserId(userId);
 		return downloadDao.find(downloadFilter);
+	}
+
+	@Override public IDownload getDownloadByToken(final String token) {
+		final DownloadFilter downloadFilter = new DownloadFilter().setToken(token);
+		return downloadDao.findOne(downloadFilter);
 	}
 
 }

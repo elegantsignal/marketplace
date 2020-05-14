@@ -7,6 +7,7 @@ import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Order_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Product_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User;
 import by.itacademy.elegantsignal.marketplace.daoapi.IDownloadDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IDownload;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.DownloadFilter;
 import org.springframework.stereotype.Repository;
@@ -56,6 +57,26 @@ public class DownloadDaoImpl extends AbstractDaoImpl<IDownload, Integer> impleme
 
 		final TypedQuery<IDownload> query = entityManager.createQuery(criteriaQuery);
 		return query.getResultList();
+	}
+
+	@Override public IDownload findOne(final DownloadFilter downloadFilter) {
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<IDownload> criteriaQuery = criteriaBuilder.createQuery(IDownload.class);
+		final Root<Download> from = criteriaQuery.from(Download.class);
+		criteriaQuery.select(from);
+
+//		from.fetch(Download_.orderItem, JoinType.LEFT)
+//			.fetch(OrderItem_.order, JoinType.LEFT)
+//			.fetch(Order_.user, JoinType.LEFT);
+
+		from.fetch(Download_.orderItem, JoinType.LEFT)
+			.fetch(OrderItem_.product, JoinType.LEFT)
+			.fetch(Product_.book, JoinType.LEFT);
+
+		applyFilter(downloadFilter, criteriaBuilder, criteriaQuery, from);
+
+		final TypedQuery<IDownload> query = entityManager.createQuery(criteriaQuery);
+		return query.getSingleResult();
 	}
 
 	private void applyFilter(

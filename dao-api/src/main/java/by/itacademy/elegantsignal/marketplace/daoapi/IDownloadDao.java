@@ -9,4 +9,6 @@ import java.util.List;
 public interface IDownloadDao extends IDao<IDownload, Integer> {
 
 	List<IDownload> find(DownloadFilter downloadFilter);
+
+	IDownload findOne(DownloadFilter downloadFilter);
 }
