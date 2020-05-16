@@ -52,4 +52,24 @@ Convert from `OrderItem` to `List<Order>`:
 	}
 ```
 
-We use `Set` to avoid to search proper **order** in list, on the other hand - we need to convert them to sorted list;
+We use `Set` to avoid to search proper **order** in list, on the other hand - we need to convert them to sorted list.
+
+### Download benchmark
+
+We have to methods of file serving. Usual static files are served directly by our servlet (I used Jetty for tests). Protected files are served by our app (we return InputStream for get request with access token parameter).
+
+![download_benchmark](presentation.assets/download_benchmark.png)
+
+| Label                                 | # Samples | Average | Min  | Max  | Std. Dev. | Error % | Throughput | Avg. Bytes |
+| ------------------------------------- | --------- | ------- | ---- | ---- | --------- | ------- | ---------- | ---------- |
+| Thread Group:Download resource image  | 100000    | 199     | 0    | 7697 | 555.3     | 0.000%  | 1832.13939 | 11772      |
+| Thread Group:Download restricted file | 100000    | 168     | 1    | 7725 | 449.92    | 0.000%  | 1836.71595 | 13677      |
+| TOTAL                                 | 200000    | 184     | 0    | 7725 | 505.61    | 0.000%  | 3664.21164 | 12724.5    |
+
+#### server static file directly by Jetty![download_by_access_link](presentation.assets/download_by_access_link.png)
+
+#### server static file by our app with token access
+
+![download_simple_image](presentation.assets/download_simple_image.png)
+
+As we can see we have similar resource usage, and if we will keep in mind that we make query to database to access restricted file we can claim that there is no difference between these serve methods.
