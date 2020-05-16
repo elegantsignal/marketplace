@@ -71,12 +71,13 @@ public class OrderServiceImpl implements IOrderService {
 			order.addOrderItem(orderItem);
 		});
 		final List<IOrder> orderList = new ArrayList<>(orderMap);
-		orderList.stream().sorted((object1, object2) -> object1.getCreated().compareTo(object2.getCreated()));
+		orderList.stream().sorted(Comparator.comparing(IOrder::getCreated));
 		return orderList;
 	}
 
-	@Override public void setStatus(final IOrder order, final OrderStatus status) {
+	@Override public IOrder setStatus(final IOrder order, final OrderStatus status) {
 		order.setStatus(status);
 		orderDao.update(order);
+		return order;
 	}
 }

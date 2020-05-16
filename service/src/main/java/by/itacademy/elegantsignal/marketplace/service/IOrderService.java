@@ -29,6 +29,6 @@ public interface IOrderService {
 	void deleteAll();
 
 	@Transactional
-	void setStatus(IOrder order, OrderStatus status);
+	IOrder setStatus(IOrder order, OrderStatus status);
 
 }

@@ -1,11 +1,11 @@
 package by.itacademy.elegantsignal.marketplace.web.controller;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.service.ICartService;
 import by.itacademy.elegantsignal.marketplace.service.IOrderItemService;
 import by.itacademy.elegantsignal.marketplace.service.IOrderService;
+import by.itacademy.elegantsignal.marketplace.service.IPaymentService;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
 import by.itacademy.elegantsignal.marketplace.web.converter.OrderItemToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.converter.OrderToDTOConverter;
@@ -36,6 +36,7 @@ public class CartController extends AbstractController {
 	@Autowired private IProductService productService;
 	@Autowired private OrderToDTOConverter orderToDTOConverter;
 	@Autowired private OrderItemToDTOConverter orderItemToDTOConverter;
+	@Autowired private IPaymentService paymentService;
 
 	@GetMapping()
 	public ModelAndView index(final HttpServletRequest req, final ExtendedToken token) {
@@ -82,7 +83,7 @@ public class CartController extends AbstractController {
 	@GetMapping("/checkout")
 	public String checkout(final ExtendedToken token) {
 		final IOrder userCart = cartService.getCartByUserId(token.getId());
-		orderService.setStatus(userCart, OrderStatus.PAYED);
+		paymentService.checkout(userCart);
 		return "redirect:/cart";
 	}
 
