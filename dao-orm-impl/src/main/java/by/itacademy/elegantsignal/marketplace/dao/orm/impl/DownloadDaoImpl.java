@@ -7,7 +7,6 @@ import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Order_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Product_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User;
 import by.itacademy.elegantsignal.marketplace.daoapi.IDownloadDao;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IDownload;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.DownloadFilter;
 import org.springframework.stereotype.Repository;
@@ -65,9 +64,9 @@ public class DownloadDaoImpl extends AbstractDaoImpl<IDownload, Integer> impleme
 		final Root<Download> from = criteriaQuery.from(Download.class);
 		criteriaQuery.select(from);
 
-//		from.fetch(Download_.orderItem, JoinType.LEFT)
-//			.fetch(OrderItem_.order, JoinType.LEFT)
-//			.fetch(Order_.user, JoinType.LEFT);
+		//		from.fetch(Download_.orderItem, JoinType.LEFT)
+		//			.fetch(OrderItem_.order, JoinType.LEFT)
+		//			.fetch(Order_.user, JoinType.LEFT);
 
 		from.fetch(Download_.orderItem, JoinType.LEFT)
 			.fetch(OrderItem_.product, JoinType.LEFT)
@@ -86,6 +85,10 @@ public class DownloadDaoImpl extends AbstractDaoImpl<IDownload, Integer> impleme
 		final Root<Download> from) {
 
 		final List<Predicate> ands = new ArrayList<>();
+
+		if (filter.getToken() != null) {
+			ands.add(criteriaBuilder.equal(from.get(Download_.token), filter.getToken()));
+		}
 
 		if (filter.getUserId() != null) {
 			final Path<User> userPath = from

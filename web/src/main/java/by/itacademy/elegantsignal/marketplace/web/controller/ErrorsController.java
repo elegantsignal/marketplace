@@ -16,4 +16,7 @@ public class ErrorsController extends AbstractController {
 		return new ModelAndView("errors." + status);
 	}
 
+	public static class DownloadController {
+
+	}
 }

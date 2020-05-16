@@ -1,7 +1,8 @@
 package by.itacademy.elegantsignal.marketplace.filestorage;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
@@ -17,4 +18,6 @@ public interface IFileUtils {
 	File getAbsolutePath(Path path);
 
 	File getAbsolutePath(File path);
+
+	String getFileNameFromEntity(IBook book, String extension);
 }

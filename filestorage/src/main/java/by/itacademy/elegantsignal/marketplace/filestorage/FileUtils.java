@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.filestorage;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import org.apache.tika.Tika;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,5 +77,9 @@ public class FileUtils implements IFileUtils {
 	@Override
 	public File getAbsolutePath(final File path) {
 		return getAbsolutePath(Paths.get(path.getPath()));
+	}
+
+	@Override public String getFileNameFromEntity(final IBook book, final String extension) {
+		return book.getTitle().toLowerCase().trim().replaceAll("\\W", "_") + "." + extension;
 	}
 }

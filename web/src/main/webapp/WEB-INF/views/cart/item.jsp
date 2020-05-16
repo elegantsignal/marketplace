@@ -45,7 +45,7 @@
 										<div class="col-sm-2">${orderItem.amount}</div>
 										<div class="col-sm-2">
 											<c:forEach var="token" items="${orderItem.tokenList}" varStatus="loopCounter">
-												<a href="${contextPath}/downlad/${token}">download</a>
+												<a href="${contextPath}/downloads/${token}">download</a>
 											</c:forEach>
 										</div>
 									</div>
