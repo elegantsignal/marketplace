@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 
 @Controller
-@RequestMapping(value = "/cart")
+@RequestMapping("/cart")
 public class CartController extends AbstractController {
 
 	@Autowired private ICartService cartService;
@@ -68,13 +68,13 @@ public class CartController extends AbstractController {
 	}
 
 	@GetMapping("/{id}/delete")
-	public String delete(@PathVariable(name = "id", required = true) final Integer id, final ExtendedToken token) {
+	public String delete(@PathVariable(name = "id") final Integer id, final ExtendedToken token) {
 		cartService.removeFromCart(token.getId(), orderItemService.get(id));
 		return "redirect:/cart";
 	}
 
 	@GetMapping("/{id}/add")
-	public String add(@PathVariable(name = "id", required = true) final Integer id, final ExtendedToken token) {
+	public String add(@PathVariable(name = "id") final Integer id, final ExtendedToken token) {
 		final IProduct product = productService.get(id);
 		cartService.addToCart(token.getId(), product);
 		return "redirect:/cart";

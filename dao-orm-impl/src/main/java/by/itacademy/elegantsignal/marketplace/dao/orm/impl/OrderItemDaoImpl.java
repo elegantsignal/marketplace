@@ -1,6 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl;
 
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Order;
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Download_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.OrderItem;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.OrderItem_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Order_;
@@ -12,7 +12,11 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +45,8 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 		from.fetch(OrderItem_.product, JoinType.LEFT).fetch(Product_.book, JoinType.LEFT);
 		// TODO: group with previous one
 		from.fetch(OrderItem_.order, JoinType.LEFT);
+		from.fetch(OrderItem_.downloadList, JoinType.LEFT);
+
 
 		applyFilter(filter, criteriaBuilder, criteriaQuery, from);
 
@@ -90,9 +96,9 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 
 		if (!filter.getOrderIds().isEmpty()) {
 			final List<Predicate> predicates = new ArrayList<>();
-			filter.getOrderIds().forEach(orderId -> {
-				predicates.add(criteriaBuilder.equal(from.get(OrderItem_.order), orderId));
-			});
+			filter.getOrderIds().forEach(orderId ->
+				predicates.add(criteriaBuilder.equal(from.get(OrderItem_.order), orderId))
+			);
 			ands.add(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 		}
 

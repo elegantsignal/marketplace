@@ -1,6 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.daoapi.entity.table;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 public interface IOrderItem extends IBaseEntity {
@@ -16,4 +17,8 @@ public interface IOrderItem extends IBaseEntity {
 	BigDecimal getAmount();
 
 	void setAmount(BigDecimal amount);
+
+	List<IDownload> getDownloadList();
+
+	IOrderItem setDownloadLink(List<IDownload> downloadLink);
 }

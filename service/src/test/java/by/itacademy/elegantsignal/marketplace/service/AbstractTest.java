@@ -54,6 +54,8 @@ public abstract class AbstractTest {
 	@Autowired protected IReviewService reviewService;
 	@Autowired protected IRoleService roleService;
 	@Autowired protected IDownloadService downloadService;
+	@Autowired protected IPaymentService paymentService;
+	@Autowired protected ICartService cartService;
 
 	private static final Random RANDOM = new Random();
 
