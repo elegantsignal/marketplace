@@ -1,6 +1,5 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl;
 
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Download_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.OrderItem;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.OrderItem_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Order_;
@@ -41,12 +40,9 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 		final Root<OrderItem> from = criteriaQuery.from(OrderItem.class);
 		criteriaQuery.select(from);
 
-		// "Book" hardcoded but if we have multiple product types we need get this type from Product
 		from.fetch(OrderItem_.product, JoinType.LEFT).fetch(Product_.book, JoinType.LEFT);
-		// TODO: group with previous one
 		from.fetch(OrderItem_.order, JoinType.LEFT);
 		from.fetch(OrderItem_.downloadList, JoinType.LEFT);
-
 
 		applyFilter(filter, criteriaBuilder, criteriaQuery, from);
 
@@ -104,9 +100,9 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 
 		if (!filter.getExcludeOrderStatusList().isEmpty()) {
 			final List<Predicate> predicates = new ArrayList<>();
-			filter.getExcludeOrderStatusList().forEach(excludeStatus -> {
-				predicates.add(criteriaBuilder.notEqual(from.get(OrderItem_.order).get(Order_.status), excludeStatus));
-			});
+			filter.getExcludeOrderStatusList().forEach(excludeStatus ->
+				predicates.add(criteriaBuilder.notEqual(from.get(OrderItem_.order).get(Order_.status), excludeStatus))
+			);
 			ands.add(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 		}
 

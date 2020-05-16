@@ -5,7 +5,13 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,8 +54,9 @@ public class Order extends BaseEntity implements IOrder {
 	}
 
 	@Override
-	public void setOrderItemList(final List<IOrderItem> orderItemList) {
+	public IOrder setOrderItemList(final List<IOrderItem> orderItemList) {
 		this.orderItemList = orderItemList;
+		return this;
 	}
 
 	@Override
@@ -58,8 +65,9 @@ public class Order extends BaseEntity implements IOrder {
 	}
 
 	@Override
-	public void setCreated(final Date created) {
+	public IOrder setCreated(final Date created) {
 		this.created = created;
+		return this;
 	}
 
 	@Override
@@ -68,8 +76,9 @@ public class Order extends BaseEntity implements IOrder {
 	}
 
 	@Override
-	public void setUpdated(final Date updated) {
+	public IOrder setUpdated(final Date updated) {
 		this.updated = updated;
+		return this;
 	}
 
 	@Override
@@ -80,10 +89,11 @@ public class Order extends BaseEntity implements IOrder {
 
 	@Override
 	public OrderStatus getStatus() {
-		return this.status;
+		return status;
 	}
 
-	@Override public void addOrderItem(final IOrderItem orderItem) {
+	@Override public IOrder addOrderItem(final IOrderItem orderItem) {
 		orderItemList.add(orderItem);
+		return this;
 	}
 }

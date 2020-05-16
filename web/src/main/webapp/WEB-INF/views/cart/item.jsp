@@ -43,6 +43,11 @@
 									<div class="row">
 										<div class="col-sm">${orderItem.productTitle}</div>
 										<div class="col-sm-2">${orderItem.amount}</div>
+										<div class="col-sm-2">
+											<c:forEach var="token" items="${orderItem.tokenList}" varStatus="loopCounter">
+												<a href="${contextPath}/downlad/${token}">download</a>
+											</c:forEach>
+										</div>
 									</div>
 								</li>
 							</c:forEach>

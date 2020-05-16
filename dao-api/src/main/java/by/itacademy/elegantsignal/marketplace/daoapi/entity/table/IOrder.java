@@ -14,19 +14,19 @@ public interface IOrder extends IBaseEntity {
 
 	List<IOrderItem> getOrderItems();
 
-	void setOrderItemList(List<IOrderItem> orderItemList);
+	IOrder setOrderItemList(List<IOrderItem> orderItemList);
 
 	Date getCreated();
 
-	void setCreated(Date created);
+	IOrder setCreated(Date created);
 
 	Date getUpdated();
 
-	void setUpdated(Date update);
+	IOrder setUpdated(Date update);
 
 	IOrder setStatus(OrderStatus status);
 
 	OrderStatus getStatus();
 
-	void addOrderItem(IOrderItem orderItem);
+	IOrder addOrderItem(IOrderItem orderItem);
 }

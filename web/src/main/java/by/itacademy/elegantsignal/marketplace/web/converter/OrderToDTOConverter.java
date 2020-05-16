@@ -25,9 +25,9 @@ public class OrderToDTOConverter implements Function<IOrder, OrderDTO> {
 		orderDTO.setUpdated(order.getUpdated());
 
 		final List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
-		order.getOrderItems().forEach(orderItem -> {
-			orderItemDTOList.add(orderItemToDTOConverter.apply(orderItem));
-		});
+		order.getOrderItems().forEach(orderItem ->
+			orderItemDTOList.add(orderItemToDTOConverter.apply(orderItem))
+		);
 		orderDTO.setOrderItems(orderItemDTOList);
 
 		return orderDTO;

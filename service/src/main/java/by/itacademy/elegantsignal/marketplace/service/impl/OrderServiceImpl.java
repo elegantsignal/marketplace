@@ -9,7 +9,11 @@ import by.itacademy.elegantsignal.marketplace.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -65,15 +69,13 @@ public class OrderServiceImpl implements IOrderService {
 	@Override public List<IOrder> getOrdersByUserId(final Integer userId) {
 		final List<IOrderItem> orderItemList = orderItemService.getOderItemsByUserId(userId);
 
-		// TODO: Replace set with list
 		final Set<IOrder> orderSet = new HashSet<>();
-		orderItemList.forEach(orderItem -> {
-			final IOrder order = orderItem.getOrder();
-			orderSet.add(order);
-			order.addOrderItem(orderItem);
-		});
+		orderItemList.forEach(orderItem ->
+			orderSet.add(orderItem.getOrder().addOrderItem(orderItem))
+		);
+
 		final List<IOrder> orderList = new ArrayList<>(orderSet);
-		orderList.stream().sorted(Comparator.comparing(IOrder::getCreated));
+		orderList.sort((o2, o1) -> o1.getCreated().compareTo(o2.getCreated()));
 		return orderList;
 	}
 
