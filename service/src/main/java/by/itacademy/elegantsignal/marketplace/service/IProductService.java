@@ -1,34 +1,26 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
-import java.util.List;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 
 import javax.transaction.Transactional;
-
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import java.util.List;
 
 
 public interface IProductService {
+
+	@Transactional IProduct createEntity();
+
+	@Transactional IProduct save(IProduct product);
+
+	@Transactional void delete(Integer id);
+
+	@Transactional void deleteAll();
 
 	IProduct get(Integer id);
 
 	List<IProduct> getAll();
 
-	@Transactional
-	IProduct save(IProduct product);
-
-	@Transactional
-	void delete(Integer id);
-
-	@Transactional
-	void deleteAll();
-
-	@Transactional
-	IProduct createEntity();
-
-	@Deprecated
-	@Transactional
-	void saveWithId(IProduct product);
-
 	IProduct getFullInfo(Integer id);
 
+	List<IProduct> getProductsByUserId(Integer userId);
 }

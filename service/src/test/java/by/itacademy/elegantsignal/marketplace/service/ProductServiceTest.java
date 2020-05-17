@@ -1,6 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class ProductServiceTest extends AbstractTest {
@@ -62,5 +62,19 @@ public class ProductServiceTest extends AbstractTest {
 		saveNewProduct(productService.createEntity());
 		productService.deleteAll();
 		assertEquals(0, productService.getAll().size());
+	}
+
+	@Test
+	public void testGetProductsByUserId() {
+		final IUser user = saveNewUser(userService.createEntity());
+		for (int i = 0; i < 3; i++) {
+			final IProduct product = saveNewProduct(productService.createEntity().setUser(user));
+			saveNewBook(bookService.createEntity().setProduct(product));
+			saveNewProduct(productService.createEntity()); // Create product with dummy user
+		}
+
+		final List<IProduct> productList = productService.getProductsByUserId(user.getId());
+		assertEquals(3, productList.size());
+		productList.forEach(product -> assertNotNull(product.getBook()));
 	}
 }

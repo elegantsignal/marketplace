@@ -27,8 +27,7 @@ import java.util.List;
 @Repository
 public class DownloadDaoImpl extends AbstractDaoImpl<IDownload, Integer> implements IDownloadDao {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	@PersistenceContext private EntityManager entityManager;
 
 	protected DownloadDaoImpl() {
 		super(Download.class);
