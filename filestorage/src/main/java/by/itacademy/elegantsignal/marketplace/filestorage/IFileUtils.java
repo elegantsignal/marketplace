@@ -11,7 +11,7 @@ public interface IFileUtils {
 
 	File saveTmpFile(InputStream inputStream);
 
-	String getFileExtension(File image) throws IllegalArgumentException;
+	String getFileExtension(File image);
 
 	File getAbsolutePath(String path);
 

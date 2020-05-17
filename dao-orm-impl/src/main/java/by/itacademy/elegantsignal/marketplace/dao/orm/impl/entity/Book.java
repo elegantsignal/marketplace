@@ -5,7 +5,11 @@ import by.itacademy.elegantsignal.marketplace.dao.orm.converter.LocalDateAttribu
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -52,7 +56,7 @@ public class Book implements IBook {
 
 	@Column
 	// TODO: Enable search
-	//	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Field(index = Index.YES, analyze =  Analyze.YES, store = Store.NO)
 	private String description;
 
 	@Column(updatable = false)

@@ -1,0 +1,5 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+"01, Jetty - maped resource:download",489466,109,0,7279,364.03,0.000%,7914.14297,90981.73,1538.00,11772.0
+02. Jetty - InputStream:download,689250,78,0,7253,306.49,0.000%,11050.45452,147443.71,1381.31,13663.0
+"03, Jetty - protected file:download",245707,217,1,7603,485.18,0.000%,3872.02358,51697.56,605.00,13672.0
+TOTAL,1424423,113,0,7603,366.14,0.000%,7205.48243,91579.71,1111.20,13014.8

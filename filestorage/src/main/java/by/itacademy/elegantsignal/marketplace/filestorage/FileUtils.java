@@ -30,7 +30,7 @@ public class FileUtils implements IFileUtils {
 			tempFile = File.createTempFile(uuid, ".tmp");
 		} catch (final IOException e) {
 			LOGGER.error("Can't create temporary file");
-			e.printStackTrace();
+			LOGGER.error(String.valueOf(e));
 			System.exit(1);
 		}
 
@@ -46,10 +46,10 @@ public class FileUtils implements IFileUtils {
 	}
 
 	@Override
-	public String getFileExtension(final File image) throws IllegalArgumentException {
+	public String getFileExtension(final File image) {
 		final Tika tika = new Tika();
 
-		String mimeType = "";
+		final String mimeType;
 		try {
 			mimeType = tika.detect(image);
 		} catch (final IOException e) {

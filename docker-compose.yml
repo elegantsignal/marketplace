@@ -2,15 +2,23 @@
 version: "3.1"
 
 services:
-  # app:
-  #   build: .
-  #   user: ${CURRENT_UID}
-  #   environment:
-  #     ASSETS_ROOT: /usr/local/assets
-  #   ports:
-  #     - "8085:8080"
-  #   volumes:
-  #     - ${ASSETS_ROOT}:/usr/local/assets
+  app:
+    build: .
+    user: ${CURRENT_UID}
+    environment:
+      ASSETS_ROOT: /usr/local/assets
+      JAVA_OPTS: "-Dcom.sun.management.jmxremote
+-Dcom.sun.management.jmxremote.local.only=false
+-Dcom.sun.management.jmxremote.authenticate=false
+-Dcom.sun.management.jmxremote.port=9010
+-Dcom.sun.management.jmxremote.rmi.port=9010
+-Djava.rmi.server.hostname=0.0.0.0
+-Dcom.sun.management.jmxremote.ssl=false"
+    ports:
+      - "8085:8080"
+      - "9010:9010"
+    volumes:
+      - ${ASSETS_ROOT}:/usr/local/assets
 
   postgres:
     container_name: marketplace_postgresql
