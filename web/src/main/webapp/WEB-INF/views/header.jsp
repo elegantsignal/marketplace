@@ -18,14 +18,17 @@
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item dropdown float-right">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<sec:authentication property="name" />
+							<sec:authentication property="name"/>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="${pagesCart}">Shopping cart</a>
-							<a class="dropdown-item" href="#">Another action</a>
-							<a class="dropdown-item" href="${contextPath}/execute_logout">logout</a>
+							<a class="dropdown-item" href="${pagesUserCart}">Shopping cart</a>
+							<a class="dropdown-item" href="${pagesUserShop}">My shop</a>
+							<a class="dropdown-item" href="${logout}">logout</a>
 						</div>
 					</li>
+				</sec:authorize>
+				<sec:authorize access="!isAuthenticated()">
+					<li class="nav-item"><a class="nav-link" href="${login}">login</a></li>
 				</sec:authorize>
 			</ul>
 

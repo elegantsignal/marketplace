@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 
 @Controller
-@RequestMapping("/cart")
+@RequestMapping("/user/cart")
 public class CartController extends AbstractController {
 
 	@Autowired private ICartService cartService;

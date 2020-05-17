@@ -1,18 +1,18 @@
 package by.itacademy.elegantsignal.marketplace.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
+import by.itacademy.elegantsignal.marketplace.daoapi.IUserDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
+import by.itacademy.elegantsignal.marketplace.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.IUserDao;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
-import by.itacademy.elegantsignal.marketplace.service.IUserService;
+import javax.persistence.NoResultException;
+import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -68,7 +68,12 @@ public class UserServiceImpl implements IUserService {
 	public IUser getUserByEmail(final String email) {
 		final UserFilter filter = new UserFilter();
 		filter.setEmail(email);
-		return userDao.getFullInfo(filter);
+
+		try {
+			return userDao.getFullInfo(filter);
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	@Override

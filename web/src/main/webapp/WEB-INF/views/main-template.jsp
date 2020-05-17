@@ -2,11 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="request"/>
-<c:set var="pagesBook" value="${contextPath}/book" scope="request"/>
-<c:set var="pagesCart" value="${contextPath}/cart" scope="request"/>
-<c:set var="pagesUser" value="${contextPath}/admin/users" scope="request"/>
-<c:set var="pagesGenre" value="${contextPath}/genre" scope="request"/>
-<c:set var="pagesCar" value="${contextPath}/car" scope="request"/>
+<c:set var="pagesBook"   value="${contextPath}/book" scope="request"/>
+<c:set var="pagesUserCart"   value="${contextPath}/user/cart" scope="request"/>
+<c:set var="pagesUser"   value="${contextPath}/admin/users" scope="request"/>
+<c:set var="pagesGenre"  value="${contextPath}/genre" scope="request"/>
+<c:set var="pagesUserShop"   value="${contextPath}/user/shop" scope="request"/>
+
+
+<c:set var="login"   value="${contextPath}/login" scope="request"/>
+<c:set var="logout"   value="${contextPath}/execute_logout" scope="request"/>
+
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
