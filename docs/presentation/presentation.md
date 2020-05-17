@@ -41,7 +41,7 @@ WHERE
 
 ```
 
-Convert from `OrderItem` to `List<Order>`:
+Convert `List<IOrderItem>` to `List<Order>`:
 
 ```java
 @Override public List<IOrder> getOrdersByUserId(final Integer userId) {

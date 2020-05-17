@@ -38,7 +38,7 @@ public class CartController extends AbstractController {
 	@Autowired private OrderItemToDTOConverter orderItemToDTOConverter;
 	@Autowired private IPaymentService paymentService;
 
-	@GetMapping()
+	@GetMapping
 	public ModelAndView index(final HttpServletRequest req, final ExtendedToken token) {
 		final Map<String, Object> hashMap = new HashMap<>();
 		final Integer userId = token.getId();
@@ -70,21 +70,21 @@ public class CartController extends AbstractController {
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable(name = "id") final Integer id, final ExtendedToken token) {
 		cartService.removeFromCart(token.getId(), orderItemService.get(id));
-		return "redirect:/cart";
+		return "redirect:/user/cart";
 	}
 
 	@GetMapping("/{id}/add")
 	public String add(@PathVariable(name = "id") final Integer id, final ExtendedToken token) {
 		final IProduct product = productService.get(id);
 		cartService.addToCart(token.getId(), product);
-		return "redirect:/cart";
+		return "redirect:/user/cart";
 	}
 
 	@GetMapping("/checkout")
 	public String checkout(final ExtendedToken token) {
 		final IOrder userCart = cartService.getCartByUserId(token.getId());
 		paymentService.checkout(userCart);
-		return "redirect:/cart";
+		return "redirect:/user/cart";
 	}
 
 }

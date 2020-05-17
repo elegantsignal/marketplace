@@ -13,11 +13,14 @@
 	<context:component-scan base-package="by.itacademy.elegantsignal.marketplace.web.security"/>
 
 	<http>
+		<intercept-url pattern="user/**" access="!isAnonymous()"/>
+
+
 		<intercept-url pattern="/**/add" access="!isAnonymous()"/>
 		<intercept-url pattern="/**/edit" access="!isAnonymous()"/>
 		<intercept-url pattern="/**/delete" access="!isAnonymous()"/>
 
-		<intercept-url pattern="/cart/**" access="!isAnonymous()"/>
+		<intercept-url pattern="/user/**" access="!isAnonymous()"/>
 
 		<intercept-url pattern="/rest/api/v1/**" access="!isAnonymous()"/>
 
