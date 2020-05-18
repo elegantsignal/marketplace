@@ -1,3 +1,17 @@
-assets
-docs
-logs
+# Ignore everything
+**
+
+# Allow files and directories
+!config/**
+!dao-api/**
+!dao-orm-impl/**
+!filestorage/**
+!seed/**
+!service/**
+!web/**
+!pom.xml
+
+# Ignore unnecessary files inside allowed directories
+# This should go after the allowed directories
+target/**
+

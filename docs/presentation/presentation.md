@@ -88,4 +88,47 @@ As we can see we have similar resource usage, and response time for both solutio
 
  OK. On Tomcat we got expected results. But why access to protected file took two times as long as access on Jetty? I don't know.
 
-As conclusion we can say that both solutions are very slow and resource hungry. Java servlets are not suitable for file serving, we should use proper tools like Nginx for that.
+As conclusion we can say that both solutions are very slow and resource hungry. Java servlets are not suitable for file serving, we should use proper tool like Nginx for that.
+
+<div style="page-break-after: always;"></div>
+
+## Deployment
+
+### Java in Docker - the right way (almost)
+
+#### Dockerfile
+
+```dockerfile
+FROM maven:3.6.3-jdk-8 AS builder
+WORKDIR /usr/src/app
+
+COPY pom.xml .
+COPY dao/pom.xml dao/pom.xml
+COPY service/pom.xml service/pom.xml
+COPY web/pom.xml web/pom.xml
+COPY web/src/main/webapp/WEB-INF/web.xml web/src/main/webapp/WEB-INF/web.xml
+RUN  mvn package && mvn clean
+
+COPY ./ .
+RUN  mvn package -DskipTests
+
+
+
+FROM tomcat:9-jre8-alpine
+WORKDIR ${CATALINA_HOME}
+
+RUN  rm -rf webapps/*
+COPY config/tomcat/server.xml config/tomcat/context.xml conf/
+COPY --from=builder /usr/src/app/web/target/${APP_NAME}.war webapps/ROOT.war
+
+RUN  addgroup www-data && \
+     adduser -D -H -u 1000 -s /bin/bash www-data -G www-data && \
+     chown -R www-data:www-data webapps temp
+
+USER www-data
+CMD  ["catalina.sh", "run"]
+```
+
+.war size 47Mb, final docker image size 200Mb and `builder` image size is bigger then 800Mb.
+
+> NB In modern world we should use [Embedded Tomcat](https://devcenter.heroku.com/articles/create-a-java-web-application-using-embedded-tomcat).

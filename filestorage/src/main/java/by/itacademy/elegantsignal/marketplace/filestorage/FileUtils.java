@@ -29,7 +29,8 @@ public class FileUtils implements IFileUtils {
 		try {
 			tempFile = File.createTempFile(uuid, ".tmp");
 		} catch (final IOException e) {
-			LOGGER.error("Can't create temporary file");
+			final String tempDir = System.getProperty("java.io.tmpdir");
+			LOGGER.error("Can't create temporary file in: " + tempDir);
 			LOGGER.error(String.valueOf(e));
 			System.exit(1);
 		}

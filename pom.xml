@@ -44,6 +44,12 @@
 
 			<dependency>
 				<groupId>by.itacademy.elegantsignal.marketplace</groupId>
+				<artifactId>filestorage</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>by.itacademy.elegantsignal.marketplace</groupId>
 				<artifactId>dao-orm-impl</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
