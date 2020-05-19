@@ -90,6 +90,10 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 			ands.add(criteriaBuilder.equal(from.get(OrderItem_.order).get(Order_.user), filter.getUserId()));
 		}
 
+		if (filter.getProductOwnerId() != null) {
+			ands.add(criteriaBuilder.equal(from.get(OrderItem_.product).get(Product_.user), filter.getProductOwnerId()));
+		}
+
 		if (!filter.getOrderIds().isEmpty()) {
 			final List<Predicate> predicates = new ArrayList<>();
 			filter.getOrderIds().forEach(orderId ->

@@ -44,18 +44,19 @@ public abstract class AbstractTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractTest.class);
 
-	@Autowired protected IUserService userService;
-	@Autowired protected IProductService productService;
 	@Autowired protected IBookService bookService;
+	@Autowired protected ICartService cartService;
+	@Autowired protected IDownloadService downloadService;
 	@Autowired protected IGenreService genreService;
 	@Autowired protected ILikeService likeService;
-	@Autowired protected IOrderService orderService;
 	@Autowired protected IOrderItemService orderItemService;
+	@Autowired protected IOrderService orderService;
+	@Autowired protected IPaymentService paymentService;
+	@Autowired protected IProductService productService;
 	@Autowired protected IReviewService reviewService;
 	@Autowired protected IRoleService roleService;
-	@Autowired protected IDownloadService downloadService;
-	@Autowired protected IPaymentService paymentService;
-	@Autowired protected ICartService cartService;
+	@Autowired protected ISalesService salesService;
+	@Autowired protected IUserService userService;
 
 	private static final Random RANDOM = new Random();
 

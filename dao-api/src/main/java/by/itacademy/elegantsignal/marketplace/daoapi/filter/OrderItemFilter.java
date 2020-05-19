@@ -12,9 +12,9 @@ public class OrderItemFilter extends AbstractFilter {
 
 	private Integer id;
 	private Integer userId;
+	private Integer productOwnerId;
 	private final List<Integer> orderIds = new ArrayList<>();
-
-	private List<OrderStatus> excludeOrderStatusList = new ArrayList<>();
+	private final List<OrderStatus> excludeOrderStatusList = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -58,4 +58,12 @@ public class OrderItemFilter extends AbstractFilter {
 		return this;
 	}
 
+	public OrderItemFilter setProductOwnerId(final Integer productOwnerId) {
+		this.productOwnerId = productOwnerId;
+		return this;
+	}
+
+	public Integer getProductOwnerId() {
+		return productOwnerId;
+	}
 }
