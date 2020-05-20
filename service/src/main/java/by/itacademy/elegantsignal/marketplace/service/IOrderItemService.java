@@ -26,4 +26,6 @@ public interface IOrderItemService {
 	@Transactional void delete(Integer id);
 
 	@Transactional void deleteAll();
+
+	List<IOrderItem> getPayedOrderItemsByProductOwnerId(Integer userId);
 }

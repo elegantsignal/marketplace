@@ -68,7 +68,12 @@ public class OrderItemServiceImpl implements IOrderItemService {
 	public List<IOrderItem> getOderItemsByUserId(final Integer userId) {
 		final OrderItemFilter filter = new OrderItemFilter().setUserId(userId).setExcludeOrderStatusList(OrderStatus.CART);
 		return orderItemDao.find(filter);
+	}
 
+	@Override
+	public List<IOrderItem> getPayedOrderItemsByProductOwnerId(final Integer userId) {
+		final OrderItemFilter filter = new OrderItemFilter().setProductOwnerId(userId).setOrderStarusList(OrderStatus.PAYED);
+		return orderItemDao.find(filter);
 	}
 
 }

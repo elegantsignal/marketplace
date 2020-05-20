@@ -110,6 +110,14 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 			ands.add(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 		}
 
+		if (!filter.getOrderStatusList().isEmpty()) {
+			final List<Predicate> predicates = new ArrayList<>();
+			filter.getOrderStatusList().forEach(status ->
+				predicates.add(criteriaBuilder.equal(from.get(OrderItem_.order).get(Order_.status), status))
+			);
+			ands.add(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
+		}
+
 		if (!ands.isEmpty()) {
 			criteriaQuery.where(criteriaBuilder.and(ands.toArray(new Predicate[0])));
 		}

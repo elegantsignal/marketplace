@@ -1,6 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
+import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderItemFilter;
 import org.junit.jupiter.api.Test;
 
 import javax.transaction.Transactional;
@@ -59,4 +60,6 @@ public class OrderItemServiceTest extends AbstractTest {
 		assertEquals(0, orderItemService.getAll().size());
 	}
 
+
 }
+

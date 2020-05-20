@@ -2,8 +2,8 @@ package by.itacademy.elegantsignal.marketplace.web.controller;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
+import by.itacademy.elegantsignal.marketplace.service.IOrderItemService;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
-import by.itacademy.elegantsignal.marketplace.service.ISalesService;
 import by.itacademy.elegantsignal.marketplace.web.converter.OrderItemToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.converter.ProductToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.OrderItemDTO;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class UserShopPageController extends AbstractController {
 
 	@Autowired IProductService productService;
-	@Autowired ISalesService salesService;
+	@Autowired IOrderItemService orderItemService;
 	@Autowired private ProductToDTOConverter productToDTOConverter;
 	@Autowired private OrderItemToDTOConverter orderItemToDTOConverter;
 
@@ -43,7 +43,7 @@ public class UserShopPageController extends AbstractController {
 
 		hashMap.put("userProducts", orderDTOList);
 
-		final List<IOrderItem> saleList = salesService.getSalesByUserId(token.getId());
+		final List<IOrderItem> saleList = orderItemService.getPayedOrderItemsByProductOwnerId(token.getId());
 		final List<OrderItemDTO> saleDTOList = saleList
 			.stream()
 			.map(orderItemToDTOConverter)

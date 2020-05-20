@@ -55,7 +55,6 @@ public abstract class AbstractTest {
 	@Autowired protected IProductService productService;
 	@Autowired protected IReviewService reviewService;
 	@Autowired protected IRoleService roleService;
-	@Autowired protected ISalesService salesService;
 	@Autowired protected IUserService userService;
 
 	private static final Random RANDOM = new Random();
@@ -255,4 +254,5 @@ public abstract class AbstractTest {
 		}
 		return downloadService.save(download);
 	}
+
 }
