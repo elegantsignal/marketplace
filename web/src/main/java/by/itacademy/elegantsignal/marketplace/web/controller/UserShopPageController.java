@@ -1,10 +1,12 @@
 package by.itacademy.elegantsignal.marketplace.web.controller;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
+import by.itacademy.elegantsignal.marketplace.service.ISalesService;
 import by.itacademy.elegantsignal.marketplace.web.converter.OrderItemToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.converter.ProductToDTOConverter;
-import by.itacademy.elegantsignal.marketplace.web.dto.OrderDTO;
+import by.itacademy.elegantsignal.marketplace.web.dto.OrderItemDTO;
 import by.itacademy.elegantsignal.marketplace.web.dto.ProductDTO;
 import by.itacademy.elegantsignal.marketplace.web.security.ExtendedToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,9 @@ import java.util.stream.Collectors;
 public class UserShopPageController extends AbstractController {
 
 	@Autowired IProductService productService;
+	@Autowired ISalesService salesService;
 	@Autowired private ProductToDTOConverter productToDTOConverter;
+	@Autowired private OrderItemToDTOConverter orderItemToDTOConverter;
 
 	@GetMapping
 	public ModelAndView index(final HttpServletRequest req, final ExtendedToken token) {
@@ -38,6 +42,13 @@ public class UserShopPageController extends AbstractController {
 			.collect(Collectors.toList());
 
 		hashMap.put("userProducts", orderDTOList);
+
+		final List<IOrderItem> saleList = salesService.getSalesByUserId(token.getId());
+		final List<OrderItemDTO> saleDTOList = saleList
+			.stream()
+			.map(orderItemToDTOConverter)
+			.collect(Collectors.toList());
+		hashMap.put("userSales", saleDTOList);
 
 		return new ModelAndView("user.product.list", hashMap);
 	}

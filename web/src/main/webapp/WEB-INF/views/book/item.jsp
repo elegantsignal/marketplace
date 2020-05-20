@@ -14,7 +14,7 @@
 			<p class="card-text mb-auto">${formModel.description}</p>
 			<div class="">
 				<h3>
-					<a href="${pagesCart}/${formModel.id}/add">
+					<a href="${pagesUserCart}/${formModel.id}/add">
 						<i class="fas fa-cart-plus"></i>
 					</a>
 				</h3>
