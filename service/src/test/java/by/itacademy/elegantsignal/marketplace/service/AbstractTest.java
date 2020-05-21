@@ -3,6 +3,8 @@ package by.itacademy.elegantsignal.marketplace.service;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.RoleName;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.TransactionStatus;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.TransactionType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IDownload;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
@@ -12,6 +14,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ITransaction;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
@@ -57,6 +60,7 @@ public abstract class AbstractTest {
 	@Autowired protected IRoleService roleService;
 	@Autowired protected IUserService userService;
 	@Autowired protected IAccountService accountService;
+	@Autowired protected ITransactionService transactionService;
 
 	private static final Random RANDOM = new Random();
 
@@ -254,6 +258,22 @@ public abstract class AbstractTest {
 			download.setOrderItem(saveNewOrderItem(orderItemService.createEntity()));
 		}
 		return downloadService.save(download);
+	}
+
+	protected ITransaction saveNewTransaction(final ITransaction transaction) {
+		if (transaction.getUser() == null) {
+			transaction.setUser(saveNewUser(userService.createEntity()));
+		}
+
+		if (transaction.getType() == null) {
+			transaction.setType(TransactionType.WITHDRAWAL);
+		}
+
+		if (transaction.getStatus() == null) {
+			transaction.setStatus(TransactionStatus.SUCCESS);
+		}
+
+		return transactionService.save(transaction);
 	}
 
 }
