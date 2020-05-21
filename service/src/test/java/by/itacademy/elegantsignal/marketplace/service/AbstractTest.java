@@ -56,6 +56,7 @@ public abstract class AbstractTest {
 	@Autowired protected IReviewService reviewService;
 	@Autowired protected IRoleService roleService;
 	@Autowired protected IUserService userService;
+	@Autowired protected IAccountService accountService;
 
 	private static final Random RANDOM = new Random();
 

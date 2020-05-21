@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.daoapi;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
@@ -15,4 +16,6 @@ public interface IOrderItemDao extends IDao<IOrderItem, Integer> {
 	long getCount(OrderItemFilter filter);
 
 	IOrderItem findOne(OrderItemFilter orderItemFilter);
+
+	BigDecimal sumAmount(OrderItemFilter orderItemFilter);
 }

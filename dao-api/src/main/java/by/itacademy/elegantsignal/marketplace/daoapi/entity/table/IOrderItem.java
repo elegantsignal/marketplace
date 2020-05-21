@@ -16,7 +16,7 @@ public interface IOrderItem extends IBaseEntity {
 
 	BigDecimal getAmount();
 
-	void setAmount(BigDecimal amount);
+	IOrderItem setAmount(BigDecimal amount);
 
 	List<IDownload> getDownloadList();
 

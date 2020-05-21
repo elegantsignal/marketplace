@@ -53,16 +53,17 @@ public class OrderItem extends BaseEntity implements IOrderItem {
 		return amount;
 	}
 
-	@Override public void setAmount(final BigDecimal amount) {
+	@Override public IOrderItem setAmount(final BigDecimal amount) {
 		this.amount = amount;
+		return this;
 	}
 
 	@Override public List<IDownload> getDownloadList() {
 		return downloadList;
 	}
 
-	@Override public IOrderItem setDownloadLink(final List<IDownload> downloadLink) {
-		this.downloadList = downloadLink;
+	@Override public IOrderItem setDownloadLink(final List<IDownload> downloadList) {
+		this.downloadList = downloadList;
 		return this;
 	}
 }

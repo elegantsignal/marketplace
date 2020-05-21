@@ -10,18 +10,22 @@ import by.itacademy.elegantsignal.marketplace.daoapi.filter.OrderItemFilter;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Repository
 public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> implements IOrderItemDao {
+
+	@PersistenceContext private EntityManager entityManager;
 
 	protected OrderItemDaoImpl() {
 		super(OrderItem.class);
@@ -34,7 +38,6 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 
 	@Override
 	public List<IOrderItem> find(final OrderItemFilter filter) {
-		final EntityManager entityManager = getEntityManager();
 		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		final CriteriaQuery<IOrderItem> criteriaQuery = criteriaBuilder.createQuery(IOrderItem.class);
 		final Root<OrderItem> from = criteriaQuery.from(OrderItem.class);
@@ -60,7 +63,6 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 
 	@Override
 	public IOrderItem findOne(OrderItemFilter filter) {
-		final EntityManager entityManager = getEntityManager();
 		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		final CriteriaQuery<IOrderItem> criteriaQuery = criteriaBuilder.createQuery(IOrderItem.class);
 		final Root<OrderItem> from = criteriaQuery.from(OrderItem.class);
@@ -74,10 +76,22 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 		return query.getSingleResult();
 	}
 
-	private void applyFilter(
+	@Override public BigDecimal sumAmount(final OrderItemFilter filter) {
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<BigDecimal> criteriaQuery = criteriaBuilder.createQuery(BigDecimal.class);
+		final Root<OrderItem> from = criteriaQuery.from(OrderItem.class);
+
+		applyFilter(filter, criteriaBuilder, criteriaQuery, from);
+
+		criteriaQuery.select(criteriaBuilder.sum(from.get(OrderItem_.amount)));
+		final TypedQuery<BigDecimal> query = entityManager.createQuery(criteriaQuery);
+		return query.getSingleResult();
+	}
+
+	private <T> void applyFilter(
 		final OrderItemFilter filter,
 		final CriteriaBuilder criteriaBuilder,
-		final CriteriaQuery<IOrderItem> criteriaQuery,
+		final CriteriaQuery<T> criteriaQuery,
 		final Root<OrderItem> from) {
 
 		final List<Predicate> ands = new ArrayList<>();
