@@ -16,7 +16,7 @@ public interface IUser extends IBaseEntity {
 
 	String getPassword();
 
-	IUser setPassword(String passwod);
+	IUser setPassword(String password);
 
 	Date getCreated();
 

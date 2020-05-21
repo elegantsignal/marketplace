@@ -51,15 +51,6 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	@Deprecated
-	public void saveWithId(final IUser entity) {
-		final Date modifiedOn = new Date();
-		entity.setUpdated(modifiedOn);
-		entity.setCreated(modifiedOn);
-		userDao.insert(entity);
-	}
-
-	@Override
 	public IUser get(final Integer id) {
 		return userDao.get(id);
 	}
