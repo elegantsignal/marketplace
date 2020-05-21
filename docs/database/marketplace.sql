@@ -287,6 +287,7 @@ CREATE TABLE public.transaction(
 	id serial NOT NULL,
 	user_id integer NOT NULL,
 	order_id integer,
+	amount numeric(12,2) NOT NULL,
 	type varchar(16) NOT NULL,
 	status varchar(16) NOT NULL,
 	payload text,

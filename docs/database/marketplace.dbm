@@ -370,6 +370,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
+	<column name="amount" not-null="true">
+		<type name="numeric" length="12" precision="2"/>
+	</column>
 	<column name="type" not-null="true">
 		<type name="varchar" length="16"/>
 	</column>
