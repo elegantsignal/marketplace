@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,17 @@ public class TransactionDaoImpl extends AbstractDaoImpl<ITransaction, Integer> i
 
 	@Override public List<ITransaction> findAll(final TransactionFilter filter) {
 		return find(filter).getResultList();
+	}
+
+	@Override public BigDecimal sumAmount(final TransactionFilter filter) {
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<BigDecimal> criteriaQuery = criteriaBuilder.createQuery(BigDecimal.class);
+		final Root<Transaction> from = criteriaQuery.from(Transaction.class);
+
+		criteriaQuery.select(criteriaBuilder.sum(from.get(Transaction_.amount)));
+		applyFilter(filter, criteriaBuilder, criteriaQuery, from);
+		final TypedQuery<BigDecimal> query = entityManager.createQuery(criteriaQuery);
+		return query.getSingleResult();
 	}
 
 	private TypedQuery<ITransaction> find(final TransactionFilter filter) {

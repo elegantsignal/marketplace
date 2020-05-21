@@ -5,6 +5,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.TransactionTyp
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ITransaction;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -17,4 +18,6 @@ public interface ITransactionService {
 	ITransaction getById(Integer id);
 
 	List<ITransaction> getTransactionByUserId(Integer userId, TransactionType type, TransactionStatus status);
+
+	BigDecimal getTransactionSumByUserId(Integer userId, TransactionType type, TransactionStatus status);
 }

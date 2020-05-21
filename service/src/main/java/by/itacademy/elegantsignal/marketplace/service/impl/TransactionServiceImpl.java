@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,14 @@ public class TransactionServiceImpl implements ITransactionService {
 			.setType(type)
 			.setStatus(status);
 		return transactionDao.findAll(filter);
+	}
+
+	@Override public BigDecimal getTransactionSumByUserId(Integer userId, TransactionType type, TransactionStatus status) {
+		final TransactionFilter filter =new TransactionFilter()
+			.setUserId(userId)
+			.setType(type)
+			.setStatus(status);
+		return transactionDao.sumAmount(filter);
 	}
 
 }

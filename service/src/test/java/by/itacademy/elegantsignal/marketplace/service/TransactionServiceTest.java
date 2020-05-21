@@ -67,4 +67,23 @@ public class TransactionServiceTest extends AbstractTest {
 			TransactionStatus.FAILED).isEmpty());
 	}
 
+	@Test public void testGetTransactionSumByUserId() {
+		final IUser user = saveNewUser(userService.createEntity());
+		for (int i = 0; i < 3; i++) {
+			final ITransaction transaction = transactionService
+				.createEntity()
+				.setUser(user)
+				.setAmount(BigDecimal.valueOf(10))
+				.setType(TransactionType.WITHDRAWAL)
+				.setStatus(TransactionStatus.SUCCESS);
+			transactionService.save(transaction);
+		}
+
+		assertEquals(0, BigDecimal.valueOf(30).compareTo(
+			transactionService.getTransactionSumByUserId(
+				user.getId(),
+				TransactionType.WITHDRAWAL,
+				TransactionStatus.SUCCESS))
+		);
+	}
 }
