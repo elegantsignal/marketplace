@@ -6,6 +6,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ITransaction;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,6 +19,7 @@ public class TransactionServiceTest extends AbstractTest {
 	@Test public void testSaveAndGet() {
 		final ITransaction transaction = transactionService.createEntity()
 			.setUser(saveNewUser(userService.createEntity()))
+			.setAmount(BigDecimal.valueOf(10))
 			.setType(TransactionType.PAYMENT)
 			.setStatus(TransactionStatus.SUCCESS);
 
@@ -26,6 +28,7 @@ public class TransactionServiceTest extends AbstractTest {
 		final ITransaction transactionFromDB = transactionService.getById(transaction.getId());
 
 		assertNotNull(transactionFromDB);
+		assertNotNull(transaction.getAmount());
 		assertNotNull(transaction.getType());
 		assertNotNull(transaction.getStatus());
 	}
@@ -36,6 +39,7 @@ public class TransactionServiceTest extends AbstractTest {
 			final ITransaction transaction = transactionService
 				.createEntity()
 				.setUser(user)
+				.setAmount(BigDecimal.valueOf(10))
 				.setType(TransactionType.WITHDRAWAL)
 				.setStatus(TransactionStatus.SUCCESS);
 			transactionService.save(transaction);
