@@ -281,23 +281,27 @@ REFERENCES public."user" (id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: public.payment | type: TABLE --
--- DROP TABLE IF EXISTS public.payment CASCADE;
-CREATE TABLE public.payment(
+-- object: public.transaction | type: TABLE --
+-- DROP TABLE IF EXISTS public.transaction CASCADE;
+CREATE TABLE public.transaction(
 	id serial NOT NULL,
-	order_id integer NOT NULL,
-	payload text NOT NULL,
-	created timestamp,
+	user_id integer NOT NULL,
+	order_id integer,
+	type varchar(16) NOT NULL,
+	status varchar(16) NOT NULL,
+	payload text,
+	created timestamp NOT NULL,
+	updated timestamp NOT NULL,
 	CONSTRAINT payment_pk PRIMARY KEY (id)
 
 );
 -- ddl-end --
 
 -- object: order_fk | type: CONSTRAINT --
--- ALTER TABLE public.payment DROP CONSTRAINT IF EXISTS order_fk CASCADE;
-ALTER TABLE public.payment ADD CONSTRAINT order_fk FOREIGN KEY (order_id)
+-- ALTER TABLE public.transaction DROP CONSTRAINT IF EXISTS order_fk CASCADE;
+ALTER TABLE public.transaction ADD CONSTRAINT order_fk FOREIGN KEY (order_id)
 REFERENCES public."order" (id) MATCH FULL
-ON DELETE RESTRICT ON UPDATE CASCADE;
+ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: public.user_2_role | type: TABLE --
@@ -374,6 +378,13 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- object: review_uq | type: CONSTRAINT --
 -- ALTER TABLE public.review DROP CONSTRAINT IF EXISTS review_uq CASCADE;
 ALTER TABLE public.review ADD CONSTRAINT review_uq UNIQUE (order_item_id);
+-- ddl-end --
+
+-- object: user_fk | type: CONSTRAINT --
+-- ALTER TABLE public.transaction DROP CONSTRAINT IF EXISTS user_fk CASCADE;
+ALTER TABLE public.transaction ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
+REFERENCES public."user" (id) MATCH FULL
+ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
 
