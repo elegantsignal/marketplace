@@ -7,7 +7,6 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -45,21 +44,27 @@ public class TransactionServiceTest extends AbstractTest {
 			transactionService.save(transaction);
 		}
 
-		List<ITransaction> transactionList = transactionService
-			.getTransactionByUserId(user.getId(), TransactionType.WITHDRAWAL, TransactionStatus.SUCCESS);
-		assertEquals(3, transactionList.size());
+		assertEquals(3, transactionService.getTransactionByUserId(
+			user.getId(),
+			TransactionType.WITHDRAWAL,
+			TransactionStatus.SUCCESS).size()
+		);
 
-		transactionList = transactionService
-			.getTransactionByUserId(user.getId(), TransactionType.WITHDRAWAL, null);
-		assertEquals(3, transactionList.size());
+		assertEquals(3, transactionService.getTransactionByUserId(
+			user.getId(),
+			TransactionType.WITHDRAWAL,
+			null).size()
+		);
 
-		transactionList = transactionService
-			.getTransactionByUserId(user.getId(), TransactionType.PAYMENT, TransactionStatus.SUCCESS);
-		assertTrue(transactionList.isEmpty());
+		assertTrue(transactionService.getTransactionByUserId(
+			user.getId(),
+			TransactionType.PAYMENT,
+			TransactionStatus.SUCCESS).isEmpty());
 
-		transactionList = transactionService
-			.getTransactionByUserId(user.getId(), TransactionType.WITHDRAWAL, TransactionStatus.FAILED);
-		assertTrue(transactionList.isEmpty());
+		assertTrue(transactionService.getTransactionByUserId(
+			user.getId(),
+			TransactionType.WITHDRAWAL,
+			TransactionStatus.FAILED).isEmpty());
 	}
 
 }
