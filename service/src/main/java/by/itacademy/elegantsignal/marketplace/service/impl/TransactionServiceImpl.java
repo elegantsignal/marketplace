@@ -4,6 +4,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.ITransactionDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.TransactionStatus;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.TransactionType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ITransaction;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.TransactionFilter;
 import by.itacademy.elegantsignal.marketplace.service.ITransactionService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,20 +46,24 @@ public class TransactionServiceImpl implements ITransactionService {
 		return transactionDao.findOne(filter);
 	}
 
-	@Override public List<ITransaction> getTransactionByUserId(final Integer userId, final TransactionType type, final TransactionStatus status) {
+	@Override public List<ITransaction> getTransactionByUser(final IUser user, final TransactionType type, final TransactionStatus status) {
 		final TransactionFilter filter = new TransactionFilter()
-			.setUserId(userId)
+			.setUserId(user.getId())
 			.setType(type)
 			.setStatus(status);
 		return transactionDao.findAll(filter);
 	}
 
-	@Override public BigDecimal getTransactionSumByUserId(Integer userId, TransactionType type, TransactionStatus status) {
-		final TransactionFilter filter =new TransactionFilter()
-			.setUserId(userId)
+	@Override public BigDecimal getTransactionSumByUser(final IUser user, final TransactionType type, final TransactionStatus status) {
+		final TransactionFilter filter = new TransactionFilter()
+			.setUserId(user.getId())
 			.setType(type)
 			.setStatus(status);
-		return transactionDao.sumAmount(filter);
+		final BigDecimal result = transactionDao.sumAmount(filter);
+		if (result == null) {
+			return BigDecimal.valueOf(0);
+		}
+		return result;
 	}
 
 }

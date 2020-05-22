@@ -44,25 +44,25 @@ public class TransactionServiceTest extends AbstractTest {
 			transactionService.save(transaction);
 		}
 
-		assertEquals(3, transactionService.getTransactionByUserId(
-			user.getId(),
+		assertEquals(3, transactionService.getTransactionByUser(
+			user,
 			TransactionType.WITHDRAWAL,
 			TransactionStatus.SUCCESS).size()
 		);
 
-		assertEquals(3, transactionService.getTransactionByUserId(
-			user.getId(),
+		assertEquals(3, transactionService.getTransactionByUser(
+			user,
 			TransactionType.WITHDRAWAL,
 			null).size()
 		);
 
-		assertTrue(transactionService.getTransactionByUserId(
-			user.getId(),
+		assertTrue(transactionService.getTransactionByUser(
+			user,
 			TransactionType.PAYMENT,
 			TransactionStatus.SUCCESS).isEmpty());
 
-		assertTrue(transactionService.getTransactionByUserId(
-			user.getId(),
+		assertTrue(transactionService.getTransactionByUser(
+			user,
 			TransactionType.WITHDRAWAL,
 			TransactionStatus.FAILED).isEmpty());
 	}
@@ -80,8 +80,8 @@ public class TransactionServiceTest extends AbstractTest {
 		}
 
 		assertEquals(0, BigDecimal.valueOf(30).compareTo(
-			transactionService.getTransactionSumByUserId(
-				user.getId(),
+			transactionService.getTransactionSumByUser(
+				user,
 				TransactionType.WITHDRAWAL,
 				TransactionStatus.SUCCESS))
 		);
