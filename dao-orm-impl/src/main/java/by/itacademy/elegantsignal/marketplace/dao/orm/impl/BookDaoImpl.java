@@ -55,7 +55,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		final EntityManager em = getEntityManager();
 		final CriteriaBuilder cb = em.getCriteriaBuilder();
 		final CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		final Root<User> from = cq.from(User.class);
+		final Root<Book> from = cq.from(Book.class);
 		cq.select(cb.count(from));
 		final TypedQuery<Long> q = em.createQuery(cq);
 		return q.getSingleResult();
