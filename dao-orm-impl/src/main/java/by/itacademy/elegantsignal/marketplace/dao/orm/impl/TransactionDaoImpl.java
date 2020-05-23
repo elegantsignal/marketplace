@@ -75,6 +75,13 @@ public class TransactionDaoImpl extends AbstractDaoImpl<ITransaction, Integer> i
 		if (filter.getStatus() != null) {
 			ands.add(criteriaBuilder.equal(from.get(Transaction_.status), filter.getStatus()));
 		}
+		if (filter.getExcludedStatusList() != null && !filter.getExcludedStatusList().isEmpty()) {
+			final List<Predicate> predicates = new ArrayList<>();
+			filter.getExcludedStatusList().forEach(excludeStatus ->
+				predicates.add(criteriaBuilder.notEqual(from.get(Transaction_.status), excludeStatus))
+			);
+			ands.add(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
+		}
 		if (!ands.isEmpty()) {
 			criteriaQuery.where(criteriaBuilder.and(ands.toArray(new Predicate[0])));
 		}

@@ -38,17 +38,17 @@ public class AccountServiceTest extends AbstractTest {
 		for (int i = 0; i < 4; i++) {
 			cartService.addToCart(user.getId(), saveNewProduct(productService.createEntity().setUser(user).setPrice(BigDecimal.valueOf(100))));
 		}
-		final BigDecimal balanceByUser = accountService.getBalanceByUser(user);
+		final BigDecimal balanceByUser = accountService.getSpendableBalanceByUser(user);
 		assertEquals(BigDecimal.valueOf(0), balanceByUser);
 		assertThrows(RuntimeException.class, () -> accountService.withdraw(user, BigDecimal.valueOf(10)));
 
 		paymentService.checkout(cartService.getCartByUserId(user.getId()));
 
-		assertEquals(BigDecimal.valueOf(400.0), accountService.getBalanceByUser(user));
+		assertEquals(BigDecimal.valueOf(400.0), accountService.getSpendableBalanceByUser(user));
 
 		// Test
 		accountService.withdraw(user, BigDecimal.valueOf(100));
-		assertEquals(BigDecimal.valueOf(300.0), accountService.getBalanceByUser(user));
+		assertEquals(BigDecimal.valueOf(300.0), accountService.getSpendableBalanceByUser(user));
 	}
 
 	@Test public void testGetBalanceByUser() {
@@ -66,6 +66,6 @@ public class AccountServiceTest extends AbstractTest {
 			.setStatus(TransactionStatus.SUCCESS)
 		);
 
-		assertEquals(BigDecimal.valueOf(20).stripTrailingZeros(), accountService.getBalanceByUser(user).stripTrailingZeros());
+		assertEquals(BigDecimal.valueOf(20).stripTrailingZeros(), accountService.getSpendableBalanceByUser(user).stripTrailingZeros());
 	}
 }

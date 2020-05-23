@@ -2,6 +2,7 @@ package by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -81,4 +82,10 @@ public class User extends BaseEntity implements IUser {
 		return this;
 	}
 
+	@Override public String toString() {
+		return "User{" +
+			"id='" + getId() + '\'' +
+			"email='" + getEmail() + '\'' +
+			'}';
+	}
 }
