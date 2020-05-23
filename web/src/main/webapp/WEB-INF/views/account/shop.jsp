@@ -27,6 +27,15 @@
 	<div class="col">
 		<div class="card mt-4">
 			<div class="card-header"><h3>My Account</h3></div>
+			<div class="m-2">
+				<c:if test="${not empty error}">
+					<div class="alert alert-warning" role="alert">${error}</div>
+				</c:if>
+				<c:if test="${not empty message}">
+					<div class="alert alert-success" role="alert">${message}</div>
+				</c:if>
+			</div>
+
 			<form:form method="POST" action="${pagesUserShop}" modelAttribute="userAccount">
 				<form:input path="userId" type="hidden"/>
 				<div class="row m-2 mt-4">
@@ -34,6 +43,8 @@
 						<label for="withdrawalAmount">Withdraw: </label>
 						<form:input path="withdrawalAmount" value="${userAccount.balance}" class="form-control" type="text" disabled="${readonly}"/>
 						<form:errors path="withdrawalAmount" cssClass="red-text"/>
+						<div>
+						</div>
 					</div>
 
 					<div class="col-md-6 float-letf">

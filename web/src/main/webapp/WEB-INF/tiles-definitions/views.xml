@@ -15,8 +15,12 @@
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>
 	</definition>
 
-	<definition name="user.product.list" extends="DefaultTemplate">
-		<put-attribute name="body" value="/WEB-INF/views/user_product/list.jsp"/>
+	<definition name="account.shop" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/views/account/shop.jsp"/>
+	</definition>
+
+	<definition name="account.withdraw" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/views/account/withdraw.jsp"/>
 	</definition>
 
 	<definition name="book.list" extends="DefaultTemplate">

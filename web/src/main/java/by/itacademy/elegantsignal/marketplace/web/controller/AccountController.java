@@ -1,9 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.web.controller;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.TransactionStatus;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.TransactionType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
-import by.itacademy.elegantsignal.marketplace.service.Account;
 import by.itacademy.elegantsignal.marketplace.service.IAccountService;
 import by.itacademy.elegantsignal.marketplace.service.IOrderItemService;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
@@ -25,19 +23,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
 @Controller @RequestMapping("/user/shop")
-public class UserShopPageController extends AbstractController {
+public class AccountController extends AbstractController {
 
 	@Autowired private IProductService productService;
 	@Autowired private IOrderItemService orderItemService;
@@ -51,53 +49,54 @@ public class UserShopPageController extends AbstractController {
 	@Autowired private TransactionToDTOConverter transactionToDTOConverter;
 
 	@GetMapping
-	public ModelAndView index(final HttpServletRequest req, final ExtendedToken token) {
-		final IUser user = userService.get(token.getId());
+	public ModelAndView index(
+		final HttpServletRequest req,
+		final ExtendedToken token,
+		@RequestParam(value = "error", required = false) final String error,
+		@RequestParam(value = "message", required = false) final String message) {
 
-		final Map<String, Object> hashMap = new HashMap<>();
+		final IUser user = userService.get(token.getId());
 
 		final List<ProductDTO> orderDTOList = productService
 			.getProductsByUserId(user.getId())
 			.stream()
 			.map(productToDTOConverter)
 			.collect(Collectors.toList());
-		hashMap.put("userProducts", (orderDTOList));
 
 		final List<OrderItemDTO> saleDTOList = orderItemService
 			.getPayedOrderItemsByProductOwnerId(user.getId())
 			.stream()
 			.map(orderItemToDTOConverter)
 			.collect(Collectors.toList());
-		hashMap.put("userSales", saleDTOList);
 
 		final List<TransactionDTO> transactionDTOList = transactionService
 			.getTransactionByUser(user, TransactionType.WITHDRAWAL, null)
 			.stream()
 			.map(transactionToDTOConverter)
 			.collect(Collectors.toList());
-		hashMap.put("userTransactions", transactionDTOList);
 
-		hashMap.put("userAccount", accountToDTOConverter.apply(accountService.getAccountByUser(user)));
-
-		return new ModelAndView("user.product.list", hashMap);
+		final ModelAndView model = new ModelAndView();
+		model.setViewName("account.shop");
+		model.addObject("error", error);
+		model.addObject("message", message);
+		model.addObject("userProducts", orderDTOList);
+		model.addObject("userSales", saleDTOList);
+		model.addObject("userTransactions", transactionDTOList);
+		model.addObject("userAccount", accountToDTOConverter.apply(accountService.getAccountByUser(user)));
+		return model;
 	}
 
 	@PostMapping
 	public String withdraw(
-		@Valid @ModelAttribute("userAccount") final AccountDTO accountDTO,
+		@RequestBody @Valid @ModelAttribute("userAccount") final AccountDTO accountDTO,
 		final BindingResult result) {
 
-		final Account account = accountFromDTOConverter.apply(accountDTO);
-		accountService.withdraw(account);
-		return "redirect:/user/shop";
+		try {
+			accountService.withdraw(accountFromDTOConverter.apply(accountDTO));
+		} catch (final RuntimeException e) {
+			return "redirect:/user/shop?error=" + e.getMessage();
+		}
 
-		//		if (result.hasErrors()) {
-		//			return "userAccount";
-		//		} else {
-		//			final Account account = accountFromDTOConverter.apply(accountDTO);
-		//			a.save(account);
-		//			return "redirect:/users";
-		//		}
+		return "redirect:/user/shop?message=the withdrawal was completed successfully";
 	}
-
 }

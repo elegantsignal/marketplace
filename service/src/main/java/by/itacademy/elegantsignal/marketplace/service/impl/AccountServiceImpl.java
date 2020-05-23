@@ -58,9 +58,9 @@ public class AccountServiceImpl implements IAccountService {
 	@Override public void withdraw(final IUser user, final BigDecimal value) {
 		log.info("user {} request withdrawal of {}", user, value);
 		final BigDecimal balance = getSpendableBalanceByUser(user);
-		if (value.compareTo(balance) >= 0) {
-			log.warn("User {} withdraw failed. Not enough money - balance: {}, amount: {}", user, balance, value);
-			throw new IllegalArgumentException();
+		if (0 <
+			value.compareTo(balance)) {
+			throw new IllegalArgumentException("withdraw amount exceeds user balance");
 		}
 
 		final ITransaction transaction = transactionService
@@ -71,19 +71,22 @@ public class AccountServiceImpl implements IAccountService {
 			.setStatus(TransactionStatus.PENDING);
 
 		transactionService.save(transaction);
-		// Do job - confirm transaction
 		transaction.setStatus(TransactionStatus.SUCCESS);
 		transactionService.save(transaction);
 	}
 
 	@Override public void withdraw(final Account account) {
-		withdraw(account.getUser(), account.getWithdrawalAmount());
+		try {
+			withdraw(account.getUser(), account.getWithdrawalAmount());
+		} catch (final IllegalArgumentException e) {
+			log.warn(e.getMessage());
+			throw e;
+		}
 	}
 
 	@Override public Account getAccountByUser(final IUser user) {
 		return createEntity()
 			.setUser(user)
 			.setBalance(getSpendableBalanceByUser(user));
-
 	}
 }
