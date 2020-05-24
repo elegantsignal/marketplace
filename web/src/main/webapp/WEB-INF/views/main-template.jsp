@@ -32,7 +32,7 @@
 <header>
 	<tiles:insertAttribute name="header"/>
 </header>
-<main class="container">
+<main class="container p-4">
 	<tiles:insertAttribute name="body"/>
 </main>
 <footer class="footer">

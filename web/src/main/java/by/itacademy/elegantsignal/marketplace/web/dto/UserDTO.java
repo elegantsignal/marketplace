@@ -1,19 +1,21 @@
 package by.itacademy.elegantsignal.marketplace.web.dto;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
 public class UserDTO {
 
 	private Integer id;
+	@NotNull @NotEmpty private String name;
+	@NotNull @NotEmpty private String email;
+	@Size(min = 6, max = 32) private String password;
 	private Date created;
 	private Date updated;
-	private String name;
-	private String email;
-	@Size(min = 6, max = 32)
-	private String password;
 
 	public Integer getId() {
 		return this.id;

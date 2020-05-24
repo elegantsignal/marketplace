@@ -17,6 +17,8 @@ public interface IUserService {
 
 	@Transactional void save(IUser entity);
 
+	@Transactional void addNewUser(IUser user);
+
 	@Transactional void delete(Integer id);
 
 	@Transactional void deleteAll();

@@ -4,6 +4,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.PersistenceException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,26 +12,28 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class UserServiceTest extends AbstractTest {
 
-	@Test
-	public void testCreate() {
-		final IUser entity = saveNewUser(userService.createEntity());
+	@Test public void testCreate() {
+		final IUser user = saveNewUser(userService.createEntity());
 
-		final IUser entityFromDb = userService.get(entity.getId());
+		final IUser entityFromDb = userService.get(user.getId());
 
 		assertNotNull(entityFromDb);
-		assertEquals(entity.getName(), entityFromDb.getName());
+		assertEquals(user.getName(), entityFromDb.getName());
 		assertNotNull(entityFromDb.getId());
 		assertNotNull(entityFromDb.getCreated());
 		assertNotNull(entityFromDb.getUpdated());
 		assertEquals(entityFromDb.getCreated(), entityFromDb.getUpdated());
+
+		final IUser newUser = userService.createEntity().setName("alice").setEmail(user.getEmail()).setPassword("1234567890");
+		assertThrows(PersistenceException.class, () -> userService.save(newUser));
 	}
 
-	@Test
-	public void testGetAll() {
+	@Test public void testGetAll() {
 		final int initialCount = userService.getAll().size();
 
 		final int randomObjectsCount = getRandomObjectsCount();
@@ -50,22 +53,19 @@ public class UserServiceTest extends AbstractTest {
 		assertEquals(randomObjectsCount + initialCount, allEntities.size());
 	}
 
-	@Test
-	public void testDelete() {
+	@Test public void testDelete() {
 		final IUser entity = saveNewUser(userService.createEntity());
 		userService.delete(entity.getId());
 		assertNull(userService.get(entity.getId()));
 	}
 
-	@Test
-	public void testDeleteAll() {
+	@Test public void testDeleteAll() {
 		saveNewUser(userService.createEntity());
 		userService.deleteAll();
 		assertEquals(0, userService.getAll().size());
 	}
 
-	@Test
-	public void testGetCount() {
+	@Test public void testGetCount() {
 		final int randomObjectsCount = getRandomObjectsCount();
 		for (int i = 0; i < randomObjectsCount; i++) {
 			saveNewUser(userService.createEntity());
@@ -73,8 +73,7 @@ public class UserServiceTest extends AbstractTest {
 		assertEquals(randomObjectsCount, userService.getAll().size());
 	}
 
-	@Test
-	public void testUserRole() {
+	@Test public void testUserRole() {
 		final IRole role = saveNewRole();
 		assertNotNull(role.getId());
 		assertNotNull(role.getName());
@@ -90,8 +89,7 @@ public class UserServiceTest extends AbstractTest {
 		assertEquals(role.getName(), firstRoleFromDb.getName());
 	}
 
-	@Test
-	public void testGetUserByEmail() {
+	@Test public void testGetUserByEmail() {
 		final Set<IRole> roleSet = new HashSet<>();
 		roleSet.add(saveNewRole());
 

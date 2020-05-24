@@ -8,12 +8,12 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${pagesBook}">books</a></li>
-				<li class="nav-item"><a class="nav-link" href="${pagesUser}">users</a></li>
-				<li class="nav-item"><a class="nav-link" href="${pagesGenre}">genre</a></li>
-				<li class="nav-item"><a class="nav-link" href="${pagesCar}">cars</a></li>
-				<li class="nav-item"><a class="nav-link" href="?lang=ru">RU</a></li>
-				<li class="nav-item"><a class="nav-link" href="?lang=en">EN</a></li>
+<!--				<li class="nav-item"><a class="nav-link" href="${pagesBook}">books</a></li>-->
+<!--				<li class="nav-item"><a class="nav-link" href="${pagesUser}">users</a></li>-->
+<!--				<li class="nav-item"><a class="nav-link" href="${pagesGenre}">genre</a></li>-->
+<!--				<li class="nav-item"><a class="nav-link" href="${pagesCar}">cars</a></li>-->
+<!--				<li class="nav-item"><a class="nav-link" href="?lang=ru">RU</a></li>-->
+<!--				<li class="nav-item"><a class="nav-link" href="?lang=en">EN</a></li>-->
 
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item dropdown float-right">
