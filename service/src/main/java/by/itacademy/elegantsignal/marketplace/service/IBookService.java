@@ -4,8 +4,8 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +24,11 @@ public interface IBookService {
 
 	@Transactional IBook save(IBook entity);
 
-	@Transactional void save(IBook book, Map<String, InputStream> inputStreamMap);
+	@Transactional IBook save(IBook book,
+		Map<String, InputStream> inputStreamMap,
+		BigDecimal price,
+		Integer productOwnerId
+	);
 
 	@Transactional void delete(Integer id);
 

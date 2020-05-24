@@ -43,14 +43,14 @@ public class BookFromDTOConverter implements Function<BookDTO, IBook> {
 		book.setDescription(dto.getDescription());
 
 		// product
-		IProduct product = book.getProduct();
-		if (product == null) {
-			product = productService.createEntity();
-		}
-		product.setType(ProductType.BOOK);
-		product.setPrice(dto.getPrice());
-		productService.save(product);
-		book.setProduct(product);
+//		IProduct product = book.getProduct();
+//		if (product == null) {
+//			product = productService.createEntity();
+//		}
+//		product.setType(ProductType.BOOK);
+//		product.setPrice(dto.getPrice());
+//		productService.save(product);
+//		book.setProduct(product);
 
 		// genre
 		final Set<Integer> genreIds = dto.getGenreIds();

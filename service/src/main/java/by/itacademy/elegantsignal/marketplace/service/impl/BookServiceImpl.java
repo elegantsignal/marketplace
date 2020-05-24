@@ -1,6 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.service.impl;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
@@ -22,6 +23,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +63,11 @@ public class BookServiceImpl implements IBookService {
 		return book;
 	}
 
-	@Override public void save(final IBook book, final Map<String, InputStream> inputStreamMap) {
+	@Override public IBook save(final IBook book,
+		final Map<String, InputStream> inputStreamMap,
+		final BigDecimal price,
+		final Integer productOwnerId
+	) {
 		inputStreamMap.forEach((fileField, inputStream) -> {
 			if (inputStream == null) {
 				return;
@@ -80,7 +86,19 @@ public class BookServiceImpl implements IBookService {
 			}
 		});
 
-		save(book);
+		final IProduct product;
+		if (book.getId() != null) {
+			product = productService.get(book.getId());
+		} else {
+			product = productService.createEntity();
+		}
+		product.setUser(userService.get(productOwnerId));
+		product.setType(ProductType.BOOK);
+		product.setPrice(price);
+		productService.save(product);
+
+		book.setProduct(product);
+		return save(book);
 	}
 
 	@Override public IBook get(final Integer id) {

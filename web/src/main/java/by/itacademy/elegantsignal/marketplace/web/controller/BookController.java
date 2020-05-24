@@ -77,6 +77,7 @@ public class BookController extends AbstractController {
 	@PostMapping()
 	public String save(
 		@Valid @ModelAttribute(FORM_MODEL) final BookDTO formModel,
+		final ExtendedToken token,
 		@RequestParam(name = "cover", required = false) final MultipartFile coverFile,
 		@RequestParam(name = "pdf", required = false) final MultipartFile pdfFile,
 		final BindingResult result) throws IOException {
@@ -94,8 +95,9 @@ public class BookController extends AbstractController {
 		if (pdfFile != null && !pdfFile.isEmpty()) {
 			bookFiles.put("pdf", pdfFile.getInputStream());
 		}
-		bookService.save(book, bookFiles);
-		return "redirect:/book";
+
+		bookService.save(book, bookFiles, formModel.getPrice(), token.getId());
+		return "redirect:/book/"+book.getId()+"/edit";
 
 	}
 

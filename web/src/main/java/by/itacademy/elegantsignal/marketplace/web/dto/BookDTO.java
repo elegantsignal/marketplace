@@ -16,6 +16,7 @@ import java.util.Set;
 public class BookDTO {
 
 	private Integer id;
+	private Integer productOwnerId;
 	private String author;
 	private String title;
 	private Set<Integer> genreIds;
