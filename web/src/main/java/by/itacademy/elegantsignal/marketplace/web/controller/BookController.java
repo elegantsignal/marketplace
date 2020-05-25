@@ -5,12 +5,14 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
+import by.itacademy.elegantsignal.marketplace.service.IProductService;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookFromDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
 import by.itacademy.elegantsignal.marketplace.web.dto.grid.GridStateDTO;
 import by.itacademy.elegantsignal.marketplace.web.security.ExtendedToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +43,7 @@ public class BookController extends AbstractController {
 	private static final String VIEW_NAME = "book.edit";
 
 	@Autowired private IBookService bookService;
+	@Autowired private IProductService productService;
 	@Autowired private IGenreService genreService;
 	@Autowired private BookToDTOConverter toDtoConverter;
 	@Autowired private BookFromDTOConverter fromDtoConverter;
@@ -74,7 +78,7 @@ public class BookController extends AbstractController {
 		return new ModelAndView(VIEW_NAME, hashMap);
 	}
 
-	@PostMapping()
+	@PostMapping
 	public String save(
 		@Valid @ModelAttribute(FORM_MODEL) final BookDTO formModel,
 		final ExtendedToken token,
@@ -84,6 +88,13 @@ public class BookController extends AbstractController {
 
 		if (result.hasErrors()) {
 			return VIEW_NAME;
+		}
+
+		if (formModel.getId() != null) {
+			final Integer ownerId = productService.get(formModel.getId()).getUser().getId();
+			if (!token.getId().equals(ownerId)) {
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+			}
 		}
 
 		final IBook book = fromDtoConverter.apply(formModel);
@@ -97,18 +108,22 @@ public class BookController extends AbstractController {
 		}
 
 		bookService.save(book, bookFiles, formModel.getPrice(), token.getId());
-		return "redirect:/book/"+book.getId()+"/edit";
+		return "redirect:/book/" + book.getId() + "/edit";
 
 	}
 
-	@GetMapping(value = "/{id}/delete")
-	public String delete(@PathVariable(name = "id", required = true) final Integer id) {
+	@GetMapping("/{id}/delete")
+	public String delete(@PathVariable(name = "id") final Integer id, final ExtendedToken token) {
+		final IBook book = bookService.getFullInfo(id);
+		if (!token.getId().equals(book.getProduct().getUser().getId())) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
 		bookService.delete(id);
 		return "redirect:/book";
 	}
 
-	@GetMapping(value = "/{id}")
-	public ModelAndView viewDetails(@PathVariable(name = "id", required = true) final Integer id) {
+	@GetMapping("/{id}")
+	public ModelAndView viewDetails(@PathVariable(name = "id") final Integer id) {
 		final IBook book = bookService.getFullInfo(id);
 		final BookDTO bookDto = toDtoConverter.apply(book);
 		final Map<String, Object> hashMap = new HashMap<>();
@@ -119,9 +134,15 @@ public class BookController extends AbstractController {
 		return new ModelAndView("book.item", hashMap);
 	}
 
-	@GetMapping(value = "/{id}/edit")
-	public ModelAndView edit(@PathVariable(name = "id", required = true) final Integer id) {
-		final BookDTO bookDto = toDtoConverter.apply(bookService.getFullInfo(id));
+	@GetMapping("/{id}/edit")
+	public ModelAndView edit(@PathVariable(name = "id") final Integer id, final ExtendedToken token) {
+		final IBook book = bookService.getFullInfo(id);
+
+		if (!token.getId().equals(book.getProduct().getUser().getId())) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+
+		final BookDTO bookDto = toDtoConverter.apply(book);
 
 		final Map<String, Object> hashMap = new HashMap<>();
 		hashMap.put(FORM_MODEL, bookDto);

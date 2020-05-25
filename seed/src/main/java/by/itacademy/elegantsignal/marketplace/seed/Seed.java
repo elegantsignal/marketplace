@@ -195,7 +195,7 @@ public class Seed {
 		final Map<String, InputStream> bookFiles  = new HashMap<>();
 		bookFiles.put("cover", new FileInputStream(coverFile));
 		bookFiles.put("pdf", new FileInputStream(pdfFile));
-		bookService.save(book, bookFiles);
+		bookService.save(book, bookFiles, BigDecimal.valueOf((Double) bookData.get("product_price")), user.getId());
 	}
 
 	private <T> void createOrder(Map<String, T> orderData) {
