@@ -1,0 +1,66 @@
+---
+- hosts: production
+  remote_user: "{{ runtime_user }}"
+  gather_facts: no
+
+  tasks:
+  - name: Clone project
+    git:
+      repo: "{{app_repo}}"
+      dest: "{{app_name}}"
+      clone: yes
+      update: yes
+      force: yes
+
+  - name: Sync assets dir
+    synchronize:
+      src: ../assets/
+      dest: "{{app_name}}/assets"
+      delete: yes
+      recursive: yes
+      archive: yes
+
+  - name: set permissions
+    file:
+      path: "{{app_name}}/assets"
+      owner: "{{ runtime_user }}"
+      group: www-data
+      mode: u=rwX,g=rX,o=rX
+      recurse: yes
+
+  - name: create .env file
+    copy:
+      dest: "{{app_name}}/.env"
+      content: |
+        DOCKER_APP_NAME={{app_name}}
+        ASSETS_ROOT=/home/{{runtime_user}}/{{app_name}}/assets
+
+
+  - name: Build
+    docker_compose:
+      project_src: "{{app_name}}"
+      build: yes
+      stopped: yes
+
+
+  - name: Stop Database container
+    shell: "cd {{app_name}} && docker-compose stop"
+
+  - name: Start Database container
+    shell: "cd {{app_name}} && docker-compose start postgres"
+
+  - name: Drop Database
+    shell: echo "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE datname = current_database() AND pid <> pg_backend_pid(); DROP DATABASE {{db_name}}" | docker exec -i {{docker_postgres}} psql -U postgres
+    ignore_errors: yes
+
+  - name: Create Database
+    shell: "docker exec -i {{docker_postgres}} createdb -U postgres {{db_name}}"
+
+  - name: Restore dump
+    shell: "cat /home/{{runtime_user}}/{{app_name}}/assets/backups/{{db_name}}.sql | docker exec -i {{docker_postgres}} psql -U postgres -d {{db_name}}"
+
+  - name: Start all containers
+    docker_compose:
+      project_src: "{{app_name}}"
+      build: yes
+      stopped: no

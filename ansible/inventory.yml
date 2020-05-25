@@ -1,0 +1,16 @@
+---
+all:
+  hosts:
+    ubuntu-4gb-hel1-1:
+      ansible_host: "{{ lookup('env','ANSIBLE_SERVER_IP') }}"
+      runtime_user: "{{ lookup('env','ANSIBLE_RUNTIME_USER') }}"
+      app_name: "{{ lookup('env','ANSIBLE_APP_NAME') }}"
+      db_name: "{{ lookup('env','ANSIBLE_DATABASE_NAME') }}"
+      app_timezone: "{{ lookup('env','ANSIBLE_TIMEZONE') }}"
+      app_repo: "{{ lookup('env','ANSIBLE_GIT_REPO') }}"
+      docker_postgres: "{{ lookup('env','ANSIBLE_DOCKER_POSTGRESQL_CONTAINER') }}"
+
+  children:
+    production:
+      hosts:
+        ubuntu-4gb-hel1-1:

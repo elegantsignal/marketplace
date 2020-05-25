@@ -1,23 +1,36 @@
 version: "3.1"
 
 services:
+
+  caddy:
+    container_name: marketplace_caddy
+    image: caddy:2.0.0-alpine
+    volumes:
+      - ./config/Caddyfile:/etc/caddy/Caddyfile
+      - caddy:/root/.caddy
+    ports:
+      - "80:80"
+      - "443:443"
+
+
   app:
+    container_name: marketplace_app
     build: .
     user: ${UID}
     environment:
       ASSETS_ROOT: /usr/local/assets
-      JAVA_OPTS: "-Dcom.sun.management.jmxremote
--Dcom.sun.management.jmxremote.local.only=false
--Dcom.sun.management.jmxremote.authenticate=false
--Dcom.sun.management.jmxremote.port=9010
--Dcom.sun.management.jmxremote.rmi.port=9010
--Djava.rmi.server.hostname=0.0.0.0
--Dcom.sun.management.jmxremote.ssl=false"
-    ports:
-      - "8085:8080"
-      - "9010:9010"
+#       JAVA_OPTS: "-Dcom.sun.management.jmxremote
+# -Dcom.sun.management.jmxremote.local.only=false
+# -Dcom.sun.management.jmxremote.authenticate=false
+# -Dcom.sun.management.jmxremote.port=9010
+# -Dcom.sun.management.jmxremote.rmi.port=9010
+# -Djava.rmi.server.hostname=0.0.0.0
+# -Dcom.sun.management.jmxremote.ssl=false"
+    # ports:
+      # - "9010:9010"
     volumes:
       - ${ASSETS_ROOT}:/usr/local/assets
+
 
   postgres:
     container_name: marketplace_postgresql
@@ -28,7 +41,7 @@ services:
     volumes:
       - jd2_marketplace_postgresql:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
 
   # pgadmin:
   #   container_name: marketplace_pgadmin
@@ -42,5 +55,7 @@ services:
   #     - "8081:80"
 
 volumes:
+  caddy:
   jd2_marketplace_postgresql:
   jd2_marketplace_pgadmin:
+  

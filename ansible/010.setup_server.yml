@@ -1,0 +1,32 @@
+---
+- hosts: production
+  remote_user: root
+  
+  roles:
+    - common_setup
+    - install_docker
+
+  tasks:
+  - name: Add a new user
+    user:
+      name: "{{ runtime_user }}"
+      create_home: true
+      shell: /bin/bash
+      groups:
+        - docker
+        - www-data
+
+  - name: Set authorized key for user
+    authorized_key:
+      user: "{{ runtime_user }}"
+      state: present
+      key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+  - name: Disable Password Authentication
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: "^PasswordAuthentication"
+      line: "PasswordAuthentication no"
+      state: present
+      backup: yes
+
