@@ -1,0 +1,9 @@
+---
+- name: Dump Database
+  hosts: 127.0.0.1
+  connection: local
+
+  tasks:
+  - name: Dump Database
+    shell: docker exec -i {{docker_postgres}} pg_dump -U postgres "{{ANSIBLE_DATABASE_NAME}}" > ../assets/backups/{{ANSIBLE_DATABASE_NAME}}.sql
+    ignore_errors: yes

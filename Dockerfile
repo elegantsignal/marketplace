@@ -22,7 +22,7 @@ FROM tomcat:9-jre8-alpine
 WORKDIR ${CATALINA_HOME}
 RUN rm -rf webapps/*
 COPY config/tomcat/server.xml config/tomcat/context.xml conf/
-COPY --from=builder /usr/src/app/web/target/marketplace.war webapps/ROOT.war
+COPY --from=builder /usr/src/app/web/target/${APP_NAME}.war webapps/ROOT.war
 
 RUN addgroup www-data && \
     adduser -D -H -u 1000 -s /bin/bash www-data -G www-data && \

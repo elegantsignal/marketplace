@@ -26,7 +26,7 @@ psql -U postgres book
 ## Export
 
 ```bash
-docker exec -it $POSTGRESQL_CONTAINER pg_dump -U postgres --schema-only --no-owner marketplace > marketplace.sql
+docker exec -it marketplace_postgresql pg_dump -U postgres --schema-only --no-owner marketplace > marketplace.sql
 ```
 
 ## psql
