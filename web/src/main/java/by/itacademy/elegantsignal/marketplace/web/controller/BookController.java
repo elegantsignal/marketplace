@@ -91,7 +91,7 @@ public class BookController extends AbstractController {
 		}
 
 		if (formModel.getId() != null) {
-			final Integer ownerId = productService.get(formModel.getId()).getUser().getId();
+			final Integer ownerId = productService.getFullInfo(formModel.getId()).getUser().getId();
 			if (!token.getId().equals(ownerId)) {
 				throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 			}
