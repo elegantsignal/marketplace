@@ -152,12 +152,12 @@ public class Seed {
 		userFilter.setEmail(bookData.get("user_email").toString());
 		final IUser user = userService.findOne(userFilter);
 
-		// create product
-		final IProduct product = productService.createEntity();
-		product.setUser(user);
-		product.setPrice(BigDecimal.valueOf((Integer) bookData.get("product_price")));
-		product.setType(ProductType.BOOK);
-		productService.save(product);
+//		// create product
+//		final IProduct product = productService.createEntity();
+//		product.setUser(user);
+//		product.setPrice(BigDecimal.valueOf((Integer) bookData.get("product_price")));
+//		product.setType(ProductType.BOOK);
+//		productService.save(product);
 
 		// handle genres
 		final Set<IGenre> genreSet = new HashSet<>();
@@ -179,7 +179,7 @@ public class Seed {
 		}
 
 		final IBook book = bookService.createEntity();
-		book.setProduct(product);
+//		book.setProduct(product);
 
 		book.setGenre(genreSet);
 
@@ -195,7 +195,7 @@ public class Seed {
 		final Map<String, InputStream> bookFiles  = new HashMap<>();
 		bookFiles.put("cover", new FileInputStream(coverFile));
 		bookFiles.put("pdf", new FileInputStream(pdfFile));
-		bookService.save(book, bookFiles, BigDecimal.valueOf((Double) bookData.get("product_price")), user.getId());
+		bookService.save(book, bookFiles, BigDecimal.valueOf((Integer) bookData.get("product_price")), user.getId());
 	}
 
 	private <T> void createOrder(Map<String, T> orderData) {
