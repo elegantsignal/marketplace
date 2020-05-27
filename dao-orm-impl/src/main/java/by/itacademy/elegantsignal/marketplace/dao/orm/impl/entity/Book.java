@@ -35,7 +35,7 @@ public class Book implements IBook {
 	@Id
 	private Integer id;
 
-	@OneToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Product.class)
+	@OneToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Product.class)
 	@PrimaryKeyJoinColumn
 	private IProduct product;
 

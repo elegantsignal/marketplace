@@ -141,18 +141,18 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 	}
 
 	@Override
-	public List<IBook> search(String text) {
+	public List<IBook> search(String queryString) {
 
-		EntityManager em = getEntityManager();
-		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+		EntityManager entityManager = getEntityManager();
+		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(entityManager);
 
 		// create native Lucene query unsing the query DSL
 		// alternatively you can write the Lucene query using the Lucene query
 		// parser
 		// or the Lucene programmatic API. The Hibernate Search DSL is
 		// recommended though
-		QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
-		org.apache.lucene.search.Query luceneQuery = qb.keyword().onFields("description").matching(text).createQuery();
+		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
+		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("description").matching(queryString).createQuery();
 
 		// wrap Lucene query in a javax.persistence.Query
 		javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Book.class);

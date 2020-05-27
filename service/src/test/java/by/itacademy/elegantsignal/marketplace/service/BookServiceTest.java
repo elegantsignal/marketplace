@@ -123,6 +123,7 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	// TODO: Enable me
+	@Test
 	public void testSearch() {
 		final List<IBook> result = bookService.search("test");
 		assertTrue(result.isEmpty());
