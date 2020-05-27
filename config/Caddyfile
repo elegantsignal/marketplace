@@ -4,5 +4,13 @@ localhost {
 
 marketplace.elegantsignal.com {
   reverse_proxy /* marketplace_app:8080
-  header /media/* Cache-Control max-age=2628000
+  
+  header /media/* {
+    Cache-Control "max-age=30672000"
+    }
+  
+  header /resources/* {
+    Cache-Control "max-age=30672000"
+    defer
+    }
 }
