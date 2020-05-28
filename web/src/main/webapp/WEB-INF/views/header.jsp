@@ -47,7 +47,6 @@
 					</div>
 				</form>
 				<div id="result" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<ul class="list-group"></ul>
 				</div>
 			</div>
 		</div>

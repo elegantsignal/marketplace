@@ -13,29 +13,34 @@ $(document).ready(function () {
     $('#state').val('');
     var searchField = $('#search').val();
     $.getJSON('/search/' + searchField, function (data) {
-      if (data.length > 0){
-       $('#result').addClass("show");
+      if (data.length > 0) {
+        $('#result').addClass("show");
       }
       else {
         $('#result').removeClass("show");
       }
       $.each(data, function (key, value) {
         $('#result').append(
-          // `<a class="dropdown-item" href="#">Action</a>`
-          `<li class="dropdown dropdown-item"><a href="/book/${value.id}">${value.title}</a> | <span class="text-muted">${value.price}</span></li>`
+          `
+        <div class="dropdown-item">
+          <div class="row">
+            <div class="col-auto" style="min-width: 100px;">
+              <img class="img-thumbnail" style="height: 50px;" src="/${value.cover}" alt="${value.title}">
+            </div>
+            <div class="col">
+              <a href="/book/${value.id}">${value.title}</a><br>by ${value.author} | <span class="text-muted">$${value.price}</span>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        `
         );
       });
     });
   });
 
 
-  $(window).click(function() {
+  $(window).click(function () {
     $('#result').removeClass("show");
-    });
-    
-    $('.dropdown').click(function(event){
-        event.stopPropagation();
-    });
-
-    
+  });
 });
