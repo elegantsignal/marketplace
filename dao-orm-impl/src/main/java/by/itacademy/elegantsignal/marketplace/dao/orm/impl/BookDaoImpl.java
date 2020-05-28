@@ -9,6 +9,9 @@ import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.Session;
 import org.hibernate.jpa.criteria.OrderImpl;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -150,24 +153,19 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 	}
 
 	@Override
-	public List<IBook> search(String queryString) {
+	public List<IBook> search(final String queryString) {
+		final EntityManager entityManager = getEntityManager();
+		final FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(entityManager);
+		final QueryBuilder builder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
 
-		EntityManager entityManager = getEntityManager();
-		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(entityManager);
+		final org.apache.lucene.search.Query luceneQuery = builder.keyword().onFields("author", "title").matching(queryString).createQuery();
 
-		// create native Lucene query unsing the query DSL
-		// alternatively you can write the Lucene query using the Lucene query
-		// parser
-		// or the Lucene programmatic API. The Hibernate Search DSL is
-		// recommended though
-		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
-		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("author", "title").matching(queryString).createQuery();
-
-		// wrap Lucene query in a javax.persistence.Query
-		javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Book.class);
-
+		final Session session = (Session) fullTextEntityManager.getDelegate();
+		final Criteria criteria = session.createCriteria(Book.class)
+			.setFetchMode("product", FetchMode.JOIN)
+			.setFetchMode("product.user", FetchMode.JOIN);
+		final javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery).setCriteriaQuery(criteria);
 		return jpaQuery.getResultList();
-
 	}
 
 }

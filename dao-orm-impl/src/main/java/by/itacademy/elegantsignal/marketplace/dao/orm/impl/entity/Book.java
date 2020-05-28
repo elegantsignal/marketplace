@@ -52,7 +52,7 @@ public class Book implements IBook {
 	@Id
 	private Integer id;
 
-	@OneToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Product.class) @PrimaryKeyJoinColumn
+	@OneToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Product.class) @PrimaryKeyJoinColumn
 	private IProduct product;
 
 	@JoinTable(name = "book_2_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))

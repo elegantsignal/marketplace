@@ -133,6 +133,11 @@ public class BookServiceTest extends AbstractTest {
 
 		final List<IBook> foundBooks = bookService.search("foo");
 		assertEquals(2, foundBooks.size());
+		foundBooks.forEach(book -> {
+			assertNotNull(book.getProduct().getPrice());
+			assertNotNull(book.getProduct().getUser().getName());
+
+		});
 	}
 
 }
