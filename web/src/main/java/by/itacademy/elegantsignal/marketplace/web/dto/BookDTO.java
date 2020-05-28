@@ -29,7 +29,7 @@ public class BookDTO {
 	private Date updated;
 
 	public void setPublished(final LocalDate localDate) {
-		this.published = localDate;
+		published = localDate;
 	}
 
 	public void setCover(final String cover) {

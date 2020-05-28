@@ -16,6 +16,10 @@ public interface IBook extends IBaseEntity {
 
 	IBook setTitle(String title);
 
+	String getAuthor();
+
+	IBook setAuthor(String author);
+
 	File getCover();
 
 	IBook setCover(File file);

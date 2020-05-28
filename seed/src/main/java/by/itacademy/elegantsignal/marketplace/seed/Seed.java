@@ -184,6 +184,7 @@ public class Seed {
 		book.setGenre(genreSet);
 
 		book.setTitle((String) bookData.get("title"));
+		book.setAuthor((String) bookData.get("author"));
 
 		final Date date = (Date) bookData.get("published");
 		book.setPublished(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());

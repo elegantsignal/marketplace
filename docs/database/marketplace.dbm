@@ -23,7 +23,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="user">
 	<schema name="public"/>
-	<position x="900" y="104"/>
+	<position x="900" y="100"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -116,7 +116,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="book">
 	<schema name="public"/>
-	<position x="1360" y="784"/>
+	<position x="1360" y="780"/>
+	<column name="author" not-null="true">
+		<type name="varchar" length="128"/>
+	</column>
 	<column name="title" not-null="true">
 		<type name="varchar" length="128"/>
 	</column>
@@ -160,7 +163,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="role">
 	<schema name="public"/>
-	<position x="1440" y="144"/>
+	<position x="1440" y="140"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -177,7 +180,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="order_item">
 	<schema name="public"/>
-	<position x="540" y="684"/>
+	<position x="540" y="680"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -210,7 +213,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="download">
 	<schema name="public"/>
-	<position x="980" y="864"/>
+	<position x="980" y="860"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -248,7 +251,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="genre">
 	<schema name="public"/>
-	<position x="1600" y="564"/>
+	<position x="1600" y="560"/>
 	<column name="id" not-null="true">
 		<type name="smallserial" length="0"/>
 	</column>
@@ -278,7 +281,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="product">
 	<schema name="public"/>
-	<position x="980" y="384"/>
+	<position x="980" y="380"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -433,7 +436,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="review" faded-out="true">
 	<schema name="public"/>
-	<position x="100" y="884"/>
+	<position x="100" y="880"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -465,7 +468,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="like" faded-out="true">
 	<schema name="public"/>
-	<position x="1600" y="384"/>
+	<position x="1600" y="380"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>

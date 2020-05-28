@@ -148,6 +148,10 @@ public abstract class AbstractTest {
 			book.setTitle("The title#" + getRandomPrefix());
 		}
 
+		if (book.getAuthor() == null) {
+			book.setAuthor("Author#" + getRandomPrefix());
+		}
+
 		if (book.getCover() == null) {
 			book.setCover(new File("/tmp/" + getRandomPrefix()));
 		}

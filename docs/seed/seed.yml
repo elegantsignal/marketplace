@@ -39,6 +39,7 @@ Book:
     genre:
       - fiction
     title: The Caves of Steel
+    author: Isaac Asimov
     cover: The Caves of Steel.jpg
     pdf: dummy.pdf
     published: 1954-02-04
@@ -48,7 +49,8 @@ Book:
     product_price: 20
     genre:
       - fiction
-    title: The Naked Sun
+    title: "The Naked Sun"
+    author: "Isaac Asimov"
     cover: The Naked Sun.jpg
     pdf: dummy.pdf
     published: 1957-01-01
@@ -58,7 +60,8 @@ Book:
     product_price: 30
     genre:
       - fiction
-    title: The Robots of Dawn
+    title: "The Robots of Dawn"
+    author: "Isaac Asimov"
     published: 1983-01-01
     cover: The Robots of Dawn.jpg
     pdf: dummy.pdf
@@ -70,6 +73,7 @@ Book:
       - mystery
       - romance
     title: Atlas Shrugged
+    author: "Ayn Rand"
     published: 1957-10-10
     cover: Atlas Shrugged.jpg
     pdf: dummy.pdf
@@ -80,6 +84,7 @@ Book:
     genre:
       - romance
     title: The Fountainhead
+    author: "Ayn Rand"
     published: 1943-01-01
     cover: The Fountainhead.jpg
     pdf: dummy.pdf
@@ -90,6 +95,7 @@ Book:
     genre:
       - non-fiction
     title: "The Black Swan: The Impact of the Highly Improbable"
+    author: "Nassim Nicholas Taleb"
     published: 2007-04-17
     cover: The Black Swan.jpg
     pdf: dummy.pdf
@@ -100,6 +106,7 @@ Book:
     genre:
       - non-fiction
     title: "Antifragile: Things That Gain from Disorder"
+    author: "Nassim Nicholas Taleb"
     published: 2012-11-27
     cover: Antifragile.jpg
     pdf: dummy.pdf
@@ -110,6 +117,7 @@ Book:
     genre:
       - non-fiction
     title: "Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets"
+    author: "Nassim Nicholas Taleb"
     published: 2001-01-01
     cover: Fooled by Randomness.jpg
     pdf: dummy.pdf

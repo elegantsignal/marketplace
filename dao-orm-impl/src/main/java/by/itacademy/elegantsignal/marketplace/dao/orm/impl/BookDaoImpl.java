@@ -1,6 +1,10 @@
 package by.itacademy.elegantsignal.marketplace.dao.orm.impl;
 
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.*;
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Book;
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Book_;
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Product;
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Product_;
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User_;
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
@@ -12,7 +16,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,7 +161,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		// or the Lucene programmatic API. The Hibernate Search DSL is
 		// recommended though
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
-		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("title").matching(queryString).createQuery();
+		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("author", "title").matching(queryString).createQuery();
 
 		// wrap Lucene query in a javax.persistence.Query
 		javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Book.class);

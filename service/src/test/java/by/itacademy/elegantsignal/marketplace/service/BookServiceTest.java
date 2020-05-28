@@ -22,8 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BookServiceTest extends AbstractTest {
 
-	@Test
-	public void testCreate() {
+	@Test public void testCreate() {
 		final IBook book = saveNewBook(bookService.createEntity());
 		final IBook bookFromDb = bookService.getFullInfo(book.getId());
 
@@ -35,14 +34,14 @@ public class BookServiceTest extends AbstractTest {
 		assertEquals(book.getUpdated(), bookFromDb.getUpdated());
 
 		assertEquals(book.getTitle(), bookFromDb.getTitle());
+		assertEquals(book.getAuthor(), bookFromDb.getAuthor());
 		assertEquals(book.getDescription(), bookFromDb.getDescription());
 		assertEquals(book.getCover(), bookFromDb.getCover());
 		assertEquals(book.getPublished(), bookFromDb.getPublished());
 		assertEquals(book.getPdf(), bookFromDb.getPdf());
 	}
 
-	@Test
-	public void testGetAll() {
+	@Test public void testGetAll() {
 		final int initialCount = bookService.getAll().size();
 
 		final int randomObjectsCount = getRandomObjectsCount();
@@ -65,8 +64,7 @@ public class BookServiceTest extends AbstractTest {
 		assertEquals(randomObjectsCount + initialCount, allEntities.size());
 	}
 
-	@Test
-	public void testDelete() {
+	@Test public void testDelete() {
 		final IBook book = saveNewBook(bookService.createEntity());
 
 		bookService.delete(book.getId());
@@ -76,15 +74,13 @@ public class BookServiceTest extends AbstractTest {
 		assertNull(productService.get(book.getProduct().getId()));
 	}
 
-	@Test
-	public void testDeleteAll() {
+	@Test public void testDeleteAll() {
 		saveNewBook(bookService.createEntity());
 		bookService.deleteAll();
 		assertEquals(0, bookService.getAll().size());
 	}
 
-	@Test
-	public void testBook2Genre() throws IOException {
+	@Test public void testBook2Genre() throws IOException {
 		final IBook book = saveNewBook(bookService.createEntity());
 
 		final Set<IGenre> genreSet = new HashSet<IGenre>();
@@ -101,8 +97,7 @@ public class BookServiceTest extends AbstractTest {
 		assertEquals(genreCount, bookFromDb.getGenre().size());
 	}
 
-	@Test
-	public void testUserBooks() {
+	@Test public void testUserBooks() {
 		final IUser user = saveNewUser(userService.createEntity());
 
 		final int bookCount = getRandomObjectsCount();
@@ -122,9 +117,7 @@ public class BookServiceTest extends AbstractTest {
 		assertEquals(bookCount, booksList.size());
 	}
 
-	// TODO: Enable me
-	@Test
-	public void testSearch() {
+	@Test public void testSearch() {
 		final List<IBook> result = bookService.search("test");
 		assertTrue(result.isEmpty());
 
