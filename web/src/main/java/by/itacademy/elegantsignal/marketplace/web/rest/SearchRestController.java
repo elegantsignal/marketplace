@@ -6,19 +6,19 @@ import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-@RestController
-public class SearchRestController extends AbstractRestController {
-
+@RestController @RequestMapping("/search")
+public class SearchRestController {
 	@Autowired private IBookService bookService;
 	@Autowired private BookToDTOConverter bookToDTOConverter;
 
-	@GetMapping("/search/{query}")
+	@GetMapping("/{query}")
 	public List<BookDTO> search(@PathVariable final String query) {
 		return bookService.search(query).stream().map(bookToDTOConverter).collect(Collectors.toList());
 	}

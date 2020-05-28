@@ -35,28 +35,23 @@ public class Book implements IBook {
 	@Id
 	private Integer id;
 
-	@OneToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Product.class)
-	@PrimaryKeyJoinColumn
+	@OneToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Product.class) @PrimaryKeyJoinColumn
 	private IProduct product;
 
 	@JoinTable(name = "book_2_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	@ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY)
 	private Set<IGenre> genre = new HashSet<>();
 
-	@Column
+	@Column @Field(index = Index.YES, analyze =  Analyze.YES, store = Store.NO)
 	private String title;
 
-	@Column
-	@Convert(converter = FileAtributeConverter.class)
+	@Column @Convert(converter = FileAtributeConverter.class)
 	private File cover;
 
-	@Column
-	@Convert(converter = LocalDateAttributeConverter.class)
+	@Column @Convert(converter = LocalDateAttributeConverter.class)
 	private LocalDate published;
 
 	@Column
-	// TODO: Enable search
-	@Field(index = Index.YES, analyze =  Analyze.YES, store = Store.NO)
 	private String description;
 
 	@Column(updatable = false)
@@ -65,8 +60,7 @@ public class Book implements IBook {
 	@Column
 	private Date updated;
 
-	@Column
-	@Convert(converter = FileAtributeConverter.class)
+	@Column @Convert(converter = FileAtributeConverter.class)
 	private File pdf;
 
 	@Override public Integer getId() {

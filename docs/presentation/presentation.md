@@ -1,6 +1,10 @@
-
-
 # Marketplace project description
+
+## TOD
+
+- тип хэширования паролей
+- проверка типа файла с помощью Тикка
+-  
 
 <div class="page-break"></div>
 

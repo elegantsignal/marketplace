@@ -2,34 +2,34 @@
 User:
   - email: asimov@exampl.com
     name: asimov
-    password: "123456"
+    password: "u2PX"
     roles:
       - consumer
       - supplier
 
   - email: rand@exampl.com
     name: rand
-    password: "123456"
+    password: "u2PX"
     roles:
       - consumer
       - supplier
 
   - email: taleb@exampl.com
     name: taleb
-    password: "123456"
+    password: "u2PX"
     roles:
       - consumer
       - supplier
 
   - email: alice@exampl.com
     name: alice
-    password: "123456"
+    password: "u2PX"
     roles:
       - consumer
 
   - email: bob@exampl.com
     name: bob
-    password: "123456"
+    password: "u2PX"
     roles:
       - consumer
 

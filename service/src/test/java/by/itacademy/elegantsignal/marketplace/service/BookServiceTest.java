@@ -128,12 +128,13 @@ public class BookServiceTest extends AbstractTest {
 		final List<IBook> result = bookService.search("test");
 		assertTrue(result.isEmpty());
 
-		final List<String> testDescriptions = Stream.of("foo", "bar", "foo bar")
+		final List<String> titleList = Stream
+			.of("foo", "bar", "foo bar")
 			.collect(Collectors.toList());
 
-		testDescriptions.forEach(description -> {
+		titleList.forEach(title -> {
 			final IBook book = bookService.createEntity();
-			book.setDescription(description);
+			book.setTitle(title);
 			saveNewBook(book);
 		});
 

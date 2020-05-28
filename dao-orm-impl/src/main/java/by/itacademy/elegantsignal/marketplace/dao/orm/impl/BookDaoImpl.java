@@ -152,7 +152,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		// or the Lucene programmatic API. The Hibernate Search DSL is
 		// recommended though
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
-		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("description").matching(queryString).createQuery();
+		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("title").matching(queryString).createQuery();
 
 		// wrap Lucene query in a javax.persistence.Query
 		javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Book.class);
