@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.web.controller;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
@@ -42,21 +43,27 @@ public class HomePageController extends AbstractController {
 
 	@GetMapping
 	public ModelAndView index(final HttpServletRequest request,
+		@RequestParam(name = "genre[]", required = false) final List<String> genreList,
 		@RequestParam(name = "page", required = false) final Integer pageNumber,
 		@RequestParam(name = "sort", required = false) final String sortColumn) {
 
 		final Map<String, Object> models = new HashMap<>();
 
-		final GridStateDTO gridState = getListDTO(request)
-			.setPage(pageNumber)
-			.setSort(sortColumn, "id");
+		final List<IBook> bookList;
+		if (genreList != null) {
+			bookList = bookService.getBooksByGenres(genreList);
+		} else {
+			final GridStateDTO gridState = getListDTO(request)
+				.setPage(pageNumber)
+				.setSort(sortColumn, "id");
 
-		final BookFilter bookFilter = new BookFilter();
-		prepareFilter(gridState, bookFilter);
+			final BookFilter bookFilter = new BookFilter();
+			prepareFilter(gridState, bookFilter);
 
-		final List<BookDTO> bookDTOList = bookService.find(bookFilter)
-			.stream().map(bookToDTOConverter).collect(Collectors.toList());
-		gridState.setTotalCount(bookService.getCount(bookFilter));
+			bookList = bookService.find(bookFilter);
+			gridState.setTotalCount(bookService.getCount(bookFilter));
+		}
+		final List<BookDTO> bookDTOList = bookList.stream().map(bookToDTOConverter).collect(Collectors.toList());
 		models.put("gridItems", bookDTOList);
 
 		final List<GenreDTO> genreDTOList = genreService.getAll()
