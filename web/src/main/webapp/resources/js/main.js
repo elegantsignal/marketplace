@@ -12,6 +12,10 @@ $(document).ready(function () {
     $('#result').html('');
     $('#state').val('');
     var searchField = $('#search').val();
+    if (searchField.length < 3) {
+      $('#result').removeClass("show");
+      return
+    }
     $.getJSON('/search/' + searchField, function (data) {
       if (data.length > 0) {
         $('#result').addClass("show");
