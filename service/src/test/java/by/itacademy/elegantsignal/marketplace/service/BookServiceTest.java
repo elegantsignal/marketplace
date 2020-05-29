@@ -9,9 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -90,7 +89,7 @@ public class BookServiceTest extends AbstractTest {
 			genreSet.add(saveNewGenre(genreService.createEntity()));
 		}
 
-		book.setGenre(genreSet);
+		book.setGenres(genreSet);
 		bookService.save(book);
 
 		final IBook bookFromDb = bookService.getFullInfo(book.getId());
@@ -112,7 +111,7 @@ public class BookServiceTest extends AbstractTest {
 			saveNewBook(bookService.createEntity());
 		}
 
-		final BookFilter bookFilter = new BookFilter(user);
+		final BookFilter bookFilter = new BookFilter().setUser(user);
 		final List<IBook> booksList = bookService.find(bookFilter);
 
 		assertEquals(bookCount, booksList.size());
@@ -142,11 +141,36 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	@Test public void getBooksByGenre() {
-		IGenre genre = saveNewGenre(genreService.createEntity().setName("1"));
-		final List<IGenre> genreList = genreService.getAll();
-		assertTrue(genreList.size() > 0);
-//
-//		saveNewBook(bookService.createEntity().setGenre(genre));
+		// white noise data
+		for (int i = 0; i < 5; i++) {
+			saveNewBook(bookService.createEntity());
+			saveNewGenre(genreService.createEntity());
+		}
+
+		// real data
+		final List<IGenre> genres = new ArrayList<>();
+		final IGenre g1 = saveNewGenre(genreService.createEntity().setName("1"));
+		genres.add(g1);
+		saveNewBook(bookService.createEntity().setGenres(genres));
+		saveNewBook(bookService.createEntity().setGenres(genres));
+		assertEquals(2, bookService.getBooksByGenres(genres).size());
+
+		final IGenre g2 = saveNewGenre(genreService.createEntity().setName("2"));
+		genres.add(g2);
+		saveNewBook(bookService.createEntity().setGenres(genres));
+		saveNewBook(bookService.createEntity().setGenres(genres));
+
+		assertEquals(2, bookService.getBooksByGenres(Arrays.asList(g2)).size());
+
+		final List<IBook> booksByGenres = bookService.getBooksByGenres(genres);
+		assertEquals(4, booksByGenres.size());
+		booksByGenres.forEach(book -> {
+			assertNotNull(book.getProduct().getPrice());
+		});
+
+		final List<IBook> books = bookService.getBooksByGenres(genres);
+		assertTrue(books.size() > 0);
+
 	}
 
 }

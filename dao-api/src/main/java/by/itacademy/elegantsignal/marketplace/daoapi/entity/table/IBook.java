@@ -43,7 +43,7 @@ public interface IBook extends IBaseEntity {
 
 	List<IGenre> getGenre();
 
-	IBook setGenre(List<IGenre> genre);
+	IBook setGenres(List<IGenre> genre);
 
 	File getPdf();
 

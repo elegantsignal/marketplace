@@ -8,6 +8,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -19,7 +20,7 @@ public class BookDTO {
 	private Integer productOwnerId;
 	private String author;
 	private String title;
-	private Set<Integer> genreIds;
+	private List<Integer> genreIds;
 	private String description;
 	private String cover;
 	private String pdf;

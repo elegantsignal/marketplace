@@ -1,24 +1,16 @@
 package by.itacademy.elegantsignal.marketplace.daoapi.filter;
 
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 
+@Getter @Setter @Accessors(chain = true)
 public class BookFilter extends AbstractFilter {
 
 	private IUser user;
-
-	public BookFilter() {}
-
-	public BookFilter(final IUser user) {
-		setUser(user);
-	}
-
-	public IUser getUser() {
-		return user;
-	}
-
-	public void setUser(final IUser user) {
-		this.user = user;
-	}
+	private IGenre genre;
 
 }

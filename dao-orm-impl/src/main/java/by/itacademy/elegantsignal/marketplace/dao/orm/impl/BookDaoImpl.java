@@ -7,7 +7,7 @@ import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Product_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User_;
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -18,6 +18,7 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -27,10 +28,13 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Repository
 public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBookDao {
+
+	@PersistenceContext private EntityManager entityManager;
 
 	protected BookDaoImpl() {
 		super(Book.class);
@@ -103,17 +107,17 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		return q.getResultList();
 	}
 
-	private void applyFilter(final BookFilter filter, final CriteriaBuilder cb, final CriteriaQuery<?> cq,
+	private void applyFilter(final BookFilter filter, final CriteriaBuilder criteriaBuilder, final CriteriaQuery<?> criteriaQuery,
 		final Root<Book> from) {
+
 		final List<Predicate> ands = new ArrayList<>();
 
-		final IUser user = filter.getUser();
 		if (filter.getUser() != null) {
-			ands.add(cb.equal(from.get(Book_.product).get(Product_.user).get(User_.id), user.getId()));
+			ands.add(criteriaBuilder.equal(from.get(Book_.product).get(Product_.user).get(User_.id), filter.getUser().getId()));
 		}
 
 		if (!ands.isEmpty()) {
-			cq.where(cb.and(ands.toArray(new Predicate[0])));
+			criteriaQuery.where(criteriaBuilder.and(ands.toArray(new Predicate[0])));
 		}
 	}
 
@@ -166,6 +170,22 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 			.setFetchMode("product.user", FetchMode.JOIN);
 		final javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery).setCriteriaQuery(criteria);
 		return jpaQuery.getResultList();
+	}
+
+	@Override public List<IBook> getBooksByGenres(final List<IGenre> genres) {
+		final TypedQuery<IBook> query = entityManager.createQuery(String.join(
+			" ",
+			"select distinct book from Book book",
+			"join fetch book.product product",
+			"join fetch book.genre genre",
+			"where genre.name in :genres"
+		), IBook.class);
+
+		final List<String> genreStringList = genres.stream().map(IGenre::getName).collect(Collectors.toList());
+
+		query.setParameter("genres", genreStringList);
+
+		return query.getResultList();
 	}
 
 }

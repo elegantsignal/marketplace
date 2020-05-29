@@ -1,11 +1,21 @@
 package by.itacademy.elegantsignal.marketplace.seed;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.OrderStatus;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.*;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrder;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IOrderItem;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.GenreFilter;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
-import by.itacademy.elegantsignal.marketplace.service.*;
+import by.itacademy.elegantsignal.marketplace.service.IBookService;
+import by.itacademy.elegantsignal.marketplace.service.IGenreService;
+import by.itacademy.elegantsignal.marketplace.service.IOrderItemService;
+import by.itacademy.elegantsignal.marketplace.service.IOrderService;
+import by.itacademy.elegantsignal.marketplace.service.IProductService;
+import by.itacademy.elegantsignal.marketplace.service.IRoleService;
+import by.itacademy.elegantsignal.marketplace.service.IUserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
@@ -26,7 +36,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 
@@ -152,15 +168,15 @@ public class Seed {
 		userFilter.setEmail(bookData.get("user_email").toString());
 		final IUser user = userService.findOne(userFilter);
 
-//		// create product
-//		final IProduct product = productService.createEntity();
-//		product.setUser(user);
-//		product.setPrice(BigDecimal.valueOf((Integer) bookData.get("product_price")));
-//		product.setType(ProductType.BOOK);
-//		productService.save(product);
+		//		// create product
+		//		final IProduct product = productService.createEntity();
+		//		product.setUser(user);
+		//		product.setPrice(BigDecimal.valueOf((Integer) bookData.get("product_price")));
+		//		product.setType(ProductType.BOOK);
+		//		productService.save(product);
 
 		// handle genres
-		final Set<IGenre> genreSet = new HashSet<>();
+		final List<IGenre> genreSet = new ArrayList<>();
 
 		for (final String genreName : (List<String>) bookData.get("genre")) {
 			final GenreFilter genreFilter = new GenreFilter();
@@ -179,9 +195,9 @@ public class Seed {
 		}
 
 		final IBook book = bookService.createEntity();
-//		book.setProduct(product);
+		//		book.setProduct(product);
 
-		book.setGenre(genreSet);
+		book.setGenres(genreSet);
 
 		book.setTitle((String) bookData.get("title"));
 		book.setAuthor((String) bookData.get("author"));
@@ -193,7 +209,7 @@ public class Seed {
 
 		final File coverFile = SEED_DIR.resolve((String) bookData.get("cover")).toFile();
 		final File pdfFile = SEED_DIR.resolve((String) bookData.get("pdf")).toFile();
-		final Map<String, InputStream> bookFiles  = new HashMap<>();
+		final Map<String, InputStream> bookFiles = new HashMap<>();
 		bookFiles.put("cover", new FileInputStream(coverFile));
 		bookFiles.put("pdf", new FileInputStream(pdfFile));
 		bookService.save(book, bookFiles, BigDecimal.valueOf((Integer) bookData.get("product_price")), user.getId());

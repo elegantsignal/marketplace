@@ -97,7 +97,7 @@ public class Book implements IBook {
 		return genre;
 	}
 
-	@Override public IBook setGenre(final List<IGenre> genre) {
+	@Override public IBook setGenres(final List<IGenre> genre) {
 		this.genre = genre;
 		return this;
 	}

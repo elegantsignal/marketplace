@@ -3,6 +3,7 @@ package by.itacademy.elegantsignal.marketplace.service.impl;
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.filestorage.IFileStorage;
@@ -174,6 +175,10 @@ public class BookServiceImpl implements IBookService {
 		final IBook book = createEntity();
 		book.setProduct(product);
 		return book;
+	}
+
+	@Override public List<IBook> getBooksByGenres(final List<IGenre> genres) {
+		return bookDao.getBooksByGenres(genres);
 	}
 
 }
