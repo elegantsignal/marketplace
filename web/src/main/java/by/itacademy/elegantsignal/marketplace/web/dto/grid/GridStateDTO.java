@@ -8,13 +8,9 @@ public class GridStateDTO {
 	public static final String GRID_STATE_SESSION_KEY = "currentPageGridState";
 
 	private SortDTO sort;
-
 	private long pageCount;
-
 	private int page = 1;
-
 	private int itemsPerPage;
-
 	private long totalCount;
 
 	public GridStateDTO(final int itemsPerPage) {
@@ -30,16 +26,17 @@ public class GridStateDTO {
 		return sort;
 	}
 
-	private void setSort(final SortDTO sort) {
+	private GridStateDTO setSort(final SortDTO sort) {
 		this.sort = sort;
+		return this;
 	}
 
-	public void setSort(final String sortColumn, String defaultSortColumn) {
+	public GridStateDTO setSort(final String sortColumn, String defaultSortColumn) {
 		if (sortColumn == null) {
 			if (getSort() == null) {
 				setSort(new SortDTO(defaultSortColumn));
 			}
-			return;
+			return this;
 		}
 
 		final String[] sortParams = sortColumn.split(":");
@@ -49,18 +46,20 @@ public class GridStateDTO {
 		} else {
 			setSort(new SortDTO(sortParams[0], "asc".equals(sortParams[1])));
 		}
+		return this;
 	}
 
 	public int getPage() {
 		return page;
 	}
 
-	public void setPage(final Integer pageNumber) {
+	public GridStateDTO setPage(final Integer pageNumber) {
 		if ((pageNumber == null) || (pageNumber == 0)) {
-			return;
+			return this;
 		}
 
 		this.page = pageNumber;
+		return this;
 	}
 
 	public int getItemsPerPage() {
