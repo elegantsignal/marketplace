@@ -30,9 +30,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import java.io.File;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 
 // README: https://docs.jboss.org/hibernate/search/4.2/reference/en-US/html/search-query.html
 @Entity @Indexed @AnalyzerDef(name = "ngram",
@@ -57,7 +59,7 @@ public class Book implements IBook {
 
 	@JoinTable(name = "book_2_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	@ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY)
-	private Set<IGenre> genre = new HashSet<>();
+	private List<IGenre> genre = new ArrayList<>();
 
 	@Column @Field(analyzer = @Analyzer(definition = "ngram"))
 	private String title;
@@ -91,11 +93,11 @@ public class Book implements IBook {
 		this.id = id;
 	}
 
-	@Override public Set<IGenre> getGenre() {
+	@Override public List<IGenre> getGenre() {
 		return genre;
 	}
 
-	@Override public IBook setGenre(final Set<IGenre> genre) {
+	@Override public IBook setGenre(final List<IGenre> genre) {
 		this.genre = genre;
 		return this;
 	}

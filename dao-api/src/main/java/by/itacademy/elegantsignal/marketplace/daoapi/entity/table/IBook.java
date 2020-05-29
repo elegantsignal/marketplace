@@ -3,6 +3,7 @@ package by.itacademy.elegantsignal.marketplace.daoapi.entity.table;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -40,9 +41,9 @@ public interface IBook extends IBaseEntity {
 
 	IBook setUpdated(Date update);
 
-	Set<IGenre> getGenre();
+	List<IGenre> getGenre();
 
-	IBook setGenre(Set<IGenre> genre);
+	IBook setGenre(List<IGenre> genre);
 
 	File getPdf();
 

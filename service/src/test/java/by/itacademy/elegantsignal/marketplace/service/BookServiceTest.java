@@ -8,6 +8,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,7 +84,7 @@ public class BookServiceTest extends AbstractTest {
 	@Test public void testBook2Genre() throws IOException {
 		final IBook book = saveNewBook(bookService.createEntity());
 
-		final Set<IGenre> genreSet = new HashSet<IGenre>();
+		final List<IGenre> genreSet = new ArrayList<>();
 		final int genreCount = getRandomObjectsCount();
 		for (int i = 0; i < genreCount; i++) {
 			genreSet.add(saveNewGenre(genreService.createEntity()));
@@ -141,9 +142,11 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	@Test public void getBooksByGenre() {
-		saveNewGenre(genreService.createEntity().setName("1"));
+		IGenre genre = saveNewGenre(genreService.createEntity().setName("1"));
 		final List<IGenre> genreList = genreService.getAll();
 		assertTrue(genreList.size() > 0);
+//
+//		saveNewBook(bookService.createEntity().setGenre(genre));
 	}
 
 }
