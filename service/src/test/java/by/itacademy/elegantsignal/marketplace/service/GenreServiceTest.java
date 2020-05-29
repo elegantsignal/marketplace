@@ -15,7 +15,7 @@ public class GenreServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		final IGenre entity = saveNewGenre();
+		final IGenre entity = saveNewGenre(genreService.createEntity());
 
 		final IGenre entityFromDb = genreService.get(entity.getId());
 
@@ -30,7 +30,7 @@ public class GenreServiceTest extends AbstractTest {
 
 		final int randomObjectsCount = getRandomObjectsCount();
 		for (int i = 0; i < randomObjectsCount; i++) {
-			saveNewGenre();
+			saveNewGenre(genreService.createEntity());
 		}
 
 		final List<IGenre> allEntities = genreService.getAll();
@@ -45,14 +45,14 @@ public class GenreServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete() {
-		final IGenre entity = saveNewGenre();
+		final IGenre entity = saveNewGenre(genreService.createEntity());
 		genreService.delete(entity.getId());
 		assertNull(genreService.get(entity.getId()));
 	}
 
 	@Test
 	public void testDeleteAll() {
-		saveNewGenre();
+		saveNewGenre(genreService.createEntity());
 		genreService.deleteAll();
 		assertEquals(0, genreService.getAll().size());
 	}

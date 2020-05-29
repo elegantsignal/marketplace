@@ -171,11 +171,13 @@ public abstract class AbstractTest {
 		return bookService.save(book);
 	}
 
-	protected IGenre saveNewGenre() {
-		final IGenre entity = genreService.createEntity();
-		entity.setName("Genre-" + getRandomPrefix());
-		genreService.save(entity);
-		return entity;
+	protected IGenre saveNewGenre(final IGenre genre) {
+		if (genre.getName() == null) {
+			genre.setName("Genre-" + getRandomPrefix());
+		}
+
+		genreService.save(genre);
+		return genre;
 	}
 
 	protected ILike saveNewLike() {

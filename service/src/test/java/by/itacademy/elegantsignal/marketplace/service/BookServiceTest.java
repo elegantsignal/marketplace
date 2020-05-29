@@ -86,7 +86,7 @@ public class BookServiceTest extends AbstractTest {
 		final Set<IGenre> genreSet = new HashSet<IGenre>();
 		final int genreCount = getRandomObjectsCount();
 		for (int i = 0; i < genreCount; i++) {
-			genreSet.add(saveNewGenre());
+			genreSet.add(saveNewGenre(genreService.createEntity()));
 		}
 
 		book.setGenre(genreSet);
@@ -138,6 +138,12 @@ public class BookServiceTest extends AbstractTest {
 			assertNotNull(book.getProduct().getUser().getName());
 
 		});
+	}
+
+	@Test public void getBooksByGenre() {
+		saveNewGenre(genreService.createEntity().setName("1"));
+		final List<IGenre> genreList = genreService.getAll();
+		assertTrue(genreList.size() > 0);
 	}
 
 }

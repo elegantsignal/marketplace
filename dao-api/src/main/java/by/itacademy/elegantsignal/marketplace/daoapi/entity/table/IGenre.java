@@ -4,5 +4,5 @@ public interface IGenre extends IBaseEntity {
 
 	String getName();
 
-	void setName(String name);
+	IGenre setName(String name);
 }
