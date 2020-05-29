@@ -1,21 +1,21 @@
 ---
 User:
   - email: asimov@exampl.com
-    name: asimov
+    name: Isaac Asimov
     password: "u2PX"
     roles:
       - consumer
       - supplier
 
   - email: rand@exampl.com
-    name: rand
+    name: Ayn Rand
     password: "u2PX"
     roles:
       - consumer
       - supplier
 
   - email: taleb@exampl.com
-    name: taleb
+    name: Nassim Nicholas Taleb
     password: "u2PX"
     roles:
       - consumer
