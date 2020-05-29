@@ -172,7 +172,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		return jpaQuery.getResultList();
 	}
 
-	@Override public List<IBook> getBooksByGenres(final List<IGenre> genres) {
+	@Override public List<IBook> getBooksByGenres(final List<String> genres) {
 		final TypedQuery<IBook> query = entityManager.createQuery(String.join(
 			" ",
 			"select distinct book from Book book",
@@ -181,9 +181,8 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 			"where genre.name in :genres"
 		), IBook.class);
 
-		final List<String> genreStringList = genres.stream().map(IGenre::getName).collect(Collectors.toList());
 
-		query.setParameter("genres", genreStringList);
+		query.setParameter("genres", genres);
 
 		return query.getResultList();
 	}

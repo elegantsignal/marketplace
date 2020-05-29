@@ -1,5 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
+import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Genre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
@@ -153,22 +154,22 @@ public class BookServiceTest extends AbstractTest {
 		genres.add(g1);
 		saveNewBook(bookService.createEntity().setGenres(genres));
 		saveNewBook(bookService.createEntity().setGenres(genres));
-		assertEquals(2, bookService.getBooksByGenres(genres).size());
+		assertEquals(2, bookService.getBooksByGenres("1").size());
 
 		final IGenre g2 = saveNewGenre(genreService.createEntity().setName("2"));
 		genres.add(g2);
 		saveNewBook(bookService.createEntity().setGenres(genres));
 		saveNewBook(bookService.createEntity().setGenres(genres));
 
-		assertEquals(2, bookService.getBooksByGenres(Arrays.asList(g2)).size());
+		assertEquals(2, bookService.getBooksByGenres("2").size());
 
-		final List<IBook> booksByGenres = bookService.getBooksByGenres(genres);
+		final List<IBook> booksByGenres = bookService.getBooksByGenres("1");
 		assertEquals(4, booksByGenres.size());
 		booksByGenres.forEach(book -> {
 			assertNotNull(book.getProduct().getPrice());
 		});
 
-		final List<IBook> books = bookService.getBooksByGenres(genres);
+		final List<IBook> books = bookService.getBooksByGenres("1");
 		assertTrue(books.size() > 0);
 
 	}

@@ -1,7 +1,6 @@
 package by.itacademy.elegantsignal.marketplace.service;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 
 import javax.transaction.Transactional;
@@ -41,5 +40,8 @@ public interface IBookService {
 
 	IBook createBook(Integer userId);
 
-	List<IBook> getBooksByGenres(List<IGenre> asList);
+	List<IBook> getBooksByGenres(List<String> asList);
+
+	List<IBook> getBooksByGenres(String... asList);
+
 }

@@ -18,5 +18,5 @@ public interface IBookDao extends IDao<IBook, Integer> {
 
 	List<IBook> search(String text);
 
-	List<IBook> getBooksByGenres(List<IGenre> genres);
+	List<IBook> getBooksByGenres(List<String> genres);
 }

@@ -3,7 +3,6 @@ package by.itacademy.elegantsignal.marketplace.service.impl;
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.filestorage.IFileStorage;
@@ -25,6 +24,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -177,8 +177,12 @@ public class BookServiceImpl implements IBookService {
 		return book;
 	}
 
-	@Override public List<IBook> getBooksByGenres(final List<IGenre> genres) {
+	@Override public List<IBook> getBooksByGenres(final List<String> genres) {
 		return bookDao.getBooksByGenres(genres);
+	}
+
+	@Override public List<IBook> getBooksByGenres(final String... asList) {
+		return getBooksByGenres(Arrays.asList(asList));
 	}
 
 }
