@@ -1,10 +1,12 @@
 package by.itacademy.elegantsignal.marketplace.web.controller;
 
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
+import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookToDTOConverter;
+import by.itacademy.elegantsignal.marketplace.web.converter.GenreToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
+import by.itacademy.elegantsignal.marketplace.web.dto.GenreDTO;
 import by.itacademy.elegantsignal.marketplace.web.dto.grid.GridStateDTO;
 import by.itacademy.elegantsignal.marketplace.web.jndi.SMTPCredentials;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,8 @@ public class HomePageController extends AbstractController {
 
 	@Autowired private IBookService bookService;
 	@Autowired private BookToDTOConverter bookToDTOConverter;
+	@Autowired private IGenreService genreService;
+	@Autowired private GenreToDTOConverter genreToDTOConverter;
 	@Autowired private SMTPCredentials smtpCredentials;
 
 	@PostConstruct private void init() {
@@ -41,6 +45,8 @@ public class HomePageController extends AbstractController {
 		@RequestParam(name = "page", required = false) final Integer pageNumber,
 		@RequestParam(name = "sort", required = false) final String sortColumn) {
 
+		final Map<String, Object> models = new HashMap<>();
+
 		final GridStateDTO gridState = getListDTO(request)
 			.setPage(pageNumber)
 			.setSort(sortColumn, "id");
@@ -48,12 +54,15 @@ public class HomePageController extends AbstractController {
 		final BookFilter bookFilter = new BookFilter();
 		prepareFilter(gridState, bookFilter);
 
-		final List<IBook> bookList = bookService.find(bookFilter);
-		final List<BookDTO> bookDTOList = bookList.stream().map(bookToDTOConverter).collect(Collectors.toList());
+		final List<BookDTO> bookDTOList = bookService.find(bookFilter)
+			.stream().map(bookToDTOConverter).collect(Collectors.toList());
 		gridState.setTotalCount(bookService.getCount(bookFilter));
-
-		final Map<String, Object> models = new HashMap<>();
 		models.put("gridItems", bookDTOList);
+
+		final List<GenreDTO> genreDTOList = genreService.getAll()
+			.stream().map(genreToDTOConverter).collect(Collectors.toList());
+		models.put("genreList", genreDTOList);
+
 		return new ModelAndView("home", models);
 	}
 
