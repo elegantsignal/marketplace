@@ -7,7 +7,6 @@ import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Product_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User_;
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
-import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -28,7 +27,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Repository
@@ -180,7 +178,6 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 			"join fetch book.genre genre",
 			"where genre.name in :genres"
 		), IBook.class);
-
 
 		query.setParameter("genres", genres);
 
