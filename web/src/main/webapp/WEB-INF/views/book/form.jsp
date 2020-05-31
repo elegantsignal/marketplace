@@ -5,7 +5,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <form:form method="POST" enctype="multipart/form-data" action="${pagesBook}" modelAttribute="formModel">
 	<div class="form-row">
-
 		<form:input path="id" type="hidden"/>
 
 		<div class="form-group col-md-6">
@@ -19,6 +18,9 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 			<form:input path="author" class="form-control" type="text" disabled="${readonly}"/>
 			<form:errors path="author" cssClass="red-text"/>
 		</div>
+	</div>
+
+	<div class="form-row">
 
 		<div class="form-group col-md-3">
 			<label for="price">price</label>
@@ -31,7 +33,9 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 			<form:input path="published" class="form-control datepicker" type="text" data-date-format="yyyy-mm-dd" data-provide="datepicker" disabled="${readonly}"/>
 			<form:errors path="published" cssClass="red-text"/>
 		</div>
+	</div>
 
+	<div class="form-row">
 		<div class="form-group col-md-4">
 			<label for="genreIds">genres</label>
 			<form:select class="form-control" path="genreIds" disabled="${readonly}" multiple="true">
@@ -53,27 +57,27 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 				</div>
 			</div>
 		</div>
+	</div>
 
+	<div class="form-row">
 		<div class="form-group col-12">
 			<label for="price">book file</label>
 			<div class="col">
 				<div class="row">
 					<form:input path="pdf" type="text"/>
-						<form:input path="pdf" class="form-control-file col-6" type="file" disabled="${readonly}"/>
-						<form:errors path="pdf" class="col" cssClass="red-text"/>
+					<form:input path="pdf" class="form-control-file col-6" type="file" disabled="${readonly}"/>
+					<form:errors path="pdf" class="col" cssClass="red-text"/>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="row">
-
+	<div class="form-row">
 		<div class="form-group col-md-12">
 			<label for="description">description</label>
 			<form:textarea class="form-control" path="description" rows="3" type="text" disabled="${readonly}"/>
 			<form:errors path="description" cssClass="red-text"/>
 		</div>
-
 		<div class="row col-12 justify-content-end">
 			<div class="col-2">
 				<c:if test="${!readonly}">
