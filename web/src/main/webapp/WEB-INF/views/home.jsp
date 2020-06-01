@@ -4,20 +4,30 @@
 <%@ taglib prefix="jspFragments" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<div class="container">
+<div class="container" xmlns:c="http://www.w3.org/1999/html">
 	<div class="row">
 
 		<div class="col-3">
-			<div class="form-check">
-				<form method='GET' action="/">
-					<c:forEach var="genre" items="${genreList}" varStatus="loopCounter">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="genre-${genre.id}" name="genre[]" value="${genre.name}">
-							<label class="form-check-label" for="genre-${genre.id}">${genre.name}</label>
-						</div>
-					</c:forEach>
-					<input class="btn btn-primary" type="submit">
-				</form>
+			<div class="card">
+				<div class="card-header">Filter</div>
+				<div class="card-body">
+					<div class="form-check">
+						<form method='GET' action="/">
+							Genres:
+							<ul class="list-group list-group-flush">
+								<c:forEach var="genre" items="${genreList}" varStatus="loopCounter">
+									<li class="list-group-item">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="genre-${genre.id}" name="genre[]" value="${genre.name}">
+											<label class="form-check-label" for="genre-${genre.id}">${genre.name}</label>
+										</div>
+									</li>
+								</c:forEach>
+							</ul>
+							<button type="submit" class="btn btn-primary mt-2">filter</button>
+						</form>
+					</div>
+				</div>
 			</div>
 
 		</div>

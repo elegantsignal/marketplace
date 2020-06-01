@@ -1,0 +1,11 @@
+---
+- hosts: production
+  remote_user: "{{ runtime_user }}"
+  gather_facts: no
+
+  tasks:
+  - name: Stop all containers
+    docker_compose:
+      project_src: "{{app_name}}"
+      build: yes
+      stopped: yes

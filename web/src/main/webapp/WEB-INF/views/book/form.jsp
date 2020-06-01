@@ -13,11 +13,11 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 			<form:errors path="title" cssClass="red-text"/>
 		</div>
 
-		<div class="form-group col-md-6">
-			<label for="title">author</label>
-			<form:input path="author" class="form-control" type="text" disabled="${readonly}"/>
-			<form:errors path="author" cssClass="red-text"/>
-		</div>
+<!--		<div class="form-group col-md-6">-->
+<!--			<label for="title">author</label>-->
+<!--			<form:input path="author" class="form-control" type="text" disabled="${readonly}"/>-->
+<!--			<form:errors path="author" cssClass="red-text"/>-->
+<!--		</div>-->
 	</div>
 
 	<div class="form-row">

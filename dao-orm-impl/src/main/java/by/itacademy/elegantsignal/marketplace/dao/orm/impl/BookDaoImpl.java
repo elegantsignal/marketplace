@@ -162,7 +162,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 			.setFetchMode("product", FetchMode.JOIN)
 			.setFetchMode("product.user", FetchMode.JOIN);
 		final javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery).setCriteriaQuery(criteria);
-		return jpaQuery.getResultList();
+		return jpaQuery.setMaxResults(3).getResultList();
 	}
 
 	@Override public List<IBook> getBooksByGenres(final List<String> genres) {

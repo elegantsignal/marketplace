@@ -2,14 +2,13 @@ package by.itacademy.elegantsignal.marketplace.web.controller;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
-import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
+import by.itacademy.elegantsignal.marketplace.service.IUserService;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookFromDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.converter.BookToDTOConverter;
 import by.itacademy.elegantsignal.marketplace.web.dto.BookDTO;
-import by.itacademy.elegantsignal.marketplace.web.dto.grid.GridStateDTO;
 import by.itacademy.elegantsignal.marketplace.web.security.ExtendedToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,12 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -41,32 +38,33 @@ public class BookController extends AbstractController {
 	private static final String FORM_MODEL = "formModel";
 	private static final String VIEW_NAME = "book.edit";
 
+	@Autowired private IUserService userService;
 	@Autowired private IBookService bookService;
 	@Autowired private IProductService productService;
 	@Autowired private IGenreService genreService;
 	@Autowired private BookToDTOConverter toDtoConverter;
 	@Autowired private BookFromDTOConverter fromDtoConverter;
 
-//	@GetMapping
-//	public ModelAndView index(final HttpServletRequest req,
-//		@RequestParam(name = "page", required = false) final Integer pageNumber,
-//		@RequestParam(name = "sort", required = false) final String sortColumn) {
-//
-//		final GridStateDTO gridState = getListDTO(req);
-//		gridState.setPage(pageNumber);
-//		gridState.setSort(sortColumn, "id");
-//
-//		final BookFilter filter = new BookFilter();
-//		prepareFilter(gridState, filter);
-//
-//		final List<IBook> entities = bookService.find(filter);
-//		final List<BookDTO> dtos = entities.stream().map(toDtoConverter).collect(Collectors.toList());
-//		gridState.setTotalCount(bookService.getCount(filter));
-//
-//		final Map<String, Object> models = new HashMap<>();
-//		models.put("gridItems", dtos);
-//		return new ModelAndView("book.list", models);
-//	}
+	//	@GetMapping
+	//	public ModelAndView index(final HttpServletRequest req,
+	//		@RequestParam(name = "page", required = false) final Integer pageNumber,
+	//		@RequestParam(name = "sort", required = false) final String sortColumn) {
+	//
+	//		final GridStateDTO gridState = getListDTO(req);
+	//		gridState.setPage(pageNumber);
+	//		gridState.setSort(sortColumn, "id");
+	//
+	//		final BookFilter filter = new BookFilter();
+	//		prepareFilter(gridState, filter);
+	//
+	//		final List<IBook> entities = bookService.find(filter);
+	//		final List<BookDTO> dtos = entities.stream().map(toDtoConverter).collect(Collectors.toList());
+	//		gridState.setTotalCount(bookService.getCount(filter));
+	//
+	//		final Map<String, Object> models = new HashMap<>();
+	//		models.put("gridItems", dtos);
+	//		return new ModelAndView("book.list", models);
+	//	}
 
 	@GetMapping("/add")
 	public ModelAndView showForm(final ExtendedToken token) {
@@ -106,6 +104,7 @@ public class BookController extends AbstractController {
 			bookFiles.put("pdf", pdfFile.getInputStream());
 		}
 
+		book.setAuthor(userService.get(token.getId()).getName());
 		bookService.save(book, bookFiles, formModel.getPrice(), token.getId());
 		return "redirect:/book/" + book.getId() + "/edit";
 
