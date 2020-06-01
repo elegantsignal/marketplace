@@ -20,7 +20,6 @@
 		<intercept-url pattern="/**/delete" access="!isAnonymous()"/>
 		<intercept-url pattern="/user/**" access="!isAnonymous()"/>
 		<intercept-url pattern="/rest/api/v1/**" access="!isAnonymous()"/>
-		<intercept-url pattern="/search/**" access="isAnonymous()"/>
 		<form-login login-page="/login" default-target-url="/" authentication-failure-url="/login?error" username-parameter="username" password-parameter="password"/>
 		<logout logout-success-url="/login?logout" logout-url="/execute_logout"/>
 
