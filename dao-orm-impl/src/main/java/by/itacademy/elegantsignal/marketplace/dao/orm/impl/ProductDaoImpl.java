@@ -60,6 +60,7 @@ public class ProductDaoImpl extends AbstractDaoImpl<IProduct, Integer> implement
 		criteriaQuery.select(from);
 
 		from.fetch(Product_.book, JoinType.LEFT);
+		from.fetch(Product_.user, JoinType.LEFT);
 
 		applyFilter(filter, criteriaBuilder, criteriaQuery, from);
 
