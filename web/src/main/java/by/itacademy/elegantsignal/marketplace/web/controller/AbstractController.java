@@ -1,17 +1,13 @@
 package by.itacademy.elegantsignal.marketplace.web.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.AbstractFilter;
-import by.itacademy.elegantsignal.marketplace.web.dto.grid.GridStateDTO;
 import by.itacademy.elegantsignal.marketplace.web.dto.SortDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import by.itacademy.elegantsignal.marketplace.web.dto.grid.GridStateDTO;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 public abstract class AbstractController {
-
-	final Logger LOGGER = LoggerFactory.getLogger(AbstractController.class);
 
 	protected GridStateDTO getListDTO(final HttpServletRequest req) {
 		final String sessionModelName = getClass().getSimpleName() + "_GRID_STATE";
@@ -27,7 +23,7 @@ public abstract class AbstractController {
 
 	protected void prepareFilter(GridStateDTO gridState, AbstractFilter filter) {
 		filter.setLimit(gridState.getItemsPerPage());
-		int offset = gridState.getItemsPerPage() * (gridState.getPage() - 1);
+		int offset = gridState.getItemsPerPage() * (Math.max(gridState.getPage(), 1) - 1);
 		filter.setOffset(gridState.getTotalCount() < offset ? 0 : offset);
 
 		final SortDTO sortModel = gridState.getSort();
