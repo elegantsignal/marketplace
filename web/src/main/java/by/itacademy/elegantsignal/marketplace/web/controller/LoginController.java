@@ -56,6 +56,7 @@ public class LoginController {
 			userService.addNewUser(userFromDTOConverter.apply(formModel));
 		} catch (final IllegalArgumentException e) {
 			model.addObject("error", e.getMessage());
+			return model;
 		}
 
 		model.addObject("msg", formModel.getEmail() + " user created.");
