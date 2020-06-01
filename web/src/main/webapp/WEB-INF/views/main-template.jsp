@@ -41,7 +41,7 @@
 	<tiles:insertAttribute name="body"/>
 </main>
 <footer class="footer pt-2">
-	<tiles:insertAttribute name="footer"/>
+<!--	<tiles:insertAttribute name="footer"/>-->
 </footer>
 
 <script src="${contextPath}/resources/js/main.js"></script>
