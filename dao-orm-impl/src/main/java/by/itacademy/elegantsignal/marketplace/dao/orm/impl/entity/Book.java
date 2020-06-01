@@ -33,7 +33,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
 // README: https://docs.jboss.org/hibernate/search/4.2/reference/en-US/html/search-query.html

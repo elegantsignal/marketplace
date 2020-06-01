@@ -1,6 +1,7 @@
 package by.itacademy.elegantsignal.marketplace.service.impl;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
+import by.itacademy.elegantsignal.marketplace.daoapi.IProductDao;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.enums.ProductType;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
@@ -37,6 +38,7 @@ public class BookServiceImpl implements IBookService {
 	@Autowired private IUserService userService;
 	@Autowired private IProductService productService;
 	@Autowired private IBookDao bookDao;
+	@Autowired private IProductDao productDao;
 	@Autowired private IFileStorage fileStorage;
 	@Autowired private IPrivateFileStorage privateFileStorage;
 	@Autowired private IFileUtils fileUtils;
@@ -111,7 +113,10 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	@Override public void delete(final Integer id) {
+		final IBook book = bookDao.getFullInfo(id);
 		bookDao.delete(id);
+		productDao.delete(id);
+		fileStorage.deleteFiles(book);
 	}
 
 	@Override public void deleteAll() {

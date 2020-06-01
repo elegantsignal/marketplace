@@ -78,14 +78,17 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 			<form:textarea class="form-control" path="description" rows="3" type="text" disabled="${readonly}"/>
 			<form:errors path="description" cssClass="red-text"/>
 		</div>
-		<div class="row col-12 justify-content-end">
-			<div class="col-2">
-				<c:if test="${!readonly}">
-					<button type="submit" class="btn btn-primary mb-2  mr-1">Save</button>
-				</c:if>
+	</div>
 
-				<button type="reset" class="btn btn-danger mb-2">Cancel</button>
+	<div class="form-row">
+		<c:if test="${!readonly}">
+			<button type="submit" class="btn btn-primary   mr-1">Save</button>
+		</c:if>
+		<button type="reset" class="btn btn-warning mr-1">Cancel</button>
+		<c:if test="${id != null}">
+			<div>
+				<a href="${pagesBook}/${id}/delete" class="btn btn-danger" role="button">Delete</a>
 			</div>
-		</div>
+		</c:if>
 	</div>
 </form:form>

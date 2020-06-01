@@ -4,6 +4,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import org.apache.tika.Tika;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
@@ -16,13 +17,12 @@ import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 
-@Repository
+@Component
 public class FileUtils implements IFileUtils {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
-	@Override
-	public File saveTmpFile(final InputStream inputStream) {
+	@Override public File saveTmpFile(final InputStream inputStream) {
 		final String uuid = UUID.randomUUID().toString();
 
 		File tempFile = null;
@@ -46,8 +46,7 @@ public class FileUtils implements IFileUtils {
 		return tempFile;
 	}
 
-	@Override
-	public String getFileExtension(final File image) {
+	@Override public String getFileExtension(final File image) {
 		final Tika tika = new Tika();
 
 		final String mimeType;
@@ -64,23 +63,24 @@ public class FileUtils implements IFileUtils {
 		return extension;
 	}
 
-	@Override
-	public File getAbsolutePath(final Path path) {
+	@Override public File getAbsolutePath(final Path path) {
 		final Path rootDir = Paths.get(System.getenv("ASSETS_ROOT"));
 		return rootDir.resolve(path).toFile();
 	}
 
-	@Override
-	public File getAbsolutePath(final String path) {
+	@Override public File getAbsolutePath(final String path) {
 		return getAbsolutePath(Paths.get(path));
 	}
 
-	@Override
-	public File getAbsolutePath(final File path) {
+	@Override public File getAbsolutePath(final File path) {
 		return getAbsolutePath(Paths.get(path.getPath()));
 	}
 
 	@Override public String getFileNameFromEntity(final IBook book, final String extension) {
-		return book.getTitle().toLowerCase().trim().replaceAll("\\W", "_") + "." + extension;
+		return book
+			.getTitle()
+			.toLowerCase()
+			.trim()
+			.replaceAll("\\W", "_") + "." + extension;
 	}
 }

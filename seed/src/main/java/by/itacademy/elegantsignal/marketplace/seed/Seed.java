@@ -133,16 +133,14 @@ public class Seed {
 	}
 
 	protected <T> void createUser(final Map<String, T> userData) {
-		final IUser user = userService.createEntity();
-		user.setName((String) userData.get("name"));
-		user.setEmail((String) userData.get("email"));
-		user.setPassword((String) userData.get("password"));
-		final List<String> userRoles = (List<String>) userData.get("roles");
+		final IUser user = userService.createEntity()
+			.setName((String) userData.get("name"))
+			.setEmail((String) userData.get("email"))
+			.setPassword((String) userData.get("password"));
 
 		final Set<IRole> roleSet = new HashSet<>();
-		for (final String roleName : userRoles) {
-			roleSet.add(getOrCreateRole(roleName));
-		}
+		final List<String> userRoles = (List<String>) userData.get("roles");
+		userRoles.forEach(roleName -> roleSet.add(getOrCreateRole(roleName)));
 		user.setRole(roleSet);
 		userService.save(user);
 	}

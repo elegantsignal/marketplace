@@ -1,40 +1,40 @@
 ---
 User:
-  - email: asimov@exampl.com
+  - email: asimov@example.com
     name: Isaac Asimov
     password: "u2PX"
     roles:
       - consumer
       - supplier
 
-  - email: rand@exampl.com
+  - email: rand@example.com
     name: Ayn Rand
     password: "u2PX"
     roles:
       - consumer
       - supplier
 
-  - email: taleb@exampl.com
+  - email: taleb@example.com
     name: Nassim Nicholas Taleb
     password: "u2PX"
     roles:
       - consumer
       - supplier
 
-  - email: alice@exampl.com
+  - email: alice@example.com
     name: alice
     password: "u2PX"
     roles:
       - consumer
 
-  - email: bob@exampl.com
+  - email: bob@example.com
     name: bob
     password: "u2PX"
     roles:
       - consumer
 
 Book:
-  - user_email: asimov@exampl.com
+  - user_email: asimov@example.com
     product_price: 10
     genre:
       - fiction
@@ -45,7 +45,7 @@ Book:
     published: 1954-02-04
     description: "A millennium into the future two advancements have altered the course of human history: the colonization of the galaxy and the creation of the positronic brain. Isaac Asimov’s Robot novels chronicle the unlikely partnership between a New York City detective and a humanoid robot who must learn to work together."
 
-  - user_email: asimov@exampl.com
+  - user_email: asimov@example.com
     product_price: 20
     genre:
       - fiction
@@ -56,7 +56,7 @@ Book:
     published: 1957-01-01
     description: "A millennium into the future, two advancements have altered the course of human history:  the colonization of the Galaxy and the creation of the positronic brain.  On the beautiful Outer World planet of Solaria, a handful of human colonists lead a hermit-like existence, their every need attended to by their faithful robot servants.  To this strange and provocative planet comes Detective Elijah Baley, sent from the streets of New York with his positronic partner, the robot R. Daneel Olivaw, to solve an incredible murder that has rocked Solaria to its foundations.  The victim had been so reclusive that he appeared to his associates only through holographic projection.  Yet someone had gotten close enough to bludgeon him to death while robots looked on.  Now Baley and Olivaw are faced with two clear impossibilities:  Either the Solarian was killed by one of his robots--unthinkable under the laws of Robotics--or he was killed by the woman who loved him so much that she never came into his presence!"
 
-  - user_email: asimov@exampl.com
+  - user_email: asimov@example.com
     product_price: 30
     genre:
       - fiction
@@ -67,7 +67,7 @@ Book:
     pdf: dummy.pdf
     description: "A millennium into the future two advances have altered the course of human history: the colonization of the Galaxy and the creation of the positronic brain. Isaac Asimov's Robot novels chronicle the unlikely partnership between a New York City detective and a humanoid robot who must learn to work together."
 
-  - user_email: rand@exampl.com
+  - user_email: rand@example.com
     product_price: 31
     genre:
       - mystery
@@ -79,7 +79,7 @@ Book:
     pdf: dummy.pdf
     description: "Who is John Galt? When he says that he will stop the motor of the world, is he a destroyer or a liberator? Why does he have to fight his battles not against his enemies but against those who need him most? Why does he fight his hardest battle against the woman he loves?"
 
-  - user_email: rand@exampl.com
+  - user_email: rand@example.com
     product_price: 41
     genre:
       - romance
@@ -90,7 +90,7 @@ Book:
     pdf: dummy.pdf
     description: "This modern classic is the story of intransigent young architect Howard Roark, whose integrity was as unyielding as granite...of Dominique Francon, the exquisitely beautiful woman who loved Roark passionately, but married his worst enemy...and of the fanatic denunciation unleashed by an enraged society against a great creator. As fresh today as it was then, Rand’s provocative novel presents one of the most challenging ideas in all of fiction—that man’s ego is the fountainhead of human progress..."
 
-  - user_email: taleb@exampl.com
+  - user_email: taleb@example.com
     product_price: 12
     genre:
       - non-fiction
@@ -101,7 +101,7 @@ Book:
     pdf: dummy.pdf
     description: "The Black Swan is a standalone book in Nassim Nicholas Taleb’s landmark Incerto series, an investigation of opacity, luck, uncertainty, probability, human error, risk, and decision-making in a world we don’t understand. The other books in the series are Fooled by Randomness, Antifragile, Skin in the Game, and The Bed of Procrustes."
 
-  - user_email: taleb@exampl.com
+  - user_email: taleb@example.com
     product_price: 22
     genre:
       - non-fiction
@@ -112,7 +112,7 @@ Book:
     pdf: dummy.pdf
     description: "Nassim Nicholas Taleb, the bestselling author of The Black Swan and one of the foremost thinkers of our time, reveals how to thrive in an uncertain world."
 
-  - user_email: taleb@exampl.com
+  - user_email: taleb@example.com
     product_price: 22
     genre:
       - non-fiction
@@ -124,7 +124,7 @@ Book:
     description: "Fooled by Randomness is the word-of-mouth sensation that will change the way you think about business and the world. Nassim Nicholas Taleb–veteran trader, renowned risk expert, polymathic scholar, erudite raconteur, and New York Times bestselling author of The Black Swan–has written a modern classic that turns on its head what we believe about luck and skill."
 
 Order:
-  - user_email: asimov@exampl.com
+  - user_email: asimov@example.com
     status: CART
     items:
       - product_id: 1

@@ -8,4 +8,6 @@ public interface IFileStorage {
 	void saveCover(IBook book);
 
 	void autoMoveAllFiles(IBook book);
+
+	void deleteFiles(IBook book);
 }

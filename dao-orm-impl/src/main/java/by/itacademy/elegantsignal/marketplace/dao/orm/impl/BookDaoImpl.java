@@ -75,12 +75,7 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		return q.getSingleResult();
 	}
 
-	@Override
-	public void delete(final Integer id) {
-		final EntityManager entityManager = getEntityManager();
-		entityManager.createQuery(String.format("delete from %s e where e.id = :id", Product.class.getSimpleName()))
-			.setParameter("id", id).executeUpdate();
-	}
+
 
 	@Override
 	public List<IBook> find(final BookFilter filter) {

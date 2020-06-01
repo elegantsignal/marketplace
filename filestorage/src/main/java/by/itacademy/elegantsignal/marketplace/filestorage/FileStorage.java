@@ -76,6 +76,17 @@ public class FileStorage implements IFileStorage {
 		book.setCover(Paths.get("media", fileName).toFile());
 	}
 
+	@Override public void deleteFiles(final IBook book) {
+		if (book.getCover() != null) {
+			fileUtils.getAbsolutePath(book.getCover()).delete();
+		}
+
+		if (book.getPdf() != null) {
+			fileUtils.getAbsolutePath(book.getPdf()).delete();
+		}
+
+	}
+
 	private void movePdf(final IBook book) {
 		final File file = book.getPdf();
 		if (file == null || !file.exists()) {

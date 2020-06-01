@@ -35,8 +35,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-@Controller
-@RequestMapping(value = "/book")
+@Controller @RequestMapping("/book")
 public class BookController extends AbstractController {
 
 	private static final String FORM_MODEL = "formModel";
@@ -48,28 +47,28 @@ public class BookController extends AbstractController {
 	@Autowired private BookToDTOConverter toDtoConverter;
 	@Autowired private BookFromDTOConverter fromDtoConverter;
 
-	@GetMapping()
-	public ModelAndView index(final HttpServletRequest req,
-		@RequestParam(name = "page", required = false) final Integer pageNumber,
-		@RequestParam(name = "sort", required = false) final String sortColumn) {
+//	@GetMapping
+//	public ModelAndView index(final HttpServletRequest req,
+//		@RequestParam(name = "page", required = false) final Integer pageNumber,
+//		@RequestParam(name = "sort", required = false) final String sortColumn) {
+//
+//		final GridStateDTO gridState = getListDTO(req);
+//		gridState.setPage(pageNumber);
+//		gridState.setSort(sortColumn, "id");
+//
+//		final BookFilter filter = new BookFilter();
+//		prepareFilter(gridState, filter);
+//
+//		final List<IBook> entities = bookService.find(filter);
+//		final List<BookDTO> dtos = entities.stream().map(toDtoConverter).collect(Collectors.toList());
+//		gridState.setTotalCount(bookService.getCount(filter));
+//
+//		final Map<String, Object> models = new HashMap<>();
+//		models.put("gridItems", dtos);
+//		return new ModelAndView("book.list", models);
+//	}
 
-		final GridStateDTO gridState = getListDTO(req);
-		gridState.setPage(pageNumber);
-		gridState.setSort(sortColumn, "id");
-
-		final BookFilter filter = new BookFilter();
-		prepareFilter(gridState, filter);
-
-		final List<IBook> entities = bookService.find(filter);
-		final List<BookDTO> dtos = entities.stream().map(toDtoConverter).collect(Collectors.toList());
-		gridState.setTotalCount(bookService.getCount(filter));
-
-		final Map<String, Object> models = new HashMap<>();
-		models.put("gridItems", dtos);
-		return new ModelAndView("book.list", models);
-	}
-
-	@GetMapping(value = "/add")
+	@GetMapping("/add")
 	public ModelAndView showForm(final ExtendedToken token) {
 		final Map<String, Object> hashMap = new HashMap<>();
 		final IBook book = bookService.createBook(token.getId());
@@ -115,11 +114,13 @@ public class BookController extends AbstractController {
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable(name = "id") final Integer id, final ExtendedToken token) {
 		final IBook book = bookService.getFullInfo(id);
+
 		if (!token.getId().equals(book.getProduct().getUser().getId())) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
+
 		bookService.delete(id);
-		return "redirect:/book";
+		return "redirect:/user/shop";
 	}
 
 	@GetMapping("/{id}")
