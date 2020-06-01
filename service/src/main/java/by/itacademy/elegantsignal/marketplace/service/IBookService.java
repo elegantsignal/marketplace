@@ -44,4 +44,7 @@ public interface IBookService {
 
 	List<IBook> getBooksByGenres(String... asList);
 
+	List<IBook> getBooksByAuthorId(List<Integer> ids);
+
+	List<IBook> getBooksByAuthorId(Integer... ids);
 }

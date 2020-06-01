@@ -9,16 +9,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
-@Getter
-@Setter
+@Getter @Setter
 public class BookDTO {
 
 	private Integer id;
 	private Integer productOwnerId;
 	private String author;
+	private Integer authorId;
 	private String title;
 	private List<Integer> genreIds;
 	private String description;

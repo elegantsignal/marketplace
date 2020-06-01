@@ -19,7 +19,8 @@ public class BookToDTOConverter implements Function<IBook, BookDTO> {
 		final BookDTO bookDto = new BookDTO();
 		bookDto.setId(book.getId());
 		bookDto.setTitle(book.getTitle());
-		bookDto.setAuthor(book.getAuthor());
+		bookDto.setAuthor(book.getProduct().getUser().getName());
+		bookDto.setAuthorId(book.getProduct().getUser().getId());
 		bookDto.setCover(book.getCover());
 		bookDto.setPdf(book.getPdf());
 		bookDto.setDescription(book.getDescription());

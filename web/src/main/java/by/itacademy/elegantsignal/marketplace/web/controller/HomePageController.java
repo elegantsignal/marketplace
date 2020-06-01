@@ -44,6 +44,7 @@ public class HomePageController extends AbstractController {
 	@GetMapping
 	public ModelAndView index(final HttpServletRequest request,
 		@RequestParam(name = "genre[]", required = false) final List<String> genreList,
+		@RequestParam(name = "authorId[]", required = false) final List<Integer> authorIdList,
 		@RequestParam(name = "page", required = false) final Integer pageNumber,
 		@RequestParam(name = "sort", required = false) final String sortColumn) {
 
@@ -52,6 +53,8 @@ public class HomePageController extends AbstractController {
 		final List<IBook> bookList;
 		if (genreList != null) {
 			bookList = bookService.getBooksByGenres(genreList);
+		} else if (authorIdList != null) {
+			bookList = bookService.getBooksByAuthorId(authorIdList);
 		} else {
 			final GridStateDTO gridState = getListDTO(request)
 				.setPage(pageNumber)

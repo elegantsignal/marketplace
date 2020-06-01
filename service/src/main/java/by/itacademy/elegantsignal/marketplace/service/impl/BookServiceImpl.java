@@ -190,4 +190,11 @@ public class BookServiceImpl implements IBookService {
 		return getBooksByGenres(Arrays.asList(asList));
 	}
 
+	@Override public List<IBook> getBooksByAuthorId(final List<Integer> ids) {
+		return bookDao.getBooksByAuthorId(ids);
+	}
+
+	@Override public List<IBook> getBooksByAuthorId(final Integer... ids) {
+		return getBooksByAuthorId(Arrays.asList(ids));
+	}
 }

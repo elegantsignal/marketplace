@@ -2,7 +2,6 @@ package by.itacademy.elegantsignal.marketplace.dao.orm.impl;
 
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Book;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Book_;
-import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Product;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.Product_;
 import by.itacademy.elegantsignal.marketplace.dao.orm.impl.entity.User_;
 import by.itacademy.elegantsignal.marketplace.daoapi.IBookDao;
@@ -75,8 +74,6 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		return q.getSingleResult();
 	}
 
-
-
 	@Override
 	public List<IBook> find(final BookFilter filter) {
 		final EntityManager em = getEntityManager();
@@ -85,7 +82,8 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 		final Root<Book> from = cq.from(Book.class);
 		cq.select(from);
 
-		from.fetch(Book_.product, JoinType.LEFT);
+		from.fetch(Book_.product, JoinType.LEFT).fetch(Product_.user, JoinType.LEFT);
+		from.fetch(Book_.genre, JoinType.LEFT);
 
 		applyFilter(filter, cb, cq, from);
 
@@ -170,11 +168,26 @@ public class BookDaoImpl extends AbstractDaoImpl<IBook, Integer> implements IBoo
 			" ",
 			"select distinct book from Book book",
 			"join fetch book.product product",
+			"join fetch product.user user",
 			"join fetch book.genre genre",
 			"where genre.name in :genres"
 		), IBook.class);
 
 		query.setParameter("genres", genres);
+
+		return query.getResultList();
+	}
+
+	@Override public List<IBook> getBooksByAuthorId(final List<Integer> ids) {
+		final TypedQuery<IBook> query = entityManager.createQuery(String.join(
+			" ",
+			"select distinct book from Book book",
+			"join fetch book.product product",
+			"join fetch product.user user",
+			"where user.id in :ids"
+		), IBook.class);
+
+		query.setParameter("ids", ids);
 
 		return query.getResultList();
 	}
