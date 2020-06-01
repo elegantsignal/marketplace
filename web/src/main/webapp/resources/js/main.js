@@ -47,4 +47,8 @@ $(document).ready(function () {
   $(window).click(function () {
     $('#result').removeClass("show");
   });
+
+  $('.select-me').click(function() {
+      $(this).select();
+  });
 });

@@ -40,7 +40,7 @@
 <main class="container p-4">
 	<tiles:insertAttribute name="body"/>
 </main>
-<footer class="footer">
+<footer class="footer pt-2">
 	<tiles:insertAttribute name="footer"/>
 </footer>
 

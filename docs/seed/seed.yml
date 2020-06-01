@@ -2,34 +2,34 @@
 User:
   - email: asimov@example.com
     name: Isaac Asimov
-    password: "u2PX"
+    password: "c7e5c4ny"
     roles:
       - consumer
       - supplier
 
   - email: rand@example.com
     name: Ayn Rand
-    password: "u2PX"
+    password: "c7e5c4ny"
     roles:
       - consumer
       - supplier
 
   - email: taleb@example.com
     name: Nassim Nicholas Taleb
-    password: "u2PX"
+    password: "c7e5c4ny"
     roles:
       - consumer
       - supplier
 
   - email: alice@example.com
     name: alice
-    password: "u2PX"
+    password: "c7e5c4ny"
     roles:
       - consumer
 
   - email: bob@example.com
     name: bob
-    password: "u2PX"
+    password: "c7e5c4ny"
     roles:
       - consumer
 
