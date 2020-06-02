@@ -1,10 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="card mt-4">
 	<div class="card-header">
-		<h3>Shopping cart</h3>
+		<h3>
+			<spring:message code='cart.header.shopingCart'/>
+		</h3>
 	</div>
 	<ul class="list-group list-group-flush">
 		<c:forEach var="item" items="${cartItems}" varStatus="loopCounter">
@@ -23,14 +26,18 @@
 	</ul>
 	<div class="card-body">
 		<div class=" float-right">
-			<a href="${pagesUserCart}/checkout" class="btn btn-info" role="button">Checkout</a>
+			<a href="${pagesUserCart}/checkout" class="btn btn-info" role="button">
+				<spring:message code='cart.button.checkout'/>
+			</a>
 		</div>
 	</div>
 </div>
 
 <div class="card mt-4">
 	<div class="card-header">
-		<h3>My purchase</h3>
+		<h3>
+			<spring:message code='cart.header.purchase'/>
+		</h3>
 	</div>
 	<ul class="list-group list-group-flush">
 		<c:forEach var="order" items="${user_orders}" varStatus="loopCounter">
@@ -45,7 +52,9 @@
 										<div class="col-sm-2">${orderItem.amount}</div>
 										<div class="col-sm-2">
 											<c:forEach var="token" items="${orderItem.tokenList}" varStatus="loopCounter">
-												<a href="${contextPath}/downloads/${token}">download</a>
+												<a href="${contextPath}/downloads/${token}">
+													<spring:message code='cart.button.download'/>
+												</a>
 											</c:forEach>
 										</div>
 									</div>
