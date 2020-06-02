@@ -72,6 +72,8 @@ public class BookController extends AbstractController {
 		final IBook book = bookService.createBook(token.getId());
 		hashMap.put(FORM_MODEL, toDtoConverter.apply(book));
 
+		loadCommonFormModels(hashMap);
+
 		return new ModelAndView(VIEW_NAME, hashMap);
 	}
 
