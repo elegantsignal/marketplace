@@ -103,7 +103,9 @@
 				<c:forEach var="transaction" items="${userTransactions}" varStatus="loopCounter">
 					<li class="list-group-item">
 						<div class="row">
-							<div class="col">${transaction.created}</div>
+							<div class="col">
+								<fmt:formatDate value="${transaction.created}" pattern="yyyy-MM-dd HH:mm"/>
+							</div>
 							<div class="col">${transaction.amount}</div>
 						</div>
 					</li>

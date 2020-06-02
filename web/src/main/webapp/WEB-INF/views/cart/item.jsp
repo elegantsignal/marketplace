@@ -1,7 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div class="card mt-4">
 	<div class="card-header">
@@ -43,7 +43,11 @@
 		<c:forEach var="order" items="${user_orders}" varStatus="loopCounter">
 			<li class="list-group-item">
 				<div class="row">
-					<div class="col-sm"><h4>${order.created}</h4>
+
+					<div class="col-sm">
+						<h4>
+							<fmt:formatDate value="${order.created}" pattern="yyyy-MM-dd HH:mm"/>
+						</h4>
 						<ul>
 							<c:forEach var="orderItem" items="${order.orderItems}" varStatus="loopCounter">
 								<li>
