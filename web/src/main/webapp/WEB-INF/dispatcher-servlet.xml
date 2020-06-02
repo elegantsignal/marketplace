@@ -22,13 +22,10 @@
 
 	<mvc:resources mapping="/resources/**" location="/resources/"/>
 
-	<mvc:resources mapping="/media/**" location="file:#{systemEnvironment['ASSETS_ROOT']}/media/"
-
-	/>
+	<mvc:resources mapping="/media/**" location="file:#{systemEnvironment['ASSETS_ROOT']}/media/"/>
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
 		<property name="exposeContextBeansAsAttributes" value="true"/>
-
 	</bean>
 
 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
@@ -46,33 +43,22 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-	<bean
-			id="messageSource"
-			class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
 				<value>/WEB-INF/locales/messages</value>
 			</list>
 		</property>
-		<property
-				name="defaultEncoding"
-				value="UTF-8"/>
+		<property name="useCodeAsDefaultMessage" value="true" />
+		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
 
-	<bean
-			id="localeChangeInterceptor"
-			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-		<property
-				name="paramName"
-				value="lang"/>
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="lang"/>
 	</bean>
 
-	<bean
-			id="localeResolver"
-			class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-		<property
-				name="defaultLocale"
-				value="ru_RU"/>
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="ru_RU"/>
 	</bean>
 
 </beans>

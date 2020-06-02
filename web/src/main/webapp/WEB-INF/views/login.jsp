@@ -3,7 +3,6 @@
 
 
 <div class="row">
-
 	<div class="container mt-4">
 		<c:if test="${not empty error}">
 			<div class="alert alert-danger" role="alert">${error}</div>

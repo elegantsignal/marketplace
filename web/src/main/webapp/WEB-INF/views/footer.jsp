@@ -1,7 +1,9 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <div class="container ">
 	<div class="row mb-2">
 		<div class="col-6">
-			<h4>Users:</h4>
+			<h4><spring:message code="footer.users"/></h4>
 			<form>
 				<div class="form-row mb-2">
 					<div class="col-auto">

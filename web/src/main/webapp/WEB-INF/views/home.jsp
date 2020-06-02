@@ -5,15 +5,16 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <div class="container" xmlns:c="http://www.w3.org/1999/html">
+
 	<div class="row">
 
 		<div class="col-3">
 			<div class="card">
-				<div class="card-header">Filter</div>
+				<div class="card-header"><spring:message code="page.home.filterHeader"/>:</div>
 				<div class="card-body">
 					<div class="form-check">
 						<form method='GET' action="/">
-							Genres:
+							<spring:message code="page.home.filterGenre"/>
 							<ul class="list-group list-group-flush">
 								<c:forEach var="genre" items="${genreList}" varStatus="loopCounter">
 									<li class="list-group-item">
@@ -24,7 +25,7 @@
 									</li>
 								</c:forEach>
 							</ul>
-							<button type="submit" class="btn btn-primary mt-2">filter</button>
+							<button type="submit" class="btn btn-primary mt-2"><spring:message code="page.home.filterButton"/></button>
 						</form>
 					</div>
 				</div>

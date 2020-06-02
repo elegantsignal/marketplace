@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-	<entry key="page.home.title">Домашняя страница</entry>
-	<entry key="page.home.welcomeMessage">Привет, {0}</entry>
-	<entry key="page.login.credentialsError">неверный логин или пароль!</entry>
-	<entry key="table.column.id">№</entry>
-</properties>
