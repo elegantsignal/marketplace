@@ -16,7 +16,13 @@ public class OrderItemToDTOConverter implements Function<IOrderItem, OrderItemDT
 	public OrderItemDTO apply(final IOrderItem orderItem) {
 		final OrderItemDTO orderItemDTO = new OrderItemDTO();
 		orderItemDTO.setId(orderItem.getId());
+
+		orderItemDTO.setProductId(orderItem.getProduct().getBook().getId());
 		orderItemDTO.setProductTitle(orderItem.getProduct().getBook().getTitle());
+
+		orderItemDTO.setProductOwnerId(orderItem.getProduct().getUser().getId());
+		orderItemDTO.setProductOwner(orderItem.getProduct().getUser().getName());
+
 		orderItemDTO.setAmount(orderItem.getProduct().getPrice());
 		final List<String> links = orderItem.getDownloadList()
 			.stream()

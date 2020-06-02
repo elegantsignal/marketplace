@@ -44,6 +44,7 @@ public class OrderItemDaoImpl extends AbstractDaoImpl<IOrderItem, Integer> imple
 		criteriaQuery.select(from);
 
 		from.fetch(OrderItem_.product, JoinType.LEFT).fetch(Product_.book, JoinType.LEFT);
+		from.fetch(OrderItem_.product, JoinType.LEFT).fetch(Product_.user, JoinType.LEFT);
 		from.fetch(OrderItem_.order, JoinType.LEFT);
 		from.fetch(OrderItem_.downloadList, JoinType.LEFT);
 

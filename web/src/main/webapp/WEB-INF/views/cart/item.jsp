@@ -52,7 +52,11 @@
 							<c:forEach var="orderItem" items="${order.orderItems}" varStatus="loopCounter">
 								<li>
 									<div class="row">
-										<div class="col-sm">${orderItem.productTitle}</div>
+										<div class="col-sm">
+											<a href="/book/${orderItem.productId}">${orderItem.productTitle}</a>
+											<spring:message code='words.by'/>
+											<a href="/?authorId[]=${orderItem.productOwnerId}">${orderItem.productOwner}</a>
+										</div>
 										<div class="col-sm-2">${orderItem.amount}</div>
 										<div class="col-sm-2">
 											<c:forEach var="token" items="${orderItem.tokenList}" varStatus="loopCounter">
