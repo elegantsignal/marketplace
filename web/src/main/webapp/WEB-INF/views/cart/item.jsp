@@ -53,9 +53,9 @@
 								<li>
 									<div class="row">
 										<div class="col-sm">
-											<a href="/book/${orderItem.productId}">${orderItem.productTitle}</a>
+											<a href="${pagesBook}/${orderItem.productId}">${orderItem.productTitle}</a>
 											<spring:message code='words.by'/>
-											<a href="/?authorId[]=${orderItem.productOwnerId}">${orderItem.productOwner}</a>
+											<a href="${contextPath}/?authorId[]=${orderItem.productOwnerId}">${orderItem.productOwner}</a>
 										</div>
 										<div class="col-sm-2">${orderItem.amount}</div>
 										<div class="col-sm-2">

@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between pt-2 pb-3">
-	<a class="navbar-brand" href="/">marketplace for self-publishers</a>
+	<a class="navbar-brand" href="${contextPath}/">marketplace for self-publishers</a>
 
 	<div class="container">
 		<div class="dropdown w-100">
