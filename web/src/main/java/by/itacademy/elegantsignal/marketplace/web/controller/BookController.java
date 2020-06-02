@@ -2,6 +2,7 @@ package by.itacademy.elegantsignal.marketplace.web.controller;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
+import by.itacademy.elegantsignal.marketplace.filestorage.WrongFileTypeException;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
@@ -67,11 +68,15 @@ public class BookController extends AbstractController {
 	//	}
 
 	@GetMapping("/add")
-	public ModelAndView showForm(final ExtendedToken token) {
+	public ModelAndView showForm(final ExtendedToken token,
+		@RequestParam(value = "error", required = false) final String error,
+		@RequestParam(value = "message", required = false) final String message) {
+
 		final Map<String, Object> hashMap = new HashMap<>();
 		final IBook book = bookService.createBook(token.getId());
+		hashMap.put("error", error);
+		hashMap.put("message", message);
 		hashMap.put(FORM_MODEL, toDtoConverter.apply(book));
-
 		loadCommonFormModels(hashMap);
 
 		return new ModelAndView(VIEW_NAME, hashMap);
@@ -107,7 +112,16 @@ public class BookController extends AbstractController {
 		}
 
 		book.setAuthor(userService.get(token.getId()).getName());
-		bookService.save(book, bookFiles, formModel.getPrice(), token.getId());
+		try {
+			bookService.save(book, bookFiles, formModel.getPrice(), token.getId());
+		} catch (WrongFileTypeException e) {
+			if (book.getId() != null) {
+				return "redirect:/book/" + book.getId() + "/edit?error=" + e.getMessage();
+			} else {
+				return "redirect:/book/add?error=" + e.getMessage();
+			}
+
+		}
 		return "redirect:/book/" + book.getId() + "/edit";
 
 	}
@@ -137,7 +151,12 @@ public class BookController extends AbstractController {
 	}
 
 	@GetMapping("/{id}/edit")
-	public ModelAndView edit(@PathVariable(name = "id") final Integer id, final ExtendedToken token) {
+	public ModelAndView edit(
+		@PathVariable(name = "id") final Integer id,
+		final ExtendedToken token,
+		@RequestParam(value = "error", required = false) final String error,
+		@RequestParam(value = "message", required = false) final String message) {
+
 		final IBook book = bookService.getFullInfo(id);
 
 		if (!token.getId().equals(book.getProduct().getUser().getId())) {
@@ -147,6 +166,8 @@ public class BookController extends AbstractController {
 		final BookDTO bookDto = toDtoConverter.apply(book);
 
 		final Map<String, Object> hashMap = new HashMap<>();
+		hashMap.put("error", error);
+		hashMap.put("message", message);
 		hashMap.put(FORM_MODEL, bookDto);
 		loadCommonFormModels(hashMap);
 

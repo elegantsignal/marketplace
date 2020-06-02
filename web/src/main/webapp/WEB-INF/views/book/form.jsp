@@ -1,6 +1,15 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib
-uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<c:if test="${not empty error}">
+	<div class="alert alert-danger" role="alert">${error}</div>
+</c:if>
+
+
+
 <h4 class="header">Edit Book</h4>
 
 <form:form method="POST" enctype="multipart/form-data" action="${pagesBook}" modelAttribute="formModel">
@@ -13,11 +22,11 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 			<form:errors path="title" cssClass="red-text"/>
 		</div>
 
-<!--		<div class="form-group col-md-6">-->
-<!--			<label for="title">author</label>-->
-<!--			<form:input path="author" class="form-control" type="text" disabled="${readonly}"/>-->
-<!--			<form:errors path="author" cssClass="red-text"/>-->
-<!--		</div>-->
+		<!--		<div class="form-group col-md-6">-->
+		<!--			<label for="title">author</label>-->
+		<!--			<form:input path="author" class="form-control" type="text" disabled="${readonly}"/>-->
+		<!--			<form:errors path="author" cssClass="red-text"/>-->
+		<!--		</div>-->
 	</div>
 
 	<div class="form-row">

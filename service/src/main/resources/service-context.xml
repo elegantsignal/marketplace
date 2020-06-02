@@ -1,11 +1,10 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
-<beans
-	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 		http://www.springframework.org/schema/tx
@@ -13,21 +12,21 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-	<import resource="dao-context.xml" />
-	<import resource="filestorage-context.xml" />
+	<import resource="dao-context.xml"/>
+	<import resource="filestorage-context.xml"/>
 
-	<tx:annotation-driven />
-	<bean
-		id="transactionManager"
-		class="org.springframework.orm.jpa.JpaTransactionManager"
-		p:entityManagerFactory-ref="entityManagerFactory" />
+	<tx:annotation-driven/>
+	<bean id="transactionManager"
+	      class="org.springframework.orm.jpa.JpaTransactionManager"
+	      p:entityManagerFactory-ref="entityManagerFactory"/>
 
-	<bean
-		id="passwordEncoder"
-		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<bean id="passwordEncoder"
+	      class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
-	<context:component-scan base-package="by.itacademy.elegantsignal.marketplace.service.impl" />
-	<import resource="spring-aop.xml" />
+	<bean id="tika" class="org.apache.tika.Tika"/>
+
+	<context:component-scan base-package="by.itacademy.elegantsignal.marketplace.service.impl"/>
+	<import resource="spring-aop.xml"/>
 
 
 </beans>

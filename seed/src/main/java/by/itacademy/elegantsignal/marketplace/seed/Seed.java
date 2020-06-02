@@ -9,6 +9,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.GenreFilter;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.UserFilter;
+import by.itacademy.elegantsignal.marketplace.filestorage.WrongFileTypeException;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.service.IGenreService;
 import by.itacademy.elegantsignal.marketplace.service.IOrderItemService;
@@ -210,7 +211,11 @@ public class Seed {
 		final Map<String, InputStream> bookFiles = new HashMap<>();
 		bookFiles.put("cover", new FileInputStream(coverFile));
 		bookFiles.put("pdf", new FileInputStream(pdfFile));
-		bookService.save(book, bookFiles, BigDecimal.valueOf((Integer) bookData.get("product_price")), user.getId());
+		try {
+			bookService.save(book, bookFiles, BigDecimal.valueOf((Integer) bookData.get("product_price")), user.getId());
+		} catch (WrongFileTypeException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private <T> void createOrder(Map<String, T> orderData) {

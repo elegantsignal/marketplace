@@ -6,6 +6,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IGenre;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IProduct;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
 import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
+import by.itacademy.elegantsignal.marketplace.filestorage.WrongFileTypeException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -91,7 +92,11 @@ public class BookServiceTest extends AbstractTest {
 		}
 
 		book.setGenres(genreSet);
-		bookService.save(book);
+		try {
+			bookService.save(book);
+		} catch (WrongFileTypeException e) {
+			e.printStackTrace();
+		}
 
 		final IBook bookFromDb = bookService.getFullInfo(book.getId());
 

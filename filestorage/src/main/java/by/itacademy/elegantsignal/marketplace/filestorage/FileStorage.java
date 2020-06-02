@@ -1,8 +1,10 @@
 package by.itacademy.elegantsignal.marketplace.filestorage;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import org.apache.tika.Tika;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
@@ -15,6 +17,8 @@ import java.nio.file.StandardCopyOption;
 
 @Repository
 public class FileStorage implements IFileStorage {
+
+	@Autowired Tika tika;
 
 	IFileUtils fileUtils = new FileUtils();
 	Path rootDir = Paths.get(System.getenv("ASSETS_ROOT"));
@@ -56,17 +60,19 @@ public class FileStorage implements IFileStorage {
 		book.setCover(new File(relativeDir.resolve(fileName).toString()));
 	}
 
-	@Override public void autoMoveAllFiles(final IBook book) {
+	@Override public void autoMoveAllFiles(final IBook book) throws IOException, WrongFileTypeException {
 		moveCover(book);
 		movePdf(book);
 	}
 
-	private void moveCover(final IBook book) {
+	private void moveCover(final IBook book) throws IOException, WrongFileTypeException {
 		final File file = book.getCover();
-		if (file == null || !file.exists()) {
-			return;
+		if (file == null || !file.exists() || !file.isFile()) {
+			throw  new WrongFileTypeException("empty file");
 		}
-		final String fileName = book.getTitle().replace(" ", "_").toLowerCase() + "." + getExtension(file);
+
+		final String extension = getFileExtension(file, "image/jpeg", "image/png");
+		final String fileName = book.getTitle().replace(" ", "_").toLowerCase() + "." + extension;
 		final Path destination = rootDir.resolve("media").resolve(fileName);
 		try {
 			rename(file.toPath(), destination);
@@ -87,12 +93,15 @@ public class FileStorage implements IFileStorage {
 
 	}
 
-	private void movePdf(final IBook book) {
+	private void movePdf(final IBook book) throws IOException, WrongFileTypeException {
 		final File file = book.getPdf();
-		if (file == null || !file.exists()) {
-			return;
+		if (file == null || !file.exists() || !file.isFile()) {
+			throw  new WrongFileTypeException("empty file");
 		}
-		final String fileName = book.getTitle().replace(" ", "_").toLowerCase() + "." + getExtension(file);
+
+		final String extension = getFileExtension(file, "application/pdf");
+
+		final String fileName = book.getTitle().replace(" ", "_").toLowerCase() + "." + extension;
 		final Path destination = rootDir.resolve("private").resolve(fileName);
 		try {
 			rename(file.toPath(), destination);
@@ -112,8 +121,14 @@ public class FileStorage implements IFileStorage {
 		log.info("File renamed from {} to {}", source, destination);
 	}
 
-	private String getExtension(final File file) {
-		return fileUtils.getFileExtension(file);
+	private String getFileExtension(final File file, final String... mimeTypes) throws IOException, WrongFileTypeException {
+		final String mimeType = tika.detect(file);
+		for (final String type : mimeTypes) {
+			if (type.equals(mimeType)) {
+				return mimeType.split("/")[1];
+			}
+		}
+		throw new WrongFileTypeException(mimeType + " - wrong file type");
 	}
 
 }

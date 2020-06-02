@@ -9,6 +9,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.filter.BookFilter;
 import by.itacademy.elegantsignal.marketplace.filestorage.IFileStorage;
 import by.itacademy.elegantsignal.marketplace.filestorage.IFileUtils;
 import by.itacademy.elegantsignal.marketplace.filestorage.IPrivateFileStorage;
+import by.itacademy.elegantsignal.marketplace.filestorage.WrongFileTypeException;
 import by.itacademy.elegantsignal.marketplace.service.IBookService;
 import by.itacademy.elegantsignal.marketplace.service.IProductService;
 import by.itacademy.elegantsignal.marketplace.service.IUserService;
@@ -23,6 +24,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -47,7 +49,7 @@ public class BookServiceImpl implements IBookService {
 		return bookDao.createEntity();
 	}
 
-	@Override public IBook save(final IBook book) {
+	@Override public IBook save(final IBook book) throws IOException, WrongFileTypeException {
 		final Date modifiedOn = new Date();
 
 		book.setUpdated(modifiedOn);
@@ -66,11 +68,12 @@ public class BookServiceImpl implements IBookService {
 		return book;
 	}
 
-	@Override public IBook save(final IBook book,
+	@Override public IBook save(
+		final IBook book,
 		final Map<String, InputStream> inputStreamMap,
 		final BigDecimal price,
-		final Integer productOwnerId
-	) {
+		final Integer productOwnerId) throws IOException, WrongFileTypeException {
+
 		inputStreamMap.forEach((fileField, inputStream) -> {
 			if (inputStream == null) {
 				return;

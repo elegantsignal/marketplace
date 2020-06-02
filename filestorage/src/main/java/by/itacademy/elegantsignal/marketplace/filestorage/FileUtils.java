@@ -57,10 +57,8 @@ public class FileUtils implements IFileUtils {
 		}
 
 		final String[] tmp = mimeType.split("/");
-		final String type = tmp[0];
-		final String extension = tmp[1];
 
-		return extension;
+		return tmp[1];
 	}
 
 	@Override public File getAbsolutePath(final Path path) {

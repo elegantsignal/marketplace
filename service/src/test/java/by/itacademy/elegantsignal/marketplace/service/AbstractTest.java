@@ -16,6 +16,7 @@ import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IReview;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IRole;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.ITransaction;
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IUser;
+import by.itacademy.elegantsignal.marketplace.filestorage.WrongFileTypeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -168,7 +169,14 @@ public abstract class AbstractTest {
 			book.setPdf(new File("/testpdf/" + getRandomPrefix()));
 		}
 
-		return bookService.save(book);
+		try {
+			return bookService.save(book);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (WrongFileTypeException e) {
+			e.printStackTrace();
+		}
+		return book;
 	}
 
 	protected IGenre saveNewGenre(final IGenre genre) {
