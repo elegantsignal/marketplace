@@ -1,8 +1,9 @@
 package by.itacademy.elegantsignal.marketplace.filestorage;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.Tika;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,10 +15,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 
-@Repository @Slf4j
+@Repository
 public class FileStorage implements IFileStorage {
 
 	@Autowired Tika tika;
+	final Logger log = LoggerFactory.getLogger(FileStorage.class);
 
 	IFileUtils fileUtils = new FileUtils();
 	Path rootDir = Paths.get(System.getenv("ASSETS_ROOT"));
