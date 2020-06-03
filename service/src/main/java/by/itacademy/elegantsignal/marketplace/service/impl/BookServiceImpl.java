@@ -54,8 +54,6 @@ public class BookServiceImpl implements IBookService {
 
 		book.setUpdated(modifiedOn);
 
-		fileStorage.autoMoveAllFiles(book);
-
 		if (book.getId() == null) {
 			book.setId(book.getProduct().getId());
 			book.setCreated(modifiedOn);
@@ -98,6 +96,9 @@ public class BookServiceImpl implements IBookService {
 		} else {
 			product = productService.createEntity();
 		}
+
+		fileStorage.autoMoveAllFiles(book);
+
 		product.setUser(userService.get(productOwnerId));
 		product.setType(ProductType.BOOK);
 		product.setPrice(price);
