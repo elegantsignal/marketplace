@@ -43,8 +43,8 @@ public class HomePageController extends AbstractController {
 
 	@GetMapping
 	public ModelAndView index(final HttpServletRequest request,
-		@RequestParam(name = "genre[]", required = false) final List<String> genreList,
-		@RequestParam(name = "authorId[]", required = false) final List<Integer> authorIdList,
+		@RequestParam(name = "genre", required = false) final List<String> genreList,
+		@RequestParam(name = "authorId", required = false) final List<Integer> authorIdList,
 		@RequestParam(name = "page", required = false) final Integer pageNumber,
 		@RequestParam(name = "sort", required = false) final String sortColumn) {
 

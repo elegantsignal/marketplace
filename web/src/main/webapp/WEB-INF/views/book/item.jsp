@@ -10,7 +10,7 @@
 			<img class="w-100" src="/${formModel.cover}" alt="Card image cap">
 		</div>
 		<div class="col-md-8 card-body d-flex flex-column align-items-start">
-			<h1>${formModel.title}</h1>by<a href="${contextPath}/?authorId[]=${formModel.authorId}"><h2>${formModel.author}</h2></a>
+			<h1>${formModel.title}</h1>by<a href="${contextPath}/?authorId=${formModel.authorId}"><h2>${formModel.author}</h2></a>
 			<p class="card-text mb-auto">${formModel.description}</p>
 			<div class="">
 				<h3>

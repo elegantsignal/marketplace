@@ -19,7 +19,7 @@
 								<c:forEach var="genre" items="${genreList}" varStatus="loopCounter">
 									<li class="list-group-item">
 										<div class="form-check">
-											<input class="form-check-input" type="checkbox" id="genre-${genre.id}" name="genre[]" value="${genre.name}">
+											<input class="form-check-input" type="checkbox" id="genre-${genre.id}" name="genre" value="${genre.name}">
 											<label class="form-check-label" for="genre-${genre.id}">${genre.name}</label>
 										</div>
 									</li>
