@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public interface IFileStorage {
 
-	void saveCover(IBook book);
+	@Deprecated void saveCover(IBook book);
 
 	void autoMoveAllFiles(IBook book) throws IOException, WrongFileTypeException;
 

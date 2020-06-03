@@ -1,9 +1,8 @@
 package by.itacademy.elegantsignal.marketplace.filestorage;
 
 import by.itacademy.elegantsignal.marketplace.daoapi.entity.table.IBook;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.Tika;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 
-@Repository
+@Repository @Slf4j
 public class FileStorage implements IFileStorage {
 
 	@Autowired Tika tika;
@@ -23,10 +22,7 @@ public class FileStorage implements IFileStorage {
 	IFileUtils fileUtils = new FileUtils();
 	Path rootDir = Paths.get(System.getenv("ASSETS_ROOT"));
 
-	final Logger log = LoggerFactory.getLogger(FileStorage.class);
-
-	@Override
-	@Deprecated
+	@Override @Deprecated
 	public void saveCover(final IBook book) {
 		String logMsg;
 
@@ -68,7 +64,7 @@ public class FileStorage implements IFileStorage {
 	private void moveCover(final IBook book) throws IOException, WrongFileTypeException {
 		final File file = book.getCover();
 		if (file == null || !file.exists() || !file.isFile()) {
-			throw  new WrongFileTypeException("empty file");
+			throw new WrongFileTypeException("empty file");
 		}
 
 		final String extension = getFileExtension(file, "image/jpeg", "image/png");
@@ -96,7 +92,7 @@ public class FileStorage implements IFileStorage {
 	private void movePdf(final IBook book) throws IOException, WrongFileTypeException {
 		final File file = book.getPdf();
 		if (file == null || !file.exists() || !file.isFile()) {
-			throw  new WrongFileTypeException("empty file");
+			throw new WrongFileTypeException("empty file");
 		}
 
 		final String extension = getFileExtension(file, "application/pdf");
@@ -122,12 +118,15 @@ public class FileStorage implements IFileStorage {
 	}
 
 	private String getFileExtension(final File file, final String... mimeTypes) throws IOException, WrongFileTypeException {
+		log.warn("Try to detect file type");
 		final String mimeType = tika.detect(file);
 		for (final String type : mimeTypes) {
 			if (type.equals(mimeType)) {
+				log.warn("Succeed");
 				return mimeType.split("/")[1];
 			}
 		}
+		log.warn("Fail");
 		throw new WrongFileTypeException(mimeType + " - wrong file type");
 	}
 

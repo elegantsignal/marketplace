@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -154,7 +155,27 @@ public abstract class AbstractTest {
 		}
 
 		if (book.getCover() == null) {
-			book.setCover(new File("/tmp/" + getRandomPrefix()));
+			File source = new File("../docs/seed/duke.png");
+			File tmpFile = new File(System.getProperty("java.io.tmpdir") + "/duke.png");
+
+			try {
+				Files.copy(source.toPath(), tmpFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			book.setCover(tmpFile);
+		}
+
+		if (book.getPdf() == null) {
+			File source = new File("../docs/seed/dummy.pdf");
+			File tmpFile = new File(System.getProperty("java.io.tmpdir") + "/dummy.pdf");
+
+			try {
+				Files.copy(source.toPath(), tmpFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			book.setPdf(tmpFile);
 		}
 
 		if (book.getPublished() == null) {
@@ -165,16 +186,12 @@ public abstract class AbstractTest {
 			book.setDescription("Description-" + getRandomPrefix());
 		}
 
-		if (book.getPdf() == null) {
-			book.setPdf(new File("/testpdf/" + getRandomPrefix()));
-		}
-
 		try {
 			return bookService.save(book);
 		} catch (IOException e) {
-			e.printStackTrace();
+
 		} catch (WrongFileTypeException e) {
-			e.printStackTrace();
+
 		}
 		return book;
 	}

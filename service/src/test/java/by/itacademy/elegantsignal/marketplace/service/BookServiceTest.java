@@ -83,20 +83,14 @@ public class BookServiceTest extends AbstractTest {
 	}
 
 	@Test public void testBook2Genre() throws IOException {
-		final IBook book = saveNewBook(bookService.createEntity());
 
-		final List<IGenre> genreSet = new ArrayList<>();
+		final List<IGenre> genreList = new ArrayList<>();
 		final int genreCount = getRandomObjectsCount();
 		for (int i = 0; i < genreCount; i++) {
-			genreSet.add(saveNewGenre(genreService.createEntity()));
+			genreList.add(saveNewGenre(genreService.createEntity()));
 		}
 
-		book.setGenres(genreSet);
-		try {
-			bookService.save(book);
-		} catch (WrongFileTypeException e) {
-			e.printStackTrace();
-		}
+		IBook book = saveNewBook(bookService.createEntity().setGenres(genreList));
 
 		final IBook bookFromDb = bookService.getFullInfo(book.getId());
 
