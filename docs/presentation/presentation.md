@@ -29,12 +29,6 @@ p {
 
   > contact with me if you want to see the project alive
 
-Example users:
-
-- `asimov@example.com` - `u2PX`
-- `rand@example.com` - `u2PX`
-- `taleb@example.com` - `u2PX`
-
 ---
 
 # Own Goals
